@@ -1,0 +1,95 @@
+// ===========================================================================
+// REDESIGN — THE FRAME
+// 7. masthead · 16. footer. Ported verbatim from the approved design, with
+// two small integration additions marked INTEGRATION at the end of each half:
+// the home for the site's existing dark-mode control, and the RSS / Sitemap
+// pair the old footer carried.
+// ===========================================================================
+
+// === 7. MASTHEAD — sticky, hairline-edged, above the content ===
+.mast{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);padding-top:var(--s3);padding-bottom:var(--s1);margin-bottom:var(--s8)}
+// ONE grid template, shared with .rule--mast. Column two IS the nav, so the
+// second waveform and the "About" link start on the same line.
+.mast .top{display:grid;grid-template-columns:minmax(0,1fr) var(--navw);column-gap:var(--s4);align-items:center;margin-bottom:var(--s2)}
+.brand{display:flex;align-items:center;gap:var(--s2);min-width:0}
+.wordmark{font-family:var(--serif);font-size:1.05rem;font-style:italic;text-decoration:none}
+.wordmark:hover{color:var(--accent)}
+// THE MINI-MLP MARK — the hero network at logo scale, no labels at all: a
+// miniature table of contents that rides along on every page. The lit output
+// is the section in view; the forward path is redrawn with it.
+// aspect-ratio is stated, not left to the viewBox: an <svg> with no width or
+// height attribute has an intrinsic RATIO but no intrinsic SIZE, and
+// `width:auto` on a flex item in that state is the one sizing path engines
+// still disagree on — some resolve it from the ratio, some fall back to the
+// containing block and the mark swallows the name. 56/40 is the viewBox.
+.minimlp{display:block;height:2.4rem;width:auto;aspect-ratio:56 / 40;flex:0 0 auto;color:var(--text);overflow:visible}
+.minimlp .mm-e{fill:none;stroke:currentColor;stroke-width:.6;opacity:var(--edge-o)}
+.minimlp .mm-i{fill:var(--bg);stroke:currentColor;stroke-width:.7;opacity:.8}
+.minimlp .mm-n{fill:var(--bg);stroke:var(--accent);stroke-width:.9;transition:fill 180ms ease}
+.minimlp .mm-n.on{fill:var(--accent)}
+.minimlp .mm-p{fill:none;stroke:var(--accent);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
+.minimlp .mm-d{fill:var(--accent);stroke:none}
+.nav{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s1) var(--s3)}
+.nav a{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent}
+.nav a:hover{color:var(--text)}
+html[data-view="home"]  .nav-home,
+html[data-view="work"]  .nav-work,
+html[data-view="blog"]  .nav-blog,
+html[data-view="post"]  .nav-blog,
+html[data-view="cv"]    .nav-cv,
+html[data-view="talks"] .nav-talks{color:var(--text);border-bottom-color:var(--accent)}
+.lang{font-family:var(--sans);font-size:var(--t-label);font-weight:600;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.lang .cur{color:var(--text)}
+.lang .br,.lang .sl{color:var(--muted)}
+.lang .sl{padding:0 .1em}
+.lang a{color:var(--accent);text-decoration-color:var(--accent);text-decoration-thickness:.07em;text-underline-offset:.2em}
+
+// INTEGRATION — the switch and the theme control travel together as the nav's
+// last flex child, so the bar keeps the six children the design balanced. The
+// control itself is the site's existing one, markup and ids untouched:
+// assets/js/_main.js binds #theme-toggle and swaps the class on #theme-icon,
+// and its data-theme + localStorage mechanism is exactly what :root[data-theme]
+// above expects. Only the dress is new, and it is the nav's own.
+.navtail{display:flex;align-items:baseline;gap:var(--s2);white-space:nowrap}
+.tgl{font-size:var(--t-label);line-height:1;color:var(--muted);cursor:pointer;transition:color 150ms ease}
+.tgl a{color:inherit;text-decoration:none;cursor:pointer}
+.tgl:hover,.tgl:focus-within{color:var(--accent)}
+
+// === 16. FOOTER — a loss surface; each iterate of the descent links up ===
+.foot{margin-top:var(--s12)}
+.foot .rubric{margin-bottom:var(--s1)}
+.rubric{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 var(--s3)}
+.field{position:relative;height:var(--field-h);margin-bottom:var(--s3)}
+.contours{position:absolute;inset:0;width:100%;height:100%;color:var(--text);pointer-events:none}
+.contours .rings{fill:none;stroke:currentColor;stroke-width:1;opacity:var(--ring-o)}
+.contours .trail-l{fill:none;stroke:var(--accent);stroke-width:1.1;opacity:var(--trail-o);stroke-linejoin:round;stroke-linecap:round}
+.fmin{position:absolute;left:25%;top:71.33%;transform:translate(-100%,-50%);padding-right:1rem;max-width:16rem;text-align:right}
+.fmin::before{content:"";position:absolute;right:0;top:50%;transform:translate(50%,-50%);width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.fmin a{font-family:var(--serif);font-size:1.1rem;font-style:italic;text-decoration:none;display:block;line-height:1.2}
+.fmin a:hover{color:var(--accent)}
+.fmin span{font-family:var(--sans);font-size:var(--t-label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-top:2px}
+.fv{position:absolute;width:0;height:0;transform:translate(-50%,-50%);text-decoration:none}
+.fv .d{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);background:var(--bg);transition:background-color 150ms ease,border-color 150ms ease}
+.fv .l{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--sans);font-size:var(--t-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:3px 4px}
+.fv--up .l{bottom:10px}
+.fv--dn .l{top:10px}
+.fv:hover .l,.fv:focus-visible .l{color:var(--accent)}
+.fv:hover .d,.fv:focus-visible .d{background:var(--accent);border-color:var(--accent)}
+// the formula on its own line; the citation DIRECTLY below it, hard against
+// the right edge, in the same tensor-shape bracket form as .attrib uses
+// everywhere else on the site — same face, size, colour and brackets.
+.flegend{margin:0 0 var(--s4)}
+.flegend .eq{display:block;font-family:var(--math);font-size:1.06rem;line-height:1.4;color:var(--text);margin:0}
+.flegend .attrib{text-align:right;margin:.15rem 0 0}
+// name at the left, social glyphs at the right
+.foot-band{padding-top:var(--s2);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--s2) var(--s4)}
+.foot-band p{margin:0;font-family:var(--sans);font-size:var(--t-label);letter-spacing:.03em;color:var(--muted);line-height:1.7}
+.foot-id{min-width:0}
+
+// INTEGRATION — the old footer's two survivors, the feed and the sitemap, ride
+// under the glyph row on the same right edge, in the metadata type the band
+// already speaks. No new colour, no new size.
+.foot-links{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s1);min-width:0}
+.foot-links p{text-align:right}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:var(--accent)}

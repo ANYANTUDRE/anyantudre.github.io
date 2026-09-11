@@ -1,0 +1,303 @@
+// ===========================================================================
+// REDESIGN — LONG-FORM AND RESPONSIVE
+// 17. blog · post · cv · talks · 18. responsive. Ported verbatim from the
+// approved design. This partial is imported LAST, so § 18's media queries
+// override every equal-specificity rule that came before them, exactly as
+// they do in the design's single stylesheet.
+// ===========================================================================
+
+// === 17. LONG-FORM VIEWS — blog · post · cv · talks. An addendum, not
+//    a parallel system: every measure resolves on --prose and --rail.
+
+// prose furniture
+.flow h2{margin-top:var(--s8)}
+.flow h3{margin:var(--s6) 0 var(--s2)}
+.flow ul,.flow ol{padding-left:1.2em;margin:0 0 var(--s3);clear:right}
+.flow li{margin-bottom:var(--s1)}
+.flow li::marker{color:var(--faint)}
+code{font-family:var(--mono);font-size:.82em;font-style:normal}
+// .8rem = 14.4px, a step under --t-note: the listing's longest line
+// (61 characters) then clears the 36rem measure without scrolling
+pre{font-family:var(--mono);font-size:.8rem;line-height:1.62;background:var(--surface);border:1px solid var(--border);padding:var(--s3);overflow-x:auto;tab-size:4;-moz-tab-size:4;margin:0 0 var(--s4);clear:right}
+pre code{font-size:1em}
+blockquote{margin:var(--s4) 0;padding-left:var(--s3);border-left:2px solid var(--accent);font-style:italic;line-height:1.5;clear:right}
+blockquote cite{display:block;font-style:normal;font-family:var(--sans);font-size:var(--t-label);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-top:var(--s1)}
+.byline{font-family:var(--sans);font-size:var(--t-label);letter-spacing:.02em;color:var(--muted);line-height:1.95;margin:0 0 var(--s4)}
+.sidenote .num{font-family:var(--sans);font-size:.78em;font-weight:600;color:var(--accent);vertical-align:super;line-height:0;margin-right:.35em}
+.wrow .meta{display:block;margin-bottom:2px}
+
+// === THE POST — a full-width band for title, dek and byline, then THREE
+//    columns: apparatus left, prose middle, and the right rail carrying BOTH
+//    the outline and the sidenotes. The outline hangs off a zero-height sticky
+//    anchor, so it costs no line box and nothing below clears it. ===
+.posthead{margin-bottom:var(--s6)}
+.posthead .rubric{margin-bottom:var(--s1)}
+// THE TITLE AND THE DEK SPEND THE WHOLE BAND. The --prose cap that used to
+// sit on both forced a title that fits on one line to break over two. With it
+// gone the head uses every column the sheet has, and text-wrap:balance is
+// left as the ONLY thing that breaks a line — and only when one truly will
+// not fit. Nothing here declares a width or a <br>.
+.posthead h1{font-size:var(--t-dsp);line-height:1.04;letter-spacing:-.02em;margin:0 0 var(--s2);max-width:none;text-wrap:balance}
+.dek{font-style:italic;color:var(--muted);margin-bottom:var(--s3);max-width:none;text-wrap:balance}
+.postgrid{display:grid;grid-template-columns:minmax(0,var(--wide))}
+.postside{font-family:var(--sans);font-size:var(--t-label);line-height:1.6;color:var(--muted);border-top:1px solid var(--border);padding-top:var(--s1);margin:0 0 var(--s6);max-width:var(--prose)}
+.postside p{margin:0 0 var(--s2)}
+.postside p:last-child{margin:0}
+.ps-l{display:block;font-weight:600;text-transform:uppercase;letter-spacing:.1em}
+.ps-t{display:block;font-family:var(--serif);font-style:italic;font-size:1rem;line-height:1.25;color:var(--text);margin:2px 0 3px}
+.postside a{color:var(--muted);text-decoration-color:var(--accent);text-decoration-thickness:.06em;text-underline-offset:.18em;overflow-wrap:anywhere}
+.postside a:hover{color:var(--accent)}
+.tocwrap{position:sticky;top:calc(var(--navh) + var(--s2));height:0;z-index:2}
+// The Academic Pages sidebar and navigation both style a BARE .toc — a card
+// with a border, a radius, a shadow and uppercase tracking — and the legacy
+// pages that keep it still need it. The redesign's outline is therefore
+// scoped to .tocwrap, where it always lives, and the card chrome is disarmed
+// here before the design's own rules run.
+.tocwrap .toc{background:none;border:0;border-radius:0;box-shadow:none;text-transform:none;letter-spacing:normal;font-family:var(--sans);color:var(--muted)}
+// THE GUTTER. The outline sits one --gap to the right of the prose, and on
+// the post --gap is widened to 4rem (see §18) — 60% more air than anywhere
+// else on the site. Because the sidenotes hang on --noteoff = --rail + --gap,
+// widening the one token moves the outline AND the notes together: they stay
+// on one line and the gutter simply opens.
+.tocwrap .toc{position:absolute;left:calc(100% + var(--gap));top:0;width:var(--rail);background:var(--bg);padding:var(--s1) 0 var(--s2)}
+.tocwrap .toc .rubric{margin-bottom:var(--s1)}
+.tocwrap .toc ol{list-style:none;margin:0;padding:0}
+.tocwrap .toc li{margin-bottom:2px}
+.tocwrap .toc a{display:block;font-family:var(--sans);font-size:var(--t-note);line-height:1.32;color:var(--muted);text-decoration:none;padding:.28rem 0 .28rem var(--s2);border-left:1px solid var(--border)}
+.tocwrap .toc .sub a{padding-left:var(--s4);font-size:var(--t-label)}
+.tocwrap .toc a:hover,.tocwrap .toc a:focus-visible{color:var(--accent);border-left-color:var(--accent);border-left-width:2px;padding-left:calc(var(--s2) - 1px)}
+.tocwrap .toc .sub a:hover,.tocwrap .toc .sub a:focus-visible{padding-left:calc(var(--s4) - 1px)}
+// the same scroll-spy marks the section being read. With no JS nothing is
+// marked — never the wrong one.
+.tocwrap .toc a.on{color:var(--accent);border-left-color:var(--accent);border-left-width:2px;padding-left:calc(var(--s2) - 1px)}
+.tocwrap .toc .sub a.on{padding-left:calc(var(--s4) - 1px)}
+.tocfoot{font-family:var(--sans);font-size:var(--t-label);line-height:1.5;color:var(--muted);margin:var(--s2) 0 0}
+// Nothing in the article spends the rail: figures and listings stop at the
+// prose measure. .wide is gone from the markup and disarmed here too.
+.postmain .wide{width:100%;max-width:100%}
+.postmain figure,.postmain pre,.postmain .codeblock,.postmain .chartwrap{max-width:100%}
+// AND NEITHER DO THE RULES. A .rule is 100% + --noteoff by default, which ran
+// every spectrogram straight out under the sticky outline and the sidenotes.
+// In the article both extra tracks collapse to zero and the band stops dead
+// on the main text column — never one pixel wider.
+.postmain .rule{width:100%;max-width:var(--prose);--gapw:0rem;--railw:0rem}
+// a real <button>, hidden until the script proves the clipboard API
+// exists, so with no JS there is no dead control
+.codeblock{position:relative;clear:right}
+.codeblock pre{clear:none}
+.copy{position:absolute;top:var(--s1);right:var(--s1);z-index:1;font-family:var(--mono);font-size:var(--t-label);line-height:1;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:2px;padding:.34rem .52rem;cursor:pointer;transition:color 150ms ease,border-color 150ms ease}
+.copy:hover{color:var(--accent);border-color:var(--accent)}
+.copy[data-copied]{color:var(--accent);border-color:var(--accent)}
+.copy[hidden]{display:none}
+
+// the in-article figures, all capped to the measure
+.dia{width:100%;max-width:22rem;height:auto;display:block;margin:0 auto;color:var(--text)}
+.dia .st{fill:none;stroke:currentColor;stroke-width:1.25}
+.dia .sc{stroke:var(--accent);stroke-dasharray:4 4}
+.dia text{fill:var(--text);stroke:none;font-family:var(--sans);font-size:12px}
+.dia .dim{fill:var(--muted)}
+.dia .mth{font-family:var(--math);font-style:italic;font-size:13px}
+.chart .line--alt{stroke:currentColor;opacity:.85;stroke-dasharray:5 4}
+.figno{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+
+// the equation colophon (blog)
+.colo{display:grid;grid-template-columns:minmax(0,1fr);gap:0 var(--s6)}
+.colo-i{border-top:1px solid var(--border);padding:var(--s2) 0 var(--s3)}
+.colo-m{font-family:var(--math);font-size:1.08rem;line-height:1.5;color:var(--text);overflow-x:auto;font-variant-numeric:lining-nums tabular-nums;padding-bottom:2px}
+.colo-a{font-family:var(--sans);font-size:var(--t-label);line-height:1.6;letter-spacing:.015em;color:var(--muted);margin:.35rem 0 0}
+
+// the notebook gutter (cv): a right-set mono prompt and one hairline,
+// no cell backgrounds. width:--wide keeps its right edge true.
+.cell{display:grid;grid-template-columns:var(--pr) minmax(0,1fr);margin-bottom:var(--s8);width:#{"min(var(--wide),100%)"}}
+.cell:last-child{margin-bottom:0}
+.pr{font-family:var(--mono);font-size:var(--t-label);color:var(--muted);text-align:right;white-space:nowrap;padding:.42rem .6rem 0 0;line-height:1.7;font-variant-numeric:lining-nums tabular-nums}
+.pr-in{padding-top:.72rem}
+.cellbody{border-left:1px solid var(--border);padding-left:var(--s2);min-width:0}
+.cell-in{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.3rem var(--s3);padding-bottom:var(--s1)}
+.cell-in h1,.cell-in h2{margin:0}
+.call{font-family:var(--mono);font-size:var(--t-label);color:var(--muted);letter-spacing:.01em}
+.rule--cv{grid-column:#{"1 / -1"};width:100%;margin:0 0 var(--s3)}
+// the CV's opening band: title and PDF on ONE line, then the standfirst.
+// The download is a real pairing with the title, not a tail link — its own
+// type step below the h1, set on the baseline the h1 sits on.
+.cvhead{margin-bottom:var(--s8)}
+.cvhead .lede{margin-bottom:0}
+.cvhead .call{font-style:normal}
+.cvtop{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s1) var(--s4);margin-bottom:var(--s3)}
+.cvtop h1{margin:0;min-width:0}
+.pdf{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--serif);font-style:italic;font-size:var(--t-h2);line-height:1.15;letter-spacing:-.01em;white-space:nowrap;text-decoration-thickness:.05em;text-underline-offset:.2em}
+.pdf:hover{color:var(--accent)}
+// the download mark: an arrow pointing DOWN into a tray, drawn here and
+// inheriting the link's own colour through currentColor
+.dl{width:.92em;height:.92em;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transform:translateY(.05em)}
+
+// CERTIFICATIONS — ONE GRID ROW PER CERTIFICATION. The title, its issuer and
+// its year are three cells of a SINGLE row, so they cannot drift apart down
+// the list the way two independently laid-out columns did. The tracks are
+// declared once and every row uses them, so the columns line up by
+// construction rather than by luck.
+.certs{list-style:none;margin:0;padding:0;border-top:1px solid var(--border)}
+.certs > li{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,12rem) 3.4rem;column-gap:var(--s3);align-items:baseline;padding:.42rem 0;border-bottom:1px solid var(--border)}
+.certs .t{font-style:italic;grid-column:1;grid-row:1;min-width:0}
+.certs .iss{grid-column:2;grid-row:1}
+.certs .cy{grid-column:3;grid-row:1;text-align:right}
+.certs .iss,.certs .cy{font-family:var(--sans);font-size:var(--t-label);letter-spacing:.015em;color:var(--muted);line-height:1.6;font-variant-numeric:lining-nums tabular-nums}
+.cell .trail{margin-left:0}
+.sk{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:var(--s1) var(--s3)}
+.sk dt{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);line-height:1.75;padding-top:.14rem}
+.sk dd{margin:0;line-height:1.75}
+
+// === 18. RESPONSIVE — 380px to 1600px, no horizontal page scroll ===
+// the colophon pairs up when two fit
+@media (min-width:760px){.colo{grid-template-columns:repeat(2,minmax(0,1fr))}}
+// THE POST'S WIDER GUTTER. Wherever the outline is in the rail at all, --gap
+// goes from 2.5rem to 4rem on this view and this view only. One token does
+// the whole job: --noteoff is calc(--rail + --gap), so the sidenotes move out
+// with the outline and the two still share one left edge. The selector is
+// html[data-view="post"] — (0,1,1) — so it also outranks the :root{--gap}
+// declared in the narrower breakpoints below.
+@media (min-width:960px){html[data-view="post"]{--gap:4rem}}
+// ≥1300px the post earns its left lane: 2 + 10 + 2.5 + 56 = 70.5rem to
+// the pixel, so masthead, title band and footer end on one edge.
+@media (min-width:1300px){html[data-view="post"] .sheet{width:calc(100% - 3rem);max-width:var(--shell-post);padding-left:var(--s4)}
+  html[data-view="post"] .band{width:100%}
+  .postgrid{grid-template-columns:var(--side) minmax(0,var(--wide));column-gap:var(--sidegap)}
+  .postside{position:sticky;top:calc(var(--navh) + var(--s2));align-self:start;margin-bottom:0}
+}
+// the rail narrows first
+@media (max-width:1119px){:root{--pad-left:2.5rem;--rail:13.5rem;--gap:2rem;--portrait:172px;--cell:1.4rem;--navw:27rem}
+  .nav{column-gap:var(--s2)}
+}
+// --navh must never UNDER-state the stacked bar. Measured at 480–959px:
+// 36 pad-top + 43 brand + 18 row-gap + 53 two-line nav + 18 + 16 rule + 9
+// + 9 pad-bottom + 1 border ≈ 203px. 10.5rem (189px) left the anchor jump
+// clearing the bar by 4px — inside the error bar of a font metric. 11.5rem
+// (207px) plus the --s2 in scroll-margin-top clears it by 22px.
+@media (max-width:959px){:root{--pad-left:1.5rem;--t-body:1.055rem;--setback:0rem;--field-h:auto;--navh:11.5rem}
+  .sheet{width:auto;margin:0;padding-left:var(--pad-left);padding-right:var(--pad-left)}
+  // one column, one right edge — and a cap, or the measure runs past 100
+  // characters between 700 and 959px where the rail has gone but the
+  // sheet has not narrowed. 34rem at 19px ≈ 72 characters.
+  .col,.band,.wide,.chartwrap,.cell,.postside{width:100%;max-width:34rem}
+  .sb{margin-left:0;width:100%}
+  // one column below, so one unbroken band above: the rail track and the
+  // set-back stub both go to zero and their segments drop out
+  .rule{width:100%;--gapw:0rem;--railw:0rem}
+  .rule--sb > svg:first-child{display:none}
+  .rule--2 > svg:last-child{display:none}
+  // the bar stacks: name over nav, and the nav runs from the left
+  .mast .top{grid-template-columns:minmax(0,1fr);row-gap:var(--s2)}
+  .nav{justify-content:flex-start;column-gap:var(--s3)}
+  // notes fall into the flow
+  .marginnote,.sidenote{float:none;width:auto;max-width:100%;margin:var(--s2) 0 var(--s3);padding-left:var(--s2);border-left:2px solid var(--border)}
+  .profile{border-left:0;padding-left:0;display:grid;grid-template-columns:var(--portrait) minmax(0,1fr);gap:var(--s3);align-items:start}
+  .profile .pt{margin-bottom:0}
+  .profile .socials{grid-column:#{"1 / -1"}}
+  .duo--hm,.duo--pc{grid-template-columns:minmax(0,1fr)}
+  .mast{padding-top:var(--s4);margin-bottom:var(--s4)}
+  h2{margin-top:var(--s8)}
+  .yr{margin-top:var(--s8)}
+  .flow h2{margin-top:var(--s6)}
+  // the contour field becomes a plain link list
+  .contours{display:none}
+  .field{position:static;height:auto;display:flex;flex-wrap:wrap;align-items:center;gap:var(--s1) var(--s3);margin-bottom:var(--s4)}
+  .fmin{position:relative;left:auto;top:auto;transform:none;text-align:left;padding:0 0 0 1rem;max-width:none;flex:0 0 100%}
+  .fmin::before{right:auto;left:0;transform:translate(-50%,-50%)}
+  .fv{position:static;width:auto;height:auto;transform:none;display:inline-flex;align-items:center;gap:.45em}
+  .fv .d{position:static;left:auto;top:auto}
+  .fv .l{position:static;transform:none;padding:0}
+  // the notebook loses its gutter, keeps its prompts as labels; the rule
+  // is third in the cell, so flow holds it under the heading
+  .cell{display:block;margin-bottom:var(--s6)}
+  .pr{text-align:left;padding:0 0 var(--s1)}
+  .cellbody{border-left:0;padding-left:0;width:100%}
+  // the certification keeps all three tracks on one row, on a tighter
+  // issuer lane so the title still gets the width it needs
+  .certs > li{grid-template-columns:minmax(0,1fr) minmax(0,9rem) 3.2rem;column-gap:var(--s2)}
+  .rule--cv{margin-bottom:var(--s2)}
+  // the outline drops out of the rail and back into the flow
+  .tocwrap{position:static;height:auto;z-index:auto}
+  .tocwrap .toc{position:static;width:auto;margin:0 0 var(--s4);padding:0}
+}
+@media (max-width:639px){:root{--portrait:150px}
+  .sk{grid-template-columns:minmax(0,1fr);gap:0}
+  .sk dd{margin-bottom:var(--s2)}
+  // the certification is STILL one grid row — the issuer just takes a second
+  // line inside it, so title, issuer and year can never come apart
+  .certs > li{grid-template-columns:minmax(0,1fr) 3.4rem}
+  .certs .iss{grid-column:1;grid-row:2}
+  .certs .cy{grid-column:2;grid-row:1}
+  .profile{grid-template-columns:minmax(0,1fr)}
+  .hmcols span{font-size:.56rem}
+  .hmrows{font-size:.56rem}
+}
+@media (max-width:479px){:root{--pad-left:1.25rem;--t-body:1rem;--cell:1.15rem;--navh:12rem}
+  .mlp{max-width:100%}
+  .minimlp{height:1.9rem}
+}
+// nothing in either network moves; the transitions are colour and opacity
+// only, and even those are suppressed here
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms !important;animation:none !important}
+  .mlp .node,.mlp .edge,.mlp .lab,.minimlp .mm-n{transition:none !important}
+}
+
+// === INTEGRATION — THE PROJECT DETAIL PAGE'S LEAD IMAGE ===
+// Not in the design file, which had no project detail view: the `portfolio`
+// collection carries an `image` in its front matter and _layouts/redesign-
+// project.html shows it at the head of the prose column. Framed exactly like
+// every other picture on the site — the portrait and the blog index thumb —
+// and capped at the measure, so a wide screenshot stops at the column and an
+// icon-sized file stays icon-sized instead of being stretched to fill it.
+// Built from existing tokens only; adds no new one.
+.leadfig{margin:0 0 var(--s6);clear:right}
+.leadfig img{max-width:100%;width:auto;border:1px solid var(--border);border-radius:2px;background:var(--surface)}
+
+// === INTEGRATION — ROUGE LISTINGS IN ANY PROSE BODY ===
+// The design drew its one listing by hand as <pre><code>. A real post's code
+// arrives through Rouge, and two things sit between the two.
+//
+// FIRST, Academic Pages draws `div.highlighter-rouge` as a card — 1em of
+// padding, a radius, a box-shadow and a Font Awesome glyph badge pinned to
+// the corner — and that rule is NOT scoped to the old blog wrapper, so it
+// still fires here. SECOND, _config.yml runs Rouge with line_numbers, so a
+// listing arrives as
+//     pre.highlight > code > table.rouge-table > tr
+//         > td.rouge-gutter.gl > pre.lineno
+//         > td.rouge-code      > pre
+// and the design's bare `pre` rule would draw its frame three times over,
+// nested.
+//
+// So: the frame is kept on exactly ONE box, the outer pre.highlight, which
+// already inherits --surface and the --border hairline from the design's own
+// `pre`. Every other layer is stripped back to nothing, the padding moves
+// inward to the two cells, and only the CODE cell scrolls — the line numbers
+// stay put beside it instead of sliding away with the text. The numerals are
+// --faint, which is what --faint is for: markers, never read text.
+//
+// TWO SCOPES, one rule set: [data-prose], which both Markdown bodies carry,
+// and .legacy, which _layouts/redesign-legacy.html and _layouts/talk.html
+// write. Between them they cover every page on the site that can hold a Rouge
+// listing, so no listing anywhere is left on the Academic Pages card.
+//
+// INTEGRATION, second pass: this block was written as `.postmain …`, which
+// only the post layout emits — so the three project pages that carry a
+// listing (florence-2-vlm, mms-adapter-asr, spotify-batch-processing) got the
+// Academic Pages card back AND the design's `pre` frame drawn three times
+// nested. [data-prose] is the marker BOTH Markdown bodies now carry, and it
+// is the same (0,2,1) specificity `.postmain div.highlighter-rouge` was, so
+// nothing else about the cascade changes.
+[data-prose] div.highlighter-rouge, .legacy div.highlighter-rouge{padding:0;border:0;border-radius:0;background:none;box-shadow:none;font-size:inherit;margin:0 0 var(--s4)}
+[data-prose] div.highlighter-rouge::before, .legacy div.highlighter-rouge::before{content:none}
+[data-prose] div.highlighter-rouge .highlight, .legacy div.highlighter-rouge .highlight{margin:0;font-family:var(--mono);font-size:inherit;line-height:inherit;background:none;border:0}
+[data-prose] pre.highlight, .legacy pre.highlight{padding:var(--s3);margin:0;overflow-x:auto}
+[data-prose] pre.highlight > code, .legacy pre.highlight > code{display:block;font-size:1em}
+// with the line-number table present the frame's padding belongs to the
+// cells, not to the box, or the gutter rule cannot reach the frame's edges
+[data-prose] pre.highlight#{":has(.rouge-table)"}, .legacy pre.highlight#{":has(.rouge-table)"}{padding:0;overflow:visible}
+[data-prose] .rouge-table, .legacy .rouge-table{width:100%;border-collapse:collapse;margin:0;table-layout:fixed}
+[data-prose] .rouge-table td, .legacy .rouge-table td{padding:0;border:0;vertical-align:top}
+[data-prose] .rouge-table pre, .legacy .rouge-table pre{background:none;border:0;border-radius:0;margin:0;padding:var(--s3) 0;font-size:1em;line-height:inherit;overflow:visible}
+[data-prose] td.rouge-gutter, .legacy td.rouge-gutter{width:2.9rem;border-right:1px solid var(--border);text-align:right;user-select:none;-webkit-user-select:none}
+[data-prose] td.rouge-gutter pre, .legacy td.rouge-gutter pre{padding-left:var(--s2);padding-right:var(--s2);color:var(--faint)}
+[data-prose] td.rouge-code pre, .legacy td.rouge-code pre{padding-left:var(--s3);padding-right:var(--s3);overflow-x:auto}

@@ -1,0 +1,83 @@
+// ===========================================================================
+// REDESIGN — 2. RESET & BASE · 3. VIEW SWITCHING · 4. THE SHEET · 5. TYPOGRAPHY
+// Ported verbatim from the approved design (§ 2–5), plus the legacy guards at
+// the foot of the file.
+// ===========================================================================
+
+// === 2. RESET & BASE ===
+*{box-sizing:border-box}
+h1,h2,h3,h4,p,ul,ol,li,figure,figcaption,blockquote,pre,dl,dd{margin:0}
+html{font-size:18px;-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:var(--t-body);line-height:1.7;font-kerning:normal;font-variant-ligatures:common-ligatures;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent-soft);color:var(--text)}
+img{max-width:100%;display:block}
+svg *{vector-effect:non-scaling-stroke}
+
+// === 3. VIEW SWITCHING ===
+// In the mock-up all six views lived in one document. In Jekyll each view is
+// its own route, so these rules are normally inert — they are kept verbatim so
+// that any markup lifted straight out of the design still behaves, because the
+// shell sets data-view on <html> from the page's own front matter.
+[data-page] { display: none; }
+html[data-view="home"]  [data-page="home"],
+html[data-view="work"]  [data-page="work"],
+html[data-view="blog"]  [data-page="blog"],
+html[data-view="post"]  [data-page="post"],
+html[data-view="cv"]    [data-page="cv"],
+html[data-view="talks"] [data-page="talks"] { display: block; }
+
+// === 4. THE SHEET ===
+.sheet{width:94%;max-width:var(--shell);margin:0 auto;padding-left:var(--pad-left);padding-right:0;padding-bottom:var(--s12)}
+// keeps prose + rail inside the sheet
+// (min() is written through interpolation: Ruby Sass 3.7 would otherwise try
+//  to evaluate it as its own numeric min() built-in and choke on the var()s.)
+.col{width:#{"min(var(--prose),calc(100% - var(--noteoff)))"}}
+.band{width:#{"min(var(--wide),100%)"}}
+// THE SET-BACK. The <h2> and its rule are NOT in here — they sit at the
+// container's left edge like any primary section. Only .sb steps in, by
+// --setback; its right edge is untouched, so the rail never moves.
+.sb{margin-left:var(--setback);width:calc(100% - var(--setback))}
+// spends the rail as well as the prose column
+.wide{width:calc(100% + var(--noteoff));max-width:none}
+
+// === 5. TYPOGRAPHY ===
+h1,h2,h3{font-weight:400;font-style:italic;line-height:1.15;text-wrap:balance}
+.dsp{font-family:var(--serif);font-style:italic;font-weight:400;font-size:var(--t-dsp);line-height:1.02;letter-spacing:-.02em;margin:0 0 var(--s2)}
+h1{font-size:var(--t-h1);letter-spacing:-.018em;margin-bottom:var(--s3)}
+// no border-bottom: the spectrogram band IS the rule and sits UNDER the
+// heading, so the section's air is the h2's margin-top
+h2{font-size:var(--t-h2);letter-spacing:-.012em;margin:var(--s12) 0 var(--s1);clear:right}
+.yr{font-size:var(--t-dsp);font-style:normal;line-height:1;letter-spacing:-.015em;font-variant-numeric:lining-nums tabular-nums;margin:var(--s12) 0 var(--s2)}
+h3{font-size:var(--t-h3);line-height:1.22;margin:0 0 var(--s1)}
+// every anchor target clears the sticky bar, so no jump lands under it
+[id]{scroll-margin-top:calc(var(--navh) + var(--s2))}
+p,li{hyphens:auto;text-wrap:pretty}
+p{margin-bottom:var(--s3)}
+.lede{font-style:italic;margin-bottom:var(--s4)}
+strong,b{font-weight:500}
+em,i{font-style:italic}
+
+// links: colour inherits; the oxblood lives in a visible underline
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:.07em;text-underline-offset:.16em;transition:color 150ms ease,text-decoration-color 150ms ease,text-decoration-thickness 150ms ease}
+a:hover{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+// A08 — the title rule, thickening on hover so the affordance is never
+// colour alone
+.tl{text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:.055em;text-underline-offset:.19em}
+.tl:hover,.tl:focus-visible{color:var(--accent);text-decoration-thickness:.11em}
+
+.skip{position:absolute;left:-9999px;top:0;z-index:30;text-decoration:none;font-family:var(--sans);font-size:var(--t-label);background:var(--surface);border:1px solid var(--border);padding:var(--s1) var(--s2)}
+.skip:focus{left:var(--s2);top:var(--s2)}
+
+// === LEGACY GUARDS ===
+// Three of the design's short class names are also Rouge highlight tokens —
+// .g (Generic), .gs (Generic.Strong) and .sb (Literal.String.Backtick) — and
+// Rouge emits them inside every fenced code block, on the redesigned pages and
+// on the Academic Pages ones alike. Without these the bracket grammar would
+// punctuate syntax highlighting and the set-back would indent a backtick
+// string. Two classes deep, so the guard wins inside .highlight and nowhere
+// else.
+.highlight .g::before,.highlight .g::after,
+.highlight .gs::before,.highlight .gs::after{content:none}
+.highlight .sb{margin-left:0;width:auto}

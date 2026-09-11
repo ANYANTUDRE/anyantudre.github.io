@@ -1,0 +1,58 @@
+{% include base_path %}<!doctype html>
+{%- comment -%}
+  THE REDESIGN SHELL — the <head>, the sprite, the navbar, the content, the
+  footer and the scripts. Every redesigned route's layout inherits this one.
+
+  data-view is the page's own front-matter `view` (home · work · blog · post ·
+  cv · talks). It marks the current link in the navbar, widens the post's
+  gutter at ≥960px, and tells assets/js/redesign.js which section list to spy
+  on. A page that sets nothing marks nothing, which is correct for the legacy
+  routes that borrow this shell.
+
+  data-theme is NOT written here: assets/js/_main.js owns it, reading
+  localStorage on load and toggling the attribute from the control in the
+  navbar — exactly the mechanism :root[data-theme="dark"] in the redesign
+  stylesheet is written against.
+
+  No `layout: compress`: the sprite's <symbol> paths and the posts' <pre>
+  listings are both whitespace-significant, and the compressor is not worth
+  the risk for what it saves.
+{%- endcomment -%}
+<html lang="{{ site.locale | slice: 0,2 }}" class="no-js" data-view="{{ page.view }}"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
+  <head>
+    {% include head.html %}
+    {% include head/custom.html %}
+
+    <!-- EB Garamond for the reading face and the mathematics, Karla for the
+         labels, metadata and the nav. Both are non-negotiable in the design. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Karla:wght@400;600&display=swap">
+  </head>
+
+  <body>
+
+    {% include browser-upgrade.html %}
+
+    <a class="skip" href="#main">Skip to content</a>
+
+    {% include redesign/sprite.html %}
+
+    <div class="sheet">
+
+      {% include redesign/masthead.html %}
+
+      <main id="main" tabindex="-1">
+        {{ content }}
+      </main>
+
+      {% include redesign/footer.html %}
+
+    </div>
+
+    {% include footer/mathjax.html %}
+    {% include scripts.html %}
+    <script src="{{ base_path }}/assets/js/redesign.js"></script>
+
+  </body>
+</html>

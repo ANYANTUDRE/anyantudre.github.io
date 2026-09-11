@@ -46,3 +46,39 @@
     "layout/home",
     "layout/sections"
 ;
+
+/*
+ * THE REDESIGN. Everything above is Academic Pages and stays: the pages he
+ * chose to keep — /certifications/, the blog taxonomies, /talkmap/, /sitemap/,
+ * 404 and the demo pages — are still rendered by those layouts and still need
+ * those rules. The redesign is appended AFTER them so that where the two
+ * disagree at equal specificity the new rules win, and so every page, old or
+ * new, inherits the new palette, typography, header and footer.
+ *
+ * Order inside the redesign is the design's own: tokens first, then the base,
+ * then the drawn instruments (whose .rule must precede the masthead's
+ * .rule--mast), the frame, the section content, and finally the long-form
+ * views with § 18's media queries last of all.
+ */
+
+@import
+    "redesign/tokens",
+    "redesign/base",
+    "redesign/devices",
+    "redesign/chrome",
+    "redesign/sections",
+    "redesign/post"
+;
+
+/*
+ * THE KEPT ROUTES, last and scoped entirely under `.legacy` — the class only
+ * _layouts/redesign-legacy.html writes. /certifications/, the blog taxonomies,
+ * /talkmap/, /sitemap/, 404 and the Academic Pages demo pages still emit that
+ * theme's own furniture (archive items, notices, buttons, tables, the in-page
+ * outline); this pulls it into the redesign's palette, faces and measures. It
+ * lands after both blocks above, and it can reach no redesigned page.
+ */
+
+@import
+    "redesign/legacy"
+;

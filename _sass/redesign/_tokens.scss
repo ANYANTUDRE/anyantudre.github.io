@@ -1,0 +1,58 @@
+// ===========================================================================
+// REDESIGN — 1. TOKENS
+// Ported verbatim from the approved design (designs5/final.html, § 1).
+// Names and values are FIXED. Nothing here may be "tuned".
+// ===========================================================================
+
+:root{
+  // on --bg #FFFFF8: text 18.8:1 · muted 6.70:1 · accent 7.68:1 · --faint
+  // 2.39:1, so --faint is rules and markers ONLY, never read text.
+  --bg:#FFFFF8; --surface:#FFFFFF;--text:#111111;      // 1 — read text
+  --muted:#5C5C57;     // 2 — metadata, labels, captions
+  --faint:#A8A89E;     // 3 — brackets, markers, hairlines
+  --border:#DCDCD4;    // 4 — rules, lattices, frames
+  --accent:#A02020; --accent-soft:#EFE1DF;--acc-rgb:160,32,32; // heatmap cells tint --bg with rgba(var(--acc-rgb), α)
+--serif:"EB Garamond",Garamond,"Palatino Linotype",Palatino,Georgia,serif;--math:"EB Garamond",Garamond,"Cambria Math",Palatino,Georgia,serif;--sans:"Karla","Helvetica Neue",Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  // type: seven steps, root 18px, body 1.111rem = 20px, label .72rem = 13px
+  --t-dsp:clamp(2.1rem,1.6rem + 2.2vw,3.05rem);--t-h1:clamp(1.75rem,1.4rem + 1.5vw,2.35rem);
+  --t-h2:clamp(1.44rem,1.2rem + .8vw,1.8rem);--t-h3:clamp(1.2rem,1.11rem + .38vw,1.38rem);--t-body:1.111rem;--t-note:.875rem;--t-label:.72rem;
+
+  // spacing: ONE unit, --u = .5rem = 9px, every gap an integer of it.
+  // Sections take s12, items s3/s4 — a 3–4× ratio.
+  --u:.5rem;--s1:var(--u); --s2:calc(2*var(--u)); --s3:calc(3*var(--u)); --s4:calc(4*var(--u));
+  --s6:calc(6*var(--u)); --s8:calc(8*var(--u)); --s12:calc(12*var(--u));
+
+  // GRID — every token in rem, root 18px. Sheet 94% capped at 62rem (1116)
+  // − 4rem pad → 1044 box. --prose 648 ≈ 70 chars · --rail 288 RIGHT ·
+  // --gap 45 · --noteoff 333 · --wide 981 ≤ 1044. Notes float right on
+  // margin-right:−noteoff, so they cost no line box.
+  --shell:62rem; --pad-left:4rem;--prose:36rem; --rail:16rem; --gap:2.5rem;--noteoff:calc(var(--rail) + var(--gap));--wide:calc(var(--prose) + var(--noteoff));
+
+  // set-back: a secondary heading and its rule stay on the container's
+  // left edge; only the CONTENT steps in, right edge unchanged.
+  --setback:1.75rem;
+
+  // THE STICKY BAR. --navh is its height: every anchor target carries that as
+  // scroll-margin-top, or an in-page jump lands underneath it. --navw is the
+  // nav's own grid track, shared by .mast .top AND .rule--mast, so the second
+  // spectrogram segment starts at exactly the left edge of the "About" link.
+  --navh:6.6rem; --navw:30rem;
+
+  // two more lanes: --pr is the CV's prompt gutter, --side the post's LEFT
+  // apparatus column. The post runs a WIDER gutter between its prose and its
+  // outline — --gap goes to 4rem there — so --wide is 36 + 16 + 4 = 56rem and
+  // 2 + 10 + 2.5 + 56 = 70.5rem = --shell-post.
+  --pr:3.5rem; --side:10rem; --sidegap:2.5rem; --shell-post:70.5rem;
+--portrait:200px;--cell:1.5rem;  // heatmap cell
+  --field-h:12.5rem;  // contour field
+  --rule-h:.9rem;  // band height
+  --rule-ink:.34;  // band loudness
+  --edge-o:.15; --edge-o2:.26; --edge-o3:.40; --edge-on:.7;  // MLP edges, stepping up toward the output layer
+  --ring-o:.85; --trail-o:.55;  // contours
+}
+
+// contrast on --bg #151515 : text 13.4:1 · muted 6.61:1 · accent 6.30:1
+:root[data-theme="dark"]{
+  --bg:#151515; --surface:#1D1D1B;--text:#DDDDD6; --muted:#9C9C94; --faint:#66665F; --border:#2A2A27;--accent:#E07B72; --accent-soft:#3A2523;--acc-rgb:224,123,114;--rule-ink:.46; --edge-o:.2; --edge-o2:.32; --edge-o3:.48; --edge-on:.8; --ring-o:.9; --trail-o:.68
+}

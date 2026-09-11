@@ -1,0 +1,90 @@
+<!-- THE FOOTER — § 16 of the approved design, ported.
+
+     A loss surface: faint contour rings, a gradient-descent path stepping in
+     from the upper right, and every iterate of that descent a link back up to
+     one of the home page's seven sections. The minimum is the name. Below
+     959px the contours are hidden and the field becomes a plain link list.
+
+     The waypoints point at the home page's anchors, so they carry the site
+     root on every view except home itself, where they stay in-page.
+
+     Carried over from the old footer: "Site last updated", the RSS feed and
+     the sitemap, all in the metadata type the band already speaks. -->
+
+{%- if page.view == 'home' -%}
+  {%- assign home_anchor = '' -%}
+{%- else -%}
+  {%- assign home_anchor = '/' | relative_url -%}
+{%- endif -%}
+{%- if site.atom_feed.path -%}
+  {%- assign feed_url = site.atom_feed.path -%}
+{%- else -%}
+  {%- assign feed_url = '/feed.xml' | relative_url -%}
+{%- endif -%}
+
+<footer class="foot">
+ <div class="band">
+  <p class="rubric">Back up the page</p>
+  <div class="rule rule--foot rule--acc" aria-hidden="true"><svg><use href="#sg5"/></svg></div>
+
+  <div class="field">
+  <svg class="contours" viewBox="0 0 1000 300" preserveAspectRatio="none" role="img" aria-label="A loss surface drawn as faint concentric contour lines, with a gradient-descent path entering from the upper right and stepping down to a marked minimum where the name sits.">
+  <g class="rings">
+  <ellipse cx="250" cy="214" rx="86" ry="26" transform="rotate(-18 250 214)" opacity=".11"/>
+  <ellipse cx="250" cy="214" rx="155" ry="47" transform="rotate(-18 250 214)" opacity=".10"/>
+  <ellipse cx="250" cy="214" rx="238" ry="72" transform="rotate(-18 250 214)" opacity=".09"/>
+  <ellipse cx="250" cy="214" rx="332" ry="100" transform="rotate(-18 250 214)" opacity=".08"/>
+  <ellipse cx="250" cy="214" rx="440" ry="132" transform="rotate(-18 250 214)" opacity=".07"/>
+  <ellipse cx="250" cy="214" rx="560" ry="168" transform="rotate(-18 250 214)" opacity=".06"/>
+  <ellipse cx="250" cy="214" rx="690" ry="206" transform="rotate(-18 250 214)" opacity=".05"/>
+  </g>
+  <polyline class="trail-l" points="920,46 846,96 752,64 656,120 560,88 462,150 368,118 300,176 250,214"/>
+  </svg>
+
+  <span class="fmin"><a href="{{ home_anchor }}#main">{{ site.author.name | default: site.title }}</a><span>the minimum</span></span>
+
+  <a class="fv fv--up" style="left:36.8%;top:39.33%" href="{{ home_anchor }}#news"><span class="d"></span><span class="l">News</span></a>
+  <a class="fv fv--dn" style="left:46.2%;top:50%" href="{{ home_anchor }}#posts"><span class="d"></span><span class="l">Latest posts</span></a>
+  <a class="fv fv--up" style="left:56%;top:29.33%" href="{{ home_anchor }}#about"><span class="d"></span><span class="l">About me</span></a>
+  <a class="fv fv--dn" style="left:65.6%;top:40%" href="{{ home_anchor }}#education"><span class="d"></span><span class="l">Education</span></a>
+  <a class="fv fv--up" style="left:75.2%;top:21.33%" href="{{ home_anchor }}#experience"><span class="d"></span><span class="l">Experience</span></a>
+  <a class="fv fv--dn" style="left:84.6%;top:32%" href="{{ home_anchor }}#work"><span class="d"></span><span class="l">Selected work</span></a>
+  <a class="fv fv--up" style="left:92%;top:15.33%" href="{{ home_anchor }}#awards"><span class="d"></span><span class="l">Awards</span></a>
+  </div>
+
+  <div class="flegend">
+  <p class="eq" role="math" aria-label="theta is updated to theta minus eta times the gradient of the loss"><i>&#952;</i> &#8592; <i>&#952;</i> &#8722; <i>&#951;</i> &#8711;<sub><i>&#952;</i></sub> &#8466;(<i>&#952;</i>)</p>
+  <p class="attrib">[gradient descent, Cauchy 1847, M&eacute;thode g&eacute;n&eacute;rale]</p>
+  </div>
+
+  <div class="foot-band">
+  <div class="foot-id">
+  <p>&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. All rights reserved.</p>
+  <p>{{ site.author.location }} &middot; set in EB Garamond &amp; Karla &middot; Site last updated {{ site.time | date: '%Y-%m-%d' }}</p>
+  </div>
+  <div class="foot-links">
+  <ul class="socials socials--foot">
+  {%- if site.author.email %}
+  <li><a href="mailto:{{ site.author.email }}" aria-label="Email {{ site.author.name }}"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-mail"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.github %}
+  <li><a href="https://github.com/{{ site.author.github }}" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-gh"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.linkedin %}
+  <li><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-li"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.kaggle %}
+  <li><a href="https://www.kaggle.com/{{ site.author.kaggle }}" aria-label="Kaggle"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-kg"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.twitter %}
+  <li><a href="https://x.com/{{ site.author.twitter }}" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-x"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.youtube %}
+  <li><a href="https://www.youtube.com/@{{ site.author.youtube }}" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-yt"/></svg></a></li>
+  {%- endif %}
+  </ul>
+  <p>{% if site.atom_feed.hide != true %}<a href="{{ feed_url }}">RSS feed</a> <span class="sep">&middot;</span> {% endif %}<a href="{{ '/sitemap/' | relative_url }}">Sitemap</a></p>
+  </div>
+  </div>
+ </div>
+</footer>
