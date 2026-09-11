@@ -1,1 +1,11 @@
+# Docker-only preview overrides. GitHub Pages builds from _config.yml alone and
+# never reads this file.
+#
+# `url` is deliberately blank so base_path resolves to "" and every asset link
+# comes out root-relative, which is what a localhost preview needs.
+#
+# Run the preview with JEKYLL_ENV=production. In development, `jekyll serve`
+# overwrites a blank `url` with its own bind address, producing
+# http://0.0.0.0:4000/assets/... which no browser can resolve — the site then
+# renders with no CSS at all. Setting the env stops that override.
 url: ""
