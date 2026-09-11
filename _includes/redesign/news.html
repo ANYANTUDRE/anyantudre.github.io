@@ -1,37 +1,34 @@
 <!-- NEWS — the one section on the home page with no collection behind it.
 
      Four dated milestones, written into the approved design (final.html
-     L771-798) and ported here. Everything that DOES have a collection behind
-     it is resolved from that collection rather than typed out: the Mooré
-     toolkit's URL and its star count come from _portfolio, the tutorial from
-     _posts, so the row cannot drift out of step with the project page.
+     L771-798) and ported here. The four rows are the four real milestones of
+     2026, newest first, each traceable to the CV; they are typed out because
+     no collection holds them, and each links to the section of the page (or
+     the page) that carries the detail.
 
      Each row is the design's .wrow: a right marginnote carrying the date and
      the place, the headline as a .wtitle, and a .res line underneath. -->
 
-{%- assign moore_proj = site.portfolio | where_exp: "p", "p.title contains 'Moore Speech Corpora'" | first -%}
-{%- assign moore_post = site.posts | where_exp: "p", "p.lang == 'en'" | where_exp: "p", "p.url contains 'moore-speech-corpora'" | first -%}
+<div class="wrow">
+ <span class="marginnote"><span class="mn-label"><time datetime="2026-08">Aug 2026</time></span>Google Research &middot; Zindi</span>
+ <h3 class="wtitle"><a class="tl" href="#awards">2nd place and Best African Participant, Google WAXAL ASR Challenge</a></h3>
+ <span class="res"><span class="dot">$4,000 USD out of 242 teams &middot; multilingual ASR for three low-resource African languages</span></span>
+</div>
+
+<div class="wrow">
+ <span class="marginnote"><span class="mn-label"><time datetime="2026-07">Jul 2026</time></span>ENSA Safi &middot; Cadi Ayyad University</span>
+ <h3 class="wtitle"><a class="tl" href="#education">Graduated Ing&eacute;nieur d&rsquo;&Eacute;tat in Computer Science and Artificial Intelligence</a></h3>
+ <span class="res"><span class="dot">Highest Honours, 17.25&#8202;/&#8202;20 &middot; ranked 1st&#8202;/&#8202;19</span></span>
+</div>
 
 <div class="wrow">
  <span class="marginnote"><span class="mn-label"><time datetime="2026-03">Mar 2026</time></span>Universit&eacute; de Moncton &middot; New Brunswick</span>
- <h3 class="wtitle"><a class="tl" href="#experience">Started as AI Research Assistant at Universit&eacute; de Moncton</a></h3>
- <span class="res"><span class="dot">Quantum machine learning</span></span>
+ <h3 class="wtitle"><a class="tl" href="#experience">Began quantum machine learning research for drug discovery at Universit&eacute; de Moncton</a></h3>
+ <span class="res"><span class="dot">Generative models for 5-LOX inhibitors</span></span>
 </div>
 
 <div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2025-08">Aug 2025</time></span>Mitacs Canada</span>
- <h3 class="wtitle"><a class="tl" href="#awards">Mitacs Globalink Research Award</a></h3>
- <span class="res"><span class="dot">Quantum ML research collaboration</span></span>
-</div>
-
-<div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2025-06">Jun 2025</time></span>Open source</span>
- <h3 class="wtitle"><a class="tl" href="{{ moore_proj.url | default: '/projects/' | relative_url }}" hreflang="en">MooreSpeechCorpora toolkit released</a></h3>
- <span class="res">{% if moore_proj.github_url %}<span class="g"><a href="{{ moore_proj.github_url }}">Code</a></span> {% endif %}{% if moore_post %}<span class="g"><a href="{{ moore_post.url | relative_url }}" hreflang="en">Tutorial</a></span>{% endif %}{% if moore_proj.github_stars %}<span class="stars">&#9733; {{ moore_proj.github_stars }} stars</span>{% endif %}</span>
-</div>
-
-<div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2025-05">May 2025</time></span>University of Oxford</span>
- <h3 class="wtitle"><a class="tl" href="{{ '/certifications/' | relative_url }}" hreflang="en">Oxford Machine Learning Summer School</a></h3>
- <span class="res"><span class="dot">OxML 2025</span></span>
+ <span class="marginnote"><span class="mn-label"><time datetime="2026-01">Jan 2026</time></span>Mitacs Canada</span>
+ <h3 class="wtitle"><a class="tl" href="#awards">Awarded the Mitacs Globalink Research Award</a></h3>
+ <span class="res"><span class="dot">$12,000 CAD for research at a Canadian university</span></span>
 </div>

@@ -12,7 +12,7 @@ site_theme               : "air" # The available themes options are "default", "
 title                    : "Wendyellé A. Alban NYANTUDRE"
 title_separator          : "-"
 name                     : &name "Wendyellé A. Alban NYANTUDRE"
-description              : &description "Machine Learning Engineer | Deep Learning (Vision, Language & Speech)"
+description              : &description "Machine Learning Engineer | Deep learning for vision, language and speech, with a focus on low-resource African languages"
 url                      : https://anyantudre.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "anyantudre/anyantudre.github.io"
@@ -39,9 +39,9 @@ author:
   avatar           : "profile.jpg"
   name             : "Wendyellé A. Alban NYANTUDRE"
   pronouns         : "he/him"
-  bio              : "ML Engineer @GO AI Corp | Deep Learning (Vision, Language & Speech)"
+  bio              : "Machine Learning Engineer | Deep learning for vision, language and speech | Looking for a PhD"
   location         : "Safi, Morocco"
-  employer         : "GO AI Corporation"
+  employer         : # no current employer — the GO AI Corporation role ended 08/2025
   uri              : # URL
   email            : "nyantudrealban@gmail.com" 
 

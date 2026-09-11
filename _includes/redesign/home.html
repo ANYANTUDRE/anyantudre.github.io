@@ -28,7 +28,7 @@
   <img class="pt" src="{{ '/images/profile.jpg' | relative_url }}" alt="{{ site.author.name }}" width="200" height="250">
   <span class="pnames">
   <span class="pname">{{ site.author.name }}</span>
-  <span class="prole">Machine Learning Engineer, {{ site.author.employer }}</span>
+  <span class="prole">Machine Learning Engineer{% if site.author.employer %}, {{ site.author.employer }}{% endif %}</span>
   <span class="pplace">{{ site.author.location }}{% if site.author.pronouns %} &middot; {{ site.author.pronouns }}{% endif %}</span>
   </span>
   <ul class="socials">
@@ -100,9 +100,9 @@
  <h2 id="about">About me</h2>
  <div class="rule" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
 
- <p>I&rsquo;m a final-year MEng student in <strong>Data Engineering and Artificial Intelligence</strong> at <a href="https://ensas.uca.ma/">ENSA Safi</a>,<span class="marginnote"><span class="mn-label">Degree</span><span class="mn-em">MEng, Data Engineering &amp; AI</span><br>ENSA Safi, Cadi Ayyad University &middot; Rank 1st&#8202;/&#8202;19 &middot; GPA 17.2&#8202;/&#8202;20</span> with a strong foundation in applied mathematics and computer science. Currently, I work as a <strong>Machine Learning Engineer</strong> at <a href="https://goaicorporation.org/">GO AI Corporation</a>, where I design and deploy end-to-end data and AI systems.</p>
+ <p>I&rsquo;m an engineer. In July 2026 I finished the <strong>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat in Computer Science and Artificial Intelligence</strong> at <a href="https://ensas.uca.ma/">ENSA Safi</a>,<span class="marginnote"><span class="mn-label">Degree</span><span class="mn-em">Ing&eacute;nieur d&rsquo;&Eacute;tat, Computer Science &amp; AI</span><br>ENSA Safi, Cadi Ayyad University &middot; 2023&ndash;2026 &middot; Highest Honours, 17.25&#8202;/&#8202;20 &middot; Rank 1st&#8202;/&#8202;19</span> on a foundation in applied mathematics and computer science. I am looking for a <strong>PhD in deep learning</strong>, with a particular interest in <strong>multimodal learning</strong>.</p>
 
- <p>My research interests focus on <strong>deep learning</strong>, <strong>computer vision</strong>, <strong>NLP</strong>, and especially <strong>speech and language technologies for low-resource languages</strong>.{% if wrinnn %}<span class="marginnote"><span class="mn-label">{{ wrinnn.title | split: ' - ' | first | split: ' &mdash; ' | first }}</span>{{ wrinnn.excerpt | split: '<br' | first | strip_html | strip }} <a href="{{ wrinnn.url | relative_url }}">See the project</a>.</span>{% endif %} I&rsquo;m passionate about building AI solutions that can make a real impact, particularly for underserved communities.</p>
+ <p>I work on <strong>deep learning for vision, language and speech</strong>.{% if wrinnn %}<span class="marginnote"><span class="mn-label">{{ wrinnn.title | split: ' - ' | first | split: ' &mdash; ' | first }}</span>{{ wrinnn.excerpt | split: '<br' | first | strip_html | strip }} <a href="{{ wrinnn.url | relative_url }}">See the project</a>.</span>{% endif %} The through-line is <strong>low-resource African languages</strong>: at GO AI Corporation I trained and deployed translation, speech recognition and speech synthesis models for Moor&eacute;, a language with over 7 million speakers and very little data, and helped build one of the largest Moor&eacute; corpora to date. Most recently, from March to August 2026, I worked on generative quantum machine learning for drug discovery at the Universit&eacute; de Moncton.</p>
 
  <p class="tail">Feel free to explore my <a href="{{ '/projects/' | relative_url }}">projects</a>, check out my <a href="{{ '/blog/' | relative_url }}">blog</a>, or <a href="mailto:{{ site.author.email }}">get in touch</a>.</p>
 
@@ -115,16 +115,16 @@
 
  <ul class="trail">
   <li>
-  <span class="marginnote"><span class="mn-label">ENSA Safi</span>Cadi Ayyad University, Morocco. On a Kingdom of Morocco Cooperation Scholarship.</span>
-  <h3>MEng in Computer Science &mdash; Data Engineering &amp; AI</h3>
-  <span class="meta"><time>2023</time> &mdash; present &middot; ENSA Safi, Cadi Ayyad University</span>
-  <p>Rank: 1st&#8202;/&#8202;19 &middot; GPA: 17.2&#8202;/&#8202;20.</p>
+  <span class="marginnote"><span class="mn-label">ENSA Safi</span>Safi, Morocco. Cadi Ayyad University. On a Kingdom of Morocco Cooperation Scholarship.</span>
+  <h3>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat (BAC+5) &mdash; Computer Science &amp; Artificial Intelligence</h3>
+  <span class="meta"><time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2026-07">Jul 2026</time> &middot; ENSA Safi, Cadi Ayyad University</span>
+  <p>Highest Honours, 17.25&#8202;/&#8202;20 &middot; Rank: 1st&#8202;/&#8202;19. Coursework: applied mathematics, data structures &amp; algorithms, stochastic modelling, optimisation, NLP, heuristics, deep learning, data mining, big data, computer vision, game theory, cloud computing, fuzzy systems.</p>
   </li>
   <li>
-  <span class="marginnote"><span class="mn-label">ENSA Fez</span>Sidi Mohamed Ben Abdellah University, Morocco.</span>
-  <h3>Preparatory Cycle &mdash; Mathematics, Physics &amp; CS</h3>
-  <span class="meta"><time>2021</time> &mdash; <time>2023</time> &middot; ENSA Fez, Sidi Mohamed Ben Abdellah University</span>
-  <p>Rank: 3rd&#8202;/&#8202;262 &middot; GPA: 16.25&#8202;/&#8202;20.</p>
+  <span class="marginnote"><span class="mn-label">ENSA Fez</span>Fez, Morocco. Sidi Mohammed Ben Abdellah University.</span>
+  <h3>Preparatory Class &mdash; Mathematics, Physics &amp; Computer Science</h3>
+  <span class="meta"><time datetime="2021-10">Oct 2021</time> &mdash; <time datetime="2023-07">Jul 2023</time> &middot; ENSA Fez, Sidi Mohammed Ben Abdellah University</span>
+  <p>Highest Honours, 16.25&#8202;/&#8202;20 &middot; Rank: 3rd&#8202;/&#8202;262. Coursework: calculus, probability &amp; statistics, linear algebra, algorithms, data structures, C programming, electronics &amp; computer architecture, physics.</p>
   </li>
  </ul>
 
@@ -133,20 +133,20 @@
 
  <ul class="trail">
   <li>
-  <span class="marginnote"><span class="mn-label">Universit&eacute; de Moncton</span>New Brunswick, Canada. Supported by a Mitacs Globalink Research Award.</span>
+  <span class="marginnote"><span class="mn-label">Universit&eacute; de Moncton</span>Moncton, New Brunswick, Canada. Supported by a Mitacs Globalink Research Award.</span>
   <h3>AI Research Assistant</h3>
-  <span class="meta"><time datetime="2026-03">March 2026</time> &mdash; Present &middot; Universit&eacute; de Moncton</span>
-  <p>Quantum Machine Learning.</p>
+  <span class="meta"><time datetime="2026-03">Mar 2026</time> &mdash; <time datetime="2026-08">Aug 2026</time> &middot; Universit&eacute; de Moncton</span>
+  <p>Literature review on quantum machine learning for drug discovery, covering molecular generative models and variational quantum circuits. Collected and curated a dataset of 5-lipoxygenase (5-LOX) inhibitors from chemical databases (ChEMBL, PubChem, BindingDB). Implemented and evaluated hybrid quantum-classical generative architectures (QGAN, QVAE) and Transformers for the <i>de novo</i> generation of 5-LOX inhibitors.</p>
   </li>
   <li>
-  <span class="marginnote"><span class="mn-label">GO AI Corporation</span>Data and AI systems for social good. <a href="https://goaicorporation.org/">goaicorporation.org</a></span>
-  <h3>Machine Learning Engineer</h3>
-  <span class="meta"><time datetime="2024-10">Oct 2024</time> &mdash; Present &middot; GO AI Corporation</span>
-  <p>Design and deploy data/AI systems for social good. Building NLP and Speech tools for low-resource Burkinab&egrave; languages.</p>
+  <span class="marginnote"><span class="mn-label">GO AI Corporation</span>Remote. Data and AI systems for social good. <a href="https://goaicorporation.org/">goaicorporation.org</a></span>
+  <h3>Machine Learning Engineer (part-time)</h3>
+  <span class="meta"><time datetime="2024-03">Mar 2024</time> &mdash; <time datetime="2025-08">Aug 2025</time> &middot; GO AI Corporation</span>
+  <p>Designed, trained and deployed translation, speech synthesis and speech recognition models (MT, ASR and TTS) for Moor&eacute;, a low-resource language with more than 7 million speakers across five or more West African countries. Contributed to building one of the largest Moor&eacute;-language corpora to date.</p>
   </li>
   <li>
-  <span class="marginnote"><span class="mn-label">Technocolabs Softwares</span>Remote. Loan-level securitisation data.</span>
-  <h3>Machine Learning Engineer Intern</h3>
+  <span class="marginnote"><span class="mn-label">Technocolabs Softwares</span>Remote. Mortgage-backed securities, for financial institutions.</span>
+  <h3>Machine Learning Engineering Intern</h3>
   <span class="meta"><time datetime="2023-08">Aug</time> &mdash; <time datetime="2023-10">Oct 2023</time> &middot; Technocolabs Softwares Inc.</span>
   <p>Developed and deployed ML models to predict prepayment risk of mortgage-backed securities, supporting better risk assessment for financial institutions.</p>
   </li>

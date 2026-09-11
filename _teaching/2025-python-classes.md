@@ -7,6 +7,7 @@ venue: "Community Initiative"
 date: 2025-03-01
 location: "Remote"
 image: "teaching/zams_python.png" 
+excerpt: "Weekly Python programming classes for 60+ students."
 ---
 
 Delivered weekly Python programming classes to **60+ students** through a community initiative from March to July 2025.

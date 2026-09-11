@@ -6,6 +6,7 @@ issuer: "DataCamp"
 date: 2024-08-01
 credential_id: "8512ab0047c1861e16c7a7461d811b388d0149b0"
 image: "certifications/datacamp-ml-engineer.png"
+link: "https://www.datacamp.com/completed/statement-of-accomplishment/track/8512ab0047c1861e16c7a7461d811b388d0149b0"
 excerpt: "MLOps, MLflow, Docker, CI/CD, ETL, data versioning and monitoring for production ML systems."
 ---
 

@@ -9,7 +9,7 @@ tags: [Deep Learning, Data Engineering, AWS, LLM, RAG]
 
 ## Overview
 
-Tagantino AI is a smart agriculture platform that helps Moroccan farmers better manage water resources by forecasting droughts using satellite data and providing real-time decision support through an LLM assistant.
+Tagantino AI is a smart agriculture platform that helps Moroccan farmers better manage water resources by forecasting droughts using satellite data and providing real-time decision support through an LLM assistant. Built between **January and June 2025**.
 
 ## Key Components
 

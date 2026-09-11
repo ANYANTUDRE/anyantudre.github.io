@@ -6,9 +6,10 @@ permalink: /teaching/2024-ds-bootcamp
 venue: "GO AI Corporation"
 date: 2024-07-01
 location: "Burkina Faso / Remote"
+excerpt: "Three-week intensive bootcamp for 120+ learners, one of the Data Science and AI bootcamps that have reached 200+ students."
 ---
 
-Led a **3-week intensive Data Science & AI bootcamp** for **120+ learners** at GO AI Corporation.
+Led a **3-week intensive Data Science & AI bootcamp** for **120+ learners** at GO AI Corporation. It is one of the Data Science and AI bootcamps I have taught, which together have reached **200+ students**.
 
 ## Bootcamp Curriculum
 

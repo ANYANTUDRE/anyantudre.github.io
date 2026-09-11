@@ -58,8 +58,7 @@ cv_pdf: /files/cv.pdf
  {%- endif %}
  </ul>
  </div>
- <p class="lede">MEng student in Data Engineering and Artificial Intelligence at ENSA Safi, and Chief Technology Officer and Machine Learning Engineer at GO AI Corporation. Deep learning for vision, language and speech &mdash; with a particular stubbornness about the languages that have almost no data.</p>
- <p class="meta">Languages of work: French (native) <span class="sep">&middot;</span> English (C1) <span class="sep">&middot;</span> Spanish (A1)</p>
+ <p class="lede">Dipl&ocirc;me d'Ing&eacute;nieur d'&Eacute;tat in Computer Science and Artificial Intelligence, ENSA Safi, July 2026. Deep learning for vision, language and speech &mdash; with a particular stubbornness about the languages that have almost no data. Looking for a PhD in deep learning, with an interest in multimodal learning.</p>
  </div>
 </div>
 
@@ -71,28 +70,21 @@ cv_pdf: /files/cv.pdf
  <div class="cellbody col">
  <ul class="trail">
  <li>
- <span class="marginnote"><span class="mn-label">GO AI Corporation</span>Data and AI systems for social good. Ouagadougou and remote.</span>
- <h3>Chief Technology Officer</h3>
- <span class="meta"><time datetime="2024-10">Oct 2024</time> &mdash; present <span class="sep">&middot;</span> GO AI Corporation</span>
- <p>Lead the team responsible for the design, development and deployment of the company's AI solutions. Supervise and mentor interns, and have trained 120+ people in data science through the bootcamps.</p>
+ <span class="marginnote"><span class="mn-label">5-LOX</span>5-lipoxygenase, the enzyme target. Candidate inhibitors were pulled from ChEMBL, PubChem and BindingDB.</span>
+ <h3>AI Research Assistant</h3>
+ <span class="meta"><time datetime="2026-03">Mar</time> &mdash; <time datetime="2026-08">Aug 2026</time> <span class="sep">&middot;</span> Universit&eacute; de Moncton <span class="sep">&middot;</span> Moncton, Canada</span>
+ <p>Literature review on quantum machine learning for drug discovery, covering molecular generative models and variational quantum circuits. Collected and curated a dataset of 5-lipoxygenase (5-LOX) inhibitors from chemical databases. Implemented and evaluated hybrid quantum-classical generative architectures &mdash; QGAN, QVAE &mdash; and Transformers for the <i>de novo</i> generation of 5-LOX inhibitors.</p>
  </li>
  <li>
- <span class="marginnote"><span class="mn-label">Moor&eacute;</span>A language with more than seven million speakers and almost no machine-readable data.</span>
- <h3>Machine Learning Engineer</h3>
- <span class="meta"><time datetime="2024-03">Mar 2024</time> &mdash; present <span class="sep">&middot;</span> GO AI Corporation</span>
- <p>AI-for-social-good projects on local languages, education and access to information. Led the design and training of translation and speech models for Moor&eacute;, since adopted by UNICEF, the Tanager NGO and Orange Burkina.</p>
+ <span class="marginnote"><span class="mn-label">Moor&eacute;</span>More than seven million speakers across five or more West African countries, and almost no machine-readable data.</span>
+ <h3>Machine Learning Engineer (part-time)</h3>
+ <span class="meta"><time datetime="2024-03">Mar 2024</time> &mdash; <time datetime="2025-08">Aug 2025</time> <span class="sep">&middot;</span> GO AI Corporation <span class="sep">&middot;</span> Remote</span>
+ <p>Designed, trained and deployed translation, speech synthesis and speech recognition models &mdash; MT, ASR and TTS &mdash; for Moor&eacute;, a low-resource language. Contributed to building one of the largest Moor&eacute;-language corpora to date, for low-resource NLP applications.</p>
  </li>
  <li>
- <span class="marginnote"><span class="mn-label">Moncton</span>New Brunswick, Canada. The collaboration that carried the Mitacs Globalink Research Award.</span>
- <h3>ML Research Intern</h3>
- <span class="meta"><time datetime="2025-02">Feb</time> &mdash; <time datetime="2025-05">May 2025</time> <span class="sep">&middot;</span> Universit&eacute; de Moncton</span>
- <p>Research on securing AI models against extraction and poisoning attacks: a literature review of model stealing and data poisoning against CNN and Transformer architectures.</p>
- </li>
- <li>
- <span class="marginnote"><span class="mn-label">Technocolabs Softwares</span>Remote. Loan-level securitisation data, under an imbalanced target.</span>
- <h3>ML Engineer Intern</h3>
- <span class="meta"><time datetime="2023-08">Aug</time> &mdash; <time datetime="2023-10">Oct 2023</time> <span class="sep">&middot;</span> Technocolabs Softwares Inc.</span>
- <p>Developed and deployed models predicting the prepayment risk of mortgage-backed securities.</p>
+ <h3>Machine Learning Engineering Intern</h3>
+ <span class="meta"><time datetime="2023-08">Aug</time> &mdash; <time datetime="2023-10">Oct 2023</time> <span class="sep">&middot;</span> Technocolabs Softwares Inc. <span class="sep">&middot;</span> Remote</span>
+ <p>Developed and deployed models predicting the prepayment risk of mortgage-backed securities, for risk assessment at financial institutions.</p>
  </li>
  </ul>
  </div>
@@ -106,16 +98,16 @@ cv_pdf: /files/cv.pdf
  <div class="cellbody col">
  <ul class="trail">
  <li>
- <span class="marginnote"><span class="mn-label">ENSA Safi</span>Cadi Ayyad University, Morocco. Studied on a Kingdom of Morocco Cooperation Scholarship.</span>
- <h3>MEng, Computer Science &mdash; Data Engineering &amp; AI</h3>
- <span class="meta"><time>2023</time> &mdash; present <span class="sep">&middot;</span> ENSA Safi, Cadi Ayyad University <span class="sep">&middot;</span> Rank 1st/19 <span class="sep">&middot;</span> GPA 17.2/20</span>
- <p>Deep learning, data mining, NLP, computer vision, big data, cloud computing, and optimisation and heuristics.</p>
+ <span class="marginnote"><span class="mn-label">ENSA Safi</span>Cadi Ayyad University, Safi, Morocco. Studied on a Kingdom of Morocco Cooperation Scholarship.</span>
+ <h3>Dipl&ocirc;me d'Ing&eacute;nieur d'&Eacute;tat (BAC+5) &mdash; Computer Science and Artificial Intelligence</h3>
+ <span class="meta"><time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2026-07">Jul 2026</time> <span class="sep">&middot;</span> ENSA Safi, Cadi Ayyad University <span class="sep">&middot;</span> Highest Honours, 17.25/20 <span class="sep">&middot;</span> Rank 1st/19</span>
+ <p>Applied mathematics, data structures and algorithms, stochastic modelling, optimisation, NLP, heuristics, deep learning, data mining, big data, computer vision, game theory, cloud computing, fuzzy systems.</p>
  </li>
  <li>
- <span class="marginnote"><span class="mn-label">ENSA Fez</span>Sidi Mohamed Ben Abdellah University. The two-year preparatory cycle before the engineering one.</span>
- <h3>Preparatory Cycle &mdash; Mathematics, Physics &amp; Computer Science</h3>
- <span class="meta"><time>2021</time> &mdash; <time>2023</time> <span class="sep">&middot;</span> ENSA Fez <span class="sep">&middot;</span> Rank 3rd/262 <span class="sep">&middot;</span> GPA 16.25/20</span>
- <p>Calculus, probability and statistics, linear algebra, data structures and C programming.</p>
+ <span class="marginnote"><span class="mn-label">ENSA Fez</span>Sidi Mohammed Ben Abdellah University, Fez, Morocco. The two-year preparatory cycle before the engineering one.</span>
+ <h3>Preparatory Class &mdash; Mathematics, Physics and Computer Science</h3>
+ <span class="meta"><time datetime="2021-10">Oct 2021</time> &mdash; <time datetime="2023-07">Jul 2023</time> <span class="sep">&middot;</span> ENSA Fez <span class="sep">&middot;</span> Highest Honours, 16.25/20 <span class="sep">&middot;</span> Rank 3rd/262</span>
+ <p>Calculus, probability and statistics, linear algebra, algorithms, data structures, C programming, electronics and computer architecture, physics.</p>
  </li>
  </ul>
  </div>
@@ -130,9 +122,10 @@ cv_pdf: /files/cv.pdf
  <span class="marginnote"><span class="mn-label">As text</span>A grouped list says how somebody thinks the tools relate; a logo grid only says what they installed.</span>
  <dl class="sk">
  <dt>Programming</dt><dd>Python <span class="sep">&middot;</span> R <span class="sep">&middot;</span> SQL <span class="sep">&middot;</span> Java <span class="sep">&middot;</span> C/C++</dd>
- <dt>AI &amp; ML</dt><dd>PyTorch <span class="sep">&middot;</span> TensorFlow <span class="sep">&middot;</span> Transformers <span class="sep">&middot;</span> Hugging Face <span class="sep">&middot;</span> LangChain/LangGraph <span class="sep">&middot;</span> OpenCV</dd>
- <dt>Databases &amp; big data</dt><dd>MongoDB <span class="sep">&middot;</span> Redis <span class="sep">&middot;</span> Spark <span class="sep">&middot;</span> Kafka <span class="sep">&middot;</span> Airflow <span class="sep">&middot;</span> Neo4j</dd>
+ <dt>AI &amp; data</dt><dd>PyTorch <span class="sep">&middot;</span> TensorFlow <span class="sep">&middot;</span> Hugging Face <span class="sep">&middot;</span> SQL/PostgreSQL <span class="sep">&middot;</span> MongoDB <span class="sep">&middot;</span> Redis <span class="sep">&middot;</span> Spark <span class="sep">&middot;</span> Airflow</dd>
  <dt>Cloud &amp; MLOps</dt><dd>AWS <span class="sep">&middot;</span> Azure <span class="sep">&middot;</span> Docker <span class="sep">&middot;</span> Git <span class="sep">&middot;</span> MLflow <span class="sep">&middot;</span> FastAPI <span class="sep">&middot;</span> Django</dd>
+ <dt>Deep learning</dt><dd>Language modelling (RNN, Transformers/LLM, supervised fine-tuning, quantisation, LoRA) <span class="sep">&middot;</span> computer vision (CNNs, VAE, ViT, VLM) <span class="sep">&middot;</span> RL &amp; alignment (DPO, PPO, GRPO)</dd>
+ <dt>Speech processing</dt><dd>Text-to-speech (mel-spectrograms, vocoders, G2P) <span class="sep">&middot;</span> ASR (CTC, Seq2Seq/Whisper, self-supervised encoders wav2vec2/XLS-R) <span class="sep">&middot;</span> pseudo-labelling &amp; distillation <span class="sep">&middot;</span> audio tooling (librosa, torchaudio, soundfile, ffmpeg)</dd>
  </dl>
  </div>
 </div>
@@ -189,9 +182,25 @@ cv_pdf: /files/cv.pdf
 
 <div class="cell">
  <div class="pr pr-in">In [8]:</div>
+ <div class="cellbody cell-in"><h2 id="cv-additional">Additional information</h2><span class="call">alban.extras</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg1"/></svg></div>
+ <div class="pr">Out[8]:</div>
+ <div class="cellbody col">
+ <span class="marginnote"><span class="mn-label">Levels</span>CEFR, where C2 is full mastery and A1 a beginner's.</span>
+ <dl class="sk">
+ <dt>Languages</dt><dd>French (C2) <span class="sep">&middot;</span> English (C1) <span class="sep">&middot;</span> Spanish (A1) <span class="sep">&middot;</span> Moor&eacute; (native)</dd>
+ <dt>Soft skills</dt><dd>Critical thinking <span class="sep">&middot;</span> leadership &amp; teamwork <span class="sep">&middot;</span> scientific curiosity <span class="sep">&middot;</span> deep work</dd>
+ <dt>Teaching</dt><dd>Python programming, 60+ students <span class="sep">&middot;</span> data science and AI bootcamps, 200+ students</dd>
+ <dt>Other</dt><dd><a href="https://www.kaggle.com/{{ site.author.kaggle | default: 'waalbannyantudre' }}">Kaggle Datasets Master</a> <span class="sep">&middot;</span> <a href="https://www.linkedin.com/posts/speak-up-ensa-safi_daezbat-leadership-engagementaeztudiant-activity-7329903188252192768-BqQt">2&times; public speaking competition winner</a></dd>
+ </dl>
+ </div>
+</div>
+
+<div class="cell">
+ <div class="pr pr-in">In [9]:</div>
  <div class="cellbody cell-in"><h2 id="cv-leadership">Leadership &amp; volunteering</h2><span class="call">alban.service</span></div>
  <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
- <div class="pr">Out[8]:</div>
+ <div class="pr">Out[9]:</div>
  <div class="cellbody col">
  <ul class="list list--d">
  <li><span class="t">Head of Debate Section, SpeakUp Club</span><span class="d">Weekly debate workshops for 150+ members, and a team led to a win at a major competition.</span><span class="meta">ENSA Safi <span class="sep">&middot;</span> <time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2025-09">Sep 2025</time></span></li>

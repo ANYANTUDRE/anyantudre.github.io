@@ -9,7 +9,7 @@ tags: [Computer Vision, VLM, Mobile App, Accessibility]
 
 ## Overview
 
-WrinnnAI is a real-time streaming mobile assistant designed for the visually impaired. It uses **Computer Vision and Speech processing** to provide environmental awareness and navigation assistance.
+WrinnnAI is a real-time streaming mobile assistant designed for the visually impaired. It uses **Computer Vision and Speech processing** to provide environmental awareness and navigation assistance. Built between **April and May 2025**.
 
 ## Key Features
 
