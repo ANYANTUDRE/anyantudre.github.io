@@ -1,0 +1,37 @@
+<!-- NEWS — the one section on the home page with no collection behind it.
+
+     Four dated milestones, written into the approved design (final.html
+     L771-798) and ported here. Everything that DOES have a collection behind
+     it is resolved from that collection rather than typed out: the Mooré
+     toolkit's URL and its star count come from _portfolio, the tutorial from
+     _posts, so the row cannot drift out of step with the project page.
+
+     Each row is the design's .wrow: a right marginnote carrying the date and
+     the place, the headline as a .wtitle, and a .res line underneath. -->
+
+{%- assign moore_proj = site.portfolio | where_exp: "p", "p.title contains 'Moore Speech Corpora'" | first -%}
+{%- assign moore_post = site.posts | where_exp: "p", "p.lang == 'en'" | where_exp: "p", "p.url contains 'moore-speech-corpora'" | first -%}
+
+<div class="wrow">
+ <span class="marginnote"><span class="mn-label"><time datetime="2026-03">Mar 2026</time></span>Universit&eacute; de Moncton &middot; New Brunswick</span>
+ <h3 class="wtitle"><a class="tl" href="#experience">Started as AI Research Assistant at Universit&eacute; de Moncton</a></h3>
+ <span class="res"><span class="dot">Quantum machine learning</span></span>
+</div>
+
+<div class="wrow">
+ <span class="marginnote"><span class="mn-label"><time datetime="2025-08">Aug 2025</time></span>Mitacs Canada</span>
+ <h3 class="wtitle"><a class="tl" href="#awards">Mitacs Globalink Research Award</a></h3>
+ <span class="res"><span class="dot">Quantum ML research collaboration</span></span>
+</div>
+
+<div class="wrow">
+ <span class="marginnote"><span class="mn-label"><time datetime="2025-06">Jun 2025</time></span>Open source</span>
+ <h3 class="wtitle"><a class="tl" href="{{ moore_proj.url | default: '/projects/' | relative_url }}" hreflang="en">MooreSpeechCorpora toolkit released</a></h3>
+ <span class="res">{% if moore_proj.github_url %}<span class="g"><a href="{{ moore_proj.github_url }}">Code</a></span> {% endif %}{% if moore_post %}<span class="g"><a href="{{ moore_post.url | relative_url }}" hreflang="en">Tutorial</a></span>{% endif %}{% if moore_proj.github_stars %}<span class="stars">&#9733; {{ moore_proj.github_stars }} stars</span>{% endif %}</span>
+</div>
+
+<div class="wrow">
+ <span class="marginnote"><span class="mn-label"><time datetime="2025-05">May 2025</time></span>University of Oxford</span>
+ <h3 class="wtitle"><a class="tl" href="{{ '/certifications/' | relative_url }}" hreflang="en">Oxford Machine Learning Summer School</a></h3>
+ <span class="res"><span class="dot">OxML 2025</span></span>
+</div>

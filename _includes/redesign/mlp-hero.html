@@ -1,0 +1,76 @@
+<!-- THE HERO NETWORK — § 14 of the approved design (final.html L705-765),
+     ported verbatim. A 3–5–5–7 multilayer perceptron: vision, language and
+     speech in, and the seven sections of the home page out. Every output unit
+     is a real anchor into the page below, so it doubles as the table of
+     contents; assets/js/redesign.js lights the unit for the section in view
+     and redraws the forward path that feeds it.
+
+     The seven outputs are in the home page's own section order, and their
+     hrefs are the ids the page below carries: news · posts · about ·
+     education · experience · work · awards. The scroll-spy walks that same
+     list of h2[id]s in document order, so the indexes cannot drift.
+
+     Nothing here moves: the transitions are colour and opacity only, and the
+     stylesheet suppresses even those under prefers-reduced-motion. -->
+
+<nav class="mlpwrap" aria-label="Sections of this page">
+ <svg class="mlp" viewBox="-66 0 662 236">
+ <title>This page, drawn as a 3&#8211;5&#8211;5&#8211;7 multilayer perceptron: vision, language and speech feed forward to seven output units, and every output unit is a section below. One unit is active at a time &#8212; the section in view.</title>
+ <g aria-hidden="true">
+ <text class="inlab" x="-8" y="82" text-anchor="end">vision</text>
+ <text class="inlab" x="-8" y="122" text-anchor="end">language</text>
+ <text class="inlab" x="-8" y="162" text-anchor="end">speech</text>
+ </g>
+ <g aria-hidden="true">
+ <path class="edge" d="M16 78 128 40M16 78 128 79M16 78 128 118M16 78 128 157M16 78 128 196M16 118 128 40M16 118 128 79M16 118 128 118M16 118 128 157M16 118 128 196M16 158 128 40M16 158 128 79M16 158 128 118M16 158 128 157M16 158 128 196"/>
+ <path class="edge e2" d="M128 40 248 40M128 40 248 79M128 40 248 118M128 40 248 157M128 40 248 196M128 79 248 40M128 79 248 79M128 79 248 118M128 79 248 157M128 79 248 196M128 118 248 40M128 118 248 79M128 118 248 118M128 118 248 157M128 118 248 196M128 157 248 40M128 157 248 79M128 157 248 118M128 157 248 157M128 157 248 196M128 196 248 40M128 196 248 79M128 196 248 118M128 196 248 157M128 196 248 196"/>
+ </g>
+ <a class="out on" href="#news" data-i="0"><title>News</title>
+ <path class="edge" d="M248 40 368 34M248 79 368 34M248 118 368 34M248 157 368 34M248 196 368 34"/>
+ <circle class="node" cx="368" cy="34" r="4.6"/>
+ <rect class="hit" x="357" y="23" width="239" height="22"/>
+ <text class="lab" x="386" y="38">News</text>
+ </a>
+ <a class="out" href="#posts" data-i="1"><title>Latest posts</title>
+ <path class="edge" d="M248 40 368 62M248 79 368 62M248 118 368 62M248 157 368 62M248 196 368 62"/>
+ <circle class="node" cx="368" cy="62" r="4.6"/>
+ <rect class="hit" x="357" y="51" width="239" height="22"/>
+ <text class="lab" x="386" y="66">Latest posts</text>
+ </a>
+ <a class="out" href="#about" data-i="2"><title>About me</title>
+ <path class="edge" d="M248 40 368 90M248 79 368 90M248 118 368 90M248 157 368 90M248 196 368 90"/>
+ <circle class="node" cx="368" cy="90" r="4.6"/>
+ <rect class="hit" x="357" y="79" width="239" height="22"/>
+ <text class="lab" x="386" y="94">About me</text>
+ </a>
+ <a class="out" href="#education" data-i="3"><title>Education</title>
+ <path class="edge" d="M248 40 368 118M248 79 368 118M248 118 368 118M248 157 368 118M248 196 368 118"/>
+ <circle class="node" cx="368" cy="118" r="4.6"/>
+ <rect class="hit" x="357" y="107" width="239" height="22"/>
+ <text class="lab" x="386" y="122">Education</text>
+ </a>
+ <a class="out" href="#experience" data-i="4"><title>Experience</title>
+ <path class="edge" d="M248 40 368 146M248 79 368 146M248 118 368 146M248 157 368 146M248 196 368 146"/>
+ <circle class="node" cx="368" cy="146" r="4.6"/>
+ <rect class="hit" x="357" y="135" width="239" height="22"/>
+ <text class="lab" x="386" y="150">Experience</text>
+ </a>
+ <a class="out" href="#work" data-i="5"><title>Selected work</title>
+ <path class="edge" d="M248 40 368 174M248 79 368 174M248 118 368 174M248 157 368 174M248 196 368 174"/>
+ <circle class="node" cx="368" cy="174" r="4.6"/>
+ <rect class="hit" x="357" y="163" width="239" height="22"/>
+ <text class="lab" x="386" y="178">Selected work</text>
+ </a>
+ <a class="out" href="#awards" data-i="6"><title>Awards</title>
+ <path class="edge" d="M248 40 368 202M248 79 368 202M248 118 368 202M248 157 368 202M248 196 368 202"/>
+ <circle class="node" cx="368" cy="202" r="4.6"/>
+ <rect class="hit" x="357" y="191" width="239" height="22"/>
+ <text class="lab" x="386" y="206">Awards</text>
+ </a>
+ <g class="node n-in" aria-hidden="true"><circle cx="16" cy="78" r="4"/><circle cx="16" cy="118" r="4"/><circle cx="16" cy="158" r="4"/></g>
+ <g class="node n-hid" aria-hidden="true"><circle cx="128" cy="40" r="4"/><circle cx="128" cy="79" r="4"/><circle cx="128" cy="118" r="4"/><circle cx="128" cy="157" r="4"/><circle cx="128" cy="196" r="4"/><circle cx="248" cy="40" r="4"/><circle cx="248" cy="79" r="4"/><circle cx="248" cy="118" r="4"/><circle cx="248" cy="157" r="4"/><circle cx="248" cy="196" r="4"/></g>
+ <path class="fwd" d="M16 158 L128 79 L248 157 L368 34" aria-hidden="true"/>
+ <g class="fdot" aria-hidden="true"><circle cx="16" cy="158" r="4"/><circle cx="128" cy="79" r="4"/><circle cx="248" cy="157" r="4"/></g>
+ </svg>
+ <p class="mlpcap">A 3&#8211;5&#8211;5&#8211;7 network: vision, language and speech in; the sections of this page out. One output unit fires at a time &#8212; the section you are reading &#8212; and the path that feeds it is drawn back through the hidden layers. Follow an output unit and the page goes there.</p>
+</nav>
