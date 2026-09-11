@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "_sass/redesign/_legacy.scss"
+        ],
+        "createdAt": "2026-09-11T17:40:44.616Z",
+        "reason": "Not a card: the rule strips Academic Pages' notice box (background:none, border:0, border-radius:0, box-shadow:none) and replaces it with the approved design's own blockquote device, which is the identical border-left:2px solid var(--accent) + padding-left on borderless flowing text. No fill or box remains for a tab to sit on."
+      }
+    ]
+  }
+}
