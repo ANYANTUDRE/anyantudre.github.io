@@ -1,0 +1,40 @@
+---
+layout: redesign-default
+---
+{%- comment -%}
+  THE LEGACY SHELL.
+
+  Everything he chose to keep but not to redesign — /certifications/, the blog
+  taxonomies, /talkmap/, /sitemap/, 404 and the Academic Pages demo pages —
+  renders through here. It is deliberately thin: the redesign's own frame (the
+  sticky bar, the sheet, the contour footer), a title at the container's left
+  edge with a spectrogram rule under it exactly as every other section heading
+  on the site has, and then the page's own content inside .flow so its prose,
+  lists, tables and code inherit the new typography.
+
+  These pages get no bespoke design. What they get is the new palette, the new
+  measures and the new furniture, so that landing on one from a redesigned page
+  feels like the same site rather than a different decade.
+
+  The rule's envelope is chosen from the page's own URL — stable per page, so
+  it never changes between builds, and varied across the set so two legacy
+  pages in a row do not carry the same waveform.
+
+  `page.legacy_wide: true` lets a page that genuinely needs the extra width —
+  the talk map's iframe — spend the rail as well as the prose column.
+{%- endcomment -%}
+{%- assign sg_pick = page.url | append: page.title | size | modulo: 6 | plus: 1 -%}
+{%- if page.legacy_wide -%}{%- assign legacy_w = 'wide' -%}{%- else -%}{%- assign legacy_w = 'band' -%}{%- endif -%}
+
+<article class="{{ legacy_w }} flow legacy">
+
+ {%- if page.title %}
+ <header class="legacyhead">
+  <h1>{{ page.title }}</h1>
+  <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg{{ sg_pick }}"/></svg></div>
+ </header>
+ {%- endif %}
+
+ {{ content }}
+
+</article>

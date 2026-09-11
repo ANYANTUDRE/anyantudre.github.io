@@ -1,75 +1,54 @@
 ---
-layout: archive
-title: "Awards & Certifications"
+layout: redesign-legacy
+title: "Awards & certifications"
 permalink: /certifications/
-author_profile: true
 ---
+<!-- KEPT AND RESTYLED. The page he chose not to delete, rendered on the new
+     shell in the design's own vocabulary: the awards as a described list, the
+     certifications as the single-row grid where the title, its issuer and its
+     year are three cells of ONE row and so cannot drift apart down the page.
+     Everything is driven from _awards and _certifications. -->
 
-{% include base_path %}
+{%- assign sorted_awards = site.awards | sort: 'date' | reverse -%}
+{%- assign sorted_certs = site.certifications | sort: 'date' | reverse -%}
 
-<section class="section-block">
-  <h2 class="section-block__title"><i class="fa fa-trophy" aria-hidden="true"></i> Awards & Honors</h2>
-  <p class="section-block__intro">Prizes, distinctions, and excellence awards received throughout my academic and professional journey.</p>
-  
-  {% assign sorted_awards = site.awards | sort: 'date' | reverse %}
-  
-  {% comment %} Scholarships & Fellowships {% endcomment %}
-  {% assign scholarship_awards = sorted_awards | where: "category", "scholarship" %}
-  {% if scholarship_awards.size > 0 %}
-  <div class="awards-category awards-category--scholarship">
-    <div class="awards-category__header">
-      <i class="fa fa-graduation-cap awards-category__icon" aria-hidden="true"></i>
-      <h3 class="awards-category__title">Scholarships & Fellowships</h3>
-    </div>
-    <div class="awards-grid">
-    {% for post in scholarship_awards %}
-      {% include archive-single-award.html %}
-    {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-  
-  {% comment %} Competitions & Hackathons {% endcomment %}
-  {% assign competition_awards = sorted_awards | where: "category", "competition" %}
-  {% if competition_awards.size > 0 %}
-  <div class="awards-category awards-category--competition">
-    <div class="awards-category__header">
-      <i class="fa fa-medal awards-category__icon" aria-hidden="true"></i>
-      <h3 class="awards-category__title">Competitions & Hackathons</h3>
-    </div>
-    <div class="awards-grid">
-    {% for post in competition_awards %}
-      {% include archive-single-award.html %}
-    {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-  
-  {% comment %} Academic Excellence {% endcomment %}
-  {% assign academic_awards = sorted_awards | where: "category", "academic" %}
-  {% if academic_awards.size > 0 %}
-  <div class="awards-category awards-category--academic">
-    <div class="awards-category__header">
-      <i class="fa fa-star awards-category__icon" aria-hidden="true"></i>
-      <h3 class="awards-category__title">Academic Excellence</h3>
-    </div>
-    <div class="awards-grid">
-    {% for post in academic_awards %}
-      {% include archive-single-award.html %}
-    {% endfor %}
-    </div>
-  </div>
-  {% endif %}
-</section>
+<p class="lede">The prizes, scholarships and certificates, in full and in one place. The short version lives on the <a href="{{ '/cv/' | relative_url }}">CV</a>.</p>
 
-<section class="section-block">
-  <h2 class="section-block__title"><i class="fa fa-certificate" aria-hidden="true"></i> Certifications & Courses</h2>
-  <p class="section-block__intro">Professional certifications and online courses completed.</p>
-  
-  <div class="certification-grid">
-  {% assign sorted_certs = site.certifications | sort: 'date' | reverse %}
-  {% for post in sorted_certs %}
-    {% include archive-single-certification.html %}
-  {% endfor %}
-  </div>
-</section>
+<h2 id="awards">Awards &amp; honours</h2>
+<div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg1"/></svg></div>
+
+{%- assign award_groups = "scholarship,competition,academic" | split: "," -%}
+{%- assign group_titles = "Scholarships &amp; fellowships,Competitions &amp; hackathons,Academic excellence" | split: "," -%}
+
+{%- for group in award_groups %}
+{%- assign group_awards = sorted_awards | where: "category", group %}
+{%- if group_awards.size > 0 %}
+<h3 id="awards-{{ group }}">{{ group_titles[forloop.index0] }}</h3>
+<ul class="list list--d">
+{%- for award in group_awards %}
+ <li><span class="t">{% if award.link %}<a class="tl" href="{{ award.link }}">{{ award.title | escape_once }}</a>{% else %}{{ award.title | escape_once }}{% endif %}</span>{% if award.excerpt %}<span class="d">{{ award.excerpt | strip_html | strip | escape_once }}</span>{% endif %}<span class="meta">{{ award.issuer | escape_once }} <span class="sep">&middot;</span> <time datetime="{{ award.date | date: '%Y-%m' }}">{{ award.date | date: '%B %Y' }}</time>{% if award.award_type %} <span class="sep">&middot;</span> {{ award.award_type | escape_once }}{% endif %}</span></li>
+{%- endfor %}
+</ul>
+{%- endif %}
+{%- endfor %}
+
+{%- assign uncategorised = sorted_awards | where_exp: "a", "a.category == nil" %}
+{%- if uncategorised.size > 0 %}
+<h3 id="awards-other">Other</h3>
+<ul class="list list--d">
+{%- for award in uncategorised %}
+ <li><span class="t">{% if award.link %}<a class="tl" href="{{ award.link }}">{{ award.title | escape_once }}</a>{% else %}{{ award.title | escape_once }}{% endif %}</span>{% if award.excerpt %}<span class="d">{{ award.excerpt | strip_html | strip | escape_once }}</span>{% endif %}<span class="meta">{{ award.issuer | escape_once }} <span class="sep">&middot;</span> <time datetime="{{ award.date | date: '%Y-%m' }}">{{ award.date | date: '%B %Y' }}</time></span></li>
+{%- endfor %}
+</ul>
+{%- endif %}
+
+<h2 id="certifications">Certifications &amp; courses</h2>
+<div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg3"/></svg></div>
+
+<ul class="certs">
+{%- for cert in sorted_certs %}
+ <li><span class="t"><a class="tl" href="{{ cert.url | relative_url }}">{{ cert.title | escape_once }}</a></span><span class="iss">{{ cert.issuer | escape_once }}</span><span class="cy"><time datetime="{{ cert.date | date: '%Y-%m' }}">{{ cert.date | date: '%Y' }}</time></span></li>
+{%- endfor %}
+</ul>
+
+<p class="tail"><a href="{{ '/cv/' | relative_url }}">The full CV &rarr;</a></p>

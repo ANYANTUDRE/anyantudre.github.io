@@ -1,37 +1,69 @@
 ---
-layout: archive
-title: "Teaching & Talks"
+layout: redesign-default
+view: talks
+title: "Teaching & talks"
 permalink: /teaching-talks/
 redirect_from:
   - /teaching/
   - /talks/
-author_profile: true
 ---
+<!-- THE TEACHING VIEW — the design's `talks` page, ported. Two sections, each
+     a heading at the container's left edge, its spectrogram rule directly
+     under it, and the CONTENT stepped in by --setback inside .sb. Everything
+     comes from _teaching and _talks: title, one-sentence excerpt, venue, date
+     and location are each item's own front matter. Awards and certifications
+     do not live here — they are on the CV and on /certifications/. -->
 
-{% include base_path %}
+{%- assign teaching_items = site.teaching | sort: 'date' | reverse -%}
+{%- assign talk_items = site.talks | sort: 'date' | reverse -%}
+{%- comment -%}
+  ONE SENTENCE, and the entry's own. A talk states its excerpt in front matter;
+  a teaching entry does not, so Jekyll builds one from the body — and a body
+  that opens straight into headings gives back far more than a line. Splitting
+  the stripped excerpt on the newline and keeping the first non-empty run takes
+  exactly the opening sentence in both cases, and never invents one.
+{%- endcomment -%}
+{%- capture nl %}
+{% endcapture -%}
 
-<section class="section-block">
-  <h2 class="section-block__title"><i class="fa fa-chalkboard-teacher" aria-hidden="true"></i> Teaching</h2>
-  <p class="section-block__intro">Courses, workshops, and educational initiatives I've been involved in.</p>
-  
-  {% for post in site.teaching reversed %}
-    {% include archive-single.html %}
-  {% endfor %}
-</section>
+<article class="col">
+ <span class="marginnote"><span class="mn-label">Mostly in French</span>Most of these were given in French, to audiences in Burkina Faso and Morocco. Titles are left in the language they were delivered in.</span>
+ <h1>{{ page.title }}</h1>
+ <p class="lede">Classrooms, conference rooms and a great many video calls. The brief is usually the one I would have wanted at nineteen: what this field is, and how somebody in Ouagadougou gets into it.</p>
+</article>
 
-<section class="section-block">
-  <h2 class="section-block__title"><i class="fa fa-microphone" aria-hidden="true"></i> Talks & Presentations</h2>
-  <p class="section-block__intro">Conference talks, presentations, and public speaking engagements.</p>
-  
-  {% if site.talks.size > 0 %}
-    <div class="talks-grid">
-    {% for post in site.talks reversed %}
-      {% include archive-single-talks.html %}
-    {% endfor %}
-    </div>
-  {% else %}
-    <div class="extra-empty" style="padding: 2rem;">
-      <p><i class="fa fa-info-circle" aria-hidden="true"></i> No talks or presentations added yet. Check back soon!</p>
-    </div>
-  {% endif %}
-</section>
+<article class="col">
+
+ <h2 id="t-teaching">Teaching</h2>
+ <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg3"/></svg><svg><use href="#sg6"/></svg></div>
+ <div class="sb">
+ {%- if teaching_items.size > 0 %}
+ <ul class="list list--d">
+ {%- for item in teaching_items %}
+  {%- assign one_line = item.excerpt | strip_html | strip | split: nl | first | strip -%}
+  <li data-spy><span class="marginnote"><span class="mn-label">{{ item.venue | escape_once }}</span><span class="mn-em"><time datetime="{{ item.date | date: '%Y-%m' }}">{{ item.date | date: '%b %Y' }}</time></span>{% if item.location %}<br>{{ item.location | escape_once }}{% endif %}</span><span class="t"><a class="tl" href="{{ item.url | relative_url }}">{{ item.title | escape_once }}</a></span><span class="d">{{ one_line | escape_once }}</span><span class="meta">Instructor{% if item.type %} <span class="sep">&middot;</span> {{ item.type | escape_once }}{% endif %}</span></li>
+ {%- endfor %}
+ </ul>
+ {%- else %}
+ <p class="meta">Nothing here yet.</p>
+ {%- endif %}
+ </div>
+
+ <h2 id="t-talks">Talks</h2>
+ <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg6"/></svg><svg><use href="#sg2"/></svg></div>
+ <div class="sb">
+ {%- if talk_items.size > 0 %}
+ <ul class="list list--d">
+ {%- for item in talk_items %}
+  {%- assign one_line = item.excerpt | strip_html | strip | split: nl | first | strip -%}
+  <li data-spy><span class="marginnote"><span class="mn-label">{{ item.venue | escape_once }}</span><span class="mn-em"><time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%-d %b %Y' }}</time></span>{% if item.location %}<br>{{ item.location | escape_once }}{% endif %}</span><span class="t"><a class="tl" href="{{ item.url | relative_url }}"{% if item.lang %} lang="{{ item.lang }}"{% endif %}>{{ item.title | escape_once }}</a></span><span class="d">{{ one_line | escape_once }}</span><span class="meta">{{ item.talk_type | default: 'Talk' | escape_once }}{% if item.pdf %} <span class="sep">&middot;</span> <a href="{{ item.pdf | relative_url }}">Slides (PDF)</a>{% endif %}</span></li>
+ {%- endfor %}
+ </ul>
+ {%- else %}
+ <p class="meta">Nothing here yet.</p>
+ {%- endif %}
+
+ <p class="tail"><a href="{{ '/cv/' | relative_url }}">The full CV &rarr;</a></p>
+ </div>
+
+</article>

@@ -1,5 +1,5 @@
 ---
-layout: archive
+layout: redesign-legacy
 title: "CV"
 permalink: /cv-json/
 author_profile: false

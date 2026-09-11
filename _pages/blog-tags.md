@@ -1,37 +1,42 @@
 ---
-layout: single
+layout: redesign-legacy
 title: "Tags"
 permalink: /blog/tags/
-author_profile: true
 ---
+<!-- KEPT AND RESTYLED. The tag index. Posts link here as /blog/tags/#slug from
+     their own bracketed tag row, so every anchor below keeps the slugified tag
+     as its id. -->
 
-<div class="blog-wrapper">
+{%- assign sorted_tags = site.tags | sort -%}
 
-<div class="blog-tags-cloud">
-{% assign sorted_tags = site.tags | sort %}
-{% for tag in sorted_tags %}
-  {% assign count_en = tag[1] | where_exp: "item", "item.lang != 'fr'" | size %}
-  {% if count_en > 0 %}
-  <a href="#{{ tag[0] | slugify }}" class="blog-post__tag">{{ tag[0] }} ({{ count_en }})</a>
-  {% endif %}
-{% endfor %}
-</div>
+<p class="lede">Every tag, and what carries it. There is also a <a href="{{ '/blog/categories/' | relative_url }}">category index</a> and a <a href="{{ '/blog/archives/' | relative_url }}">plain archive</a>.</p>
 
-<hr style="margin: 2rem 0;">
+{%- assign tag_count = 0 -%}
+<ul class="cloud">
+{%- for tag in sorted_tags %}
+{%- assign count_en = tag[1] | where_exp: "item", "item.lang != 'fr'" | size %}
+{%- if count_en > 0 %}
+{%- assign tag_count = tag_count | plus: 1 %}
+ <li><span class="gs"><a href="#{{ tag[0] | slugify }}">{{ tag[0] }}</a></span> <span class="n">({{ count_en }})</span></li>
+{%- endif %}
+{%- endfor %}
+</ul>
 
-{% for tag in sorted_tags %}
-  {% assign posts_en = tag[1] | where_exp: "item", "item.lang != 'fr'" %}
-  {% if posts_en.size > 0 %}
-  <h3 id="{{ tag[0] | slugify }}">{{ tag[0] }} <small>({{ posts_en.size }})</small></h3>
-  <ul class="blog-archives">
-    {% for post in posts_en %}
-      <li>
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        <small>({{ post.date | date: "%b %d, %Y" }})</small>
-      </li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-{% endfor %}
+{%- for tag in sorted_tags %}
+{%- assign posts_en = tag[1] | where_exp: "item", "item.lang != 'fr'" %}
+{%- if posts_en.size > 0 %}
+<h2 id="{{ tag[0] | slugify }}">{{ tag[0] }}</h2>
+<div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg{{ forloop.index0 | modulo: 6 | plus: 1 }}"/></svg></div>
+<ul class="index">
+{%- for post in posts_en %}
+ <li><span class="t"><a class="tl" href="{{ post.url | relative_url }}">{{ post.title }}</a></span><span class="dt"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%-d %b %Y" }}</time></span></li>
+{%- endfor %}
+</ul>
+{%- endif %}
+{%- endfor %}
 
-</div>
+{%- if tag_count == 0 %}
+<p class="meta">No tags yet.</p>
+{%- endif %}
+
+<p class="tail"><a href="{{ '/blog/' | relative_url }}">Back to the blog &rarr;</a></p>
