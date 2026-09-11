@@ -1,18 +1,68 @@
 ---
-layout: archive
-title: "Projects"
+layout: redesign-default
+view: work
+title: "Work"
 permalink: /projects/
 redirect_from:
   - /portfolio/
-author_profile: true
 ---
 
-{% include base_path %}
+{%- comment -%}
+  THE WORK INDEX — the approved design's `work` view, driven entirely by the
+  `portfolio` collection.
 
-<div class="portfolio-grid">
-{% assign sorted_projects = site.portfolio | sort: 'date' | reverse %}
-{% for post in sorted_projects %}
-  {% include archive-single-portfolio.html %}
+  Nothing about an entry is written here: the title, the one-line description,
+  the year, the tags, the repository and its real star count all come from that
+  item's own front matter. The only copy that is the design's own is the
+  standfirst and the perceptron gloss, and the count in the margin note is
+  counted, not typed.
+
+  Structure, top to bottom: standfirst · the perceptron · then one big year
+  numeral per year, each underlined by its own two-segment spectrogram rule,
+  with every project of that year beneath it. Text only — no thumbnails; the
+  margin column carries the tags, exactly as the design has it.
+{%- endcomment -%}
+
+<article class="col">
+
+ <span class="marginnote"><span class="mn-label">About this list</span>{{ site.portfolio | size }} projects, newest first. Tags and star counts sit out here so the descriptions stay readable as sentences, and the big numerals below are the only index this page needs.</span>
+
+ <h1>Work</h1>
+ <p class="lede">Everything I have built and can show, newest first. Most are open on GitHub; the rest are client systems I can describe but not link.</p>
+
+{% include redesign/perceptron.html %}
+
+{%- comment -%}
+  The year bands. `rules` is the design's own sequence of spectrogram pairs,
+  cycled by year index so no two adjacent bands are alike.
+{%- endcomment -%}
+{% assign projects = site.portfolio | sort: 'date' | reverse %}
+{% assign rules = "sg3|sg5,sg6|sg1,sg2|sg4,sg4|sg6" | split: "," %}
+{% assign shown_year = "" %}
+{% assign year_index = 0 %}
+{% for item in projects %}
+  {%- assign year = item.date | date: "%Y" -%}
+  {%- if year != shown_year -%}
+    {%- assign shown_year = year -%}
+    {%- assign slot = year_index | modulo: 4 -%}
+    {%- assign pair = rules[slot] | split: "|" -%}
+    {%- assign year_index = year_index | plus: 1 %}
+
+ <h2 class="yr" id="year-{{ year }}">{{ year }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#{{ pair[0] }}"/></svg><svg><use href="#{{ pair[1] }}"/></svg></div>
+  {%- endif -%}
+
+  {%- assign blurb = item.excerpt | split: '<br' | first | markdownify | strip_html | strip_newlines | strip %}
+ <div class="entry" data-spy>
+  {%- if item.tags and item.tags.size > 0 %}
+  <span class="marginnote"><span class="mn-label">Tags</span>{{ item.tags | join: " · " }}</span>
+  {%- endif %}
+  <h3><a class="tl" href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+  <p>{{ blurb }}</p>
+  <p class="res">{% if item.github_url %}<span class="g"><a href="{{ item.github_url }}">Code</a></span> {% endif %}<span class="g"><a href="{{ item.url | relative_url }}">Write-up</a></span>{% if item.github_stars %}<span class="stars">&#9733; {{ item.github_stars }} star{% if item.github_stars != 1 %}s{% endif %}</span>{% endif %}</p>
+ </div>
 {% endfor %}
-</div>
 
+ <p class="tail"><a href="{{ '/cv/' | relative_url }}">The full CV &rarr;</a></p>
+
+</article>

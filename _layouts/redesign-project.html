@@ -1,0 +1,132 @@
+---
+layout: redesign-default
+---
+
+{%- comment -%}
+  THE PROJECT DETAIL PAGE — the `portfolio` collection's own layout, built on
+  the redesign shell.
+
+  Shape, from the approved design's `post` view: a FULL-WIDTH BAND carrying the
+  rubric, the title, the standfirst and the byline, closed by a spectrogram
+  rule; then the prose column with the right margin column beside it holding
+  the metadata and the links; then the related projects.
+
+  Every word of it comes from the item's own front matter — title, excerpt,
+  date, image, tags, github_url, github_stars. Nothing is written here.
+
+  The page is data-view="work" (set in _config.yml's portfolio defaults), so
+  the navbar marks Work, not Writing, while the reader is inside a project.
+
+  The article carries `data-prose`, the same marker the post's body carries:
+  assets/js/redesign.js hangs a spectrogram rule under each of the Markdown
+  body's h2s and wraps each Rouge listing in .codeblock with a copy button,
+  and _sass/redesign/_post.scss's Rouge rules key off the same attribute. Both
+  jobs used to be duplicated per layout; they are one pass now.
+{%- endcomment -%}
+
+{%- assign lead = page.excerpt | split: '<br' | first | markdownify | strip_html | strip_newlines | strip -%}
+{%- if page.excerpt contains 'Technologies:**' -%}
+  {%- assign stack = page.excerpt | split: 'Technologies:**' | last | strip_html | strip -%}
+{%- endif -%}
+{%- if page.image -%}
+  {%- if page.image contains '://' -%}
+    {%- assign lead_image = page.image -%}
+  {%- else -%}
+    {%- assign lead_image = page.image | prepend: '/images/' | relative_url -%}
+  {%- endif -%}
+{%- endif -%}
+
+<header class="posthead band">
+ <p class="rubric">Project</p>
+ <h1>{{ page.title }}</h1>
+ {%- if lead and lead != "" %}
+ <p class="dek">{{ lead }}</p>
+ {%- endif %}
+ <p class="byline">{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>{% endif %}{% if page.tags and page.tags.size > 0 %} <span class="sep">&middot;</span> {{ page.tags | join: ", " }}{% endif %}{% if page.github_stars %} <span class="sep">&middot;</span> &#9733; {{ page.github_stars }} star{% if page.github_stars != 1 %}s{% endif %} on GitHub{% endif %}</p>
+ <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
+</header>
+
+<article class="col flow" data-prose>
+
+ {%- comment -%} THE RIGHT MARGIN — metadata first, then the links. {%- endcomment %}
+ <span class="marginnote">
+  <span class="mn-label">This project</span>
+  {%- if page.date %}<span class="mn-em">{{ page.date | date: "%B %Y" }}</span><br>{% endif -%}
+  {%- if page.tags and page.tags.size > 0 %}{{ page.tags | join: " &middot; " }}{% endif -%}
+  {%- if stack %}<br>{{ stack }}{% endif -%}
+  {%- if page.github_stars %}<br>&#9733; {{ page.github_stars }} star{% if page.github_stars != 1 %}s{% endif %} on GitHub{% endif -%}
+ </span>
+
+ <span class="marginnote">
+  <span class="mn-label">Links</span>
+  {%- if page.github_url %}<span class="g"><a href="{{ page.github_url }}">Code</a></span> {% endif -%}
+  <span class="g"><a href="{{ '/projects/' | relative_url }}">All&nbsp;projects</a></span>
+ </span>
+
+ {%- if lead_image %}
+ <figure class="leadfig">
+  <img src="{{ lead_image }}" alt="{{ page.title | strip_html | escape }}" loading="lazy">
+ </figure>
+ {%- endif %}
+
+ {{ content }}
+
+ <p class="tail"><a href="{{ '/projects/' | relative_url }}">All projects &rarr;</a>{% if page.github_url %} <span class="sep">&middot;</span> <a href="{{ page.github_url }}">The repository &rarr;</a>{% endif %}</p>
+
+</article>
+
+{%- comment -%}
+  YOU MAY ALSO ENJOY — the other projects that share a tag with this one,
+  newest first, three at most. site.related_posts only knows about _posts, so
+  the relation is computed here over the collection itself; when nothing shares
+  a tag the three most recent other projects stand in, so the section is never
+  empty and never wrong.
+{%- endcomment -%}
+{%- capture related_html -%}
+  {%- assign pool = site.portfolio | sort: 'date' | reverse -%}
+  {%- assign found = 0 -%}
+  {%- for item in pool -%}
+    {%- if found < 3 and item.url != page.url -%}
+      {%- assign shares = false -%}
+      {%- for t in page.tags -%}
+        {%- if item.tags contains t -%}{%- assign shares = true -%}{%- endif -%}
+      {%- endfor -%}
+      {%- if shares -%}
+        {%- assign found = found | plus: 1 -%}
+        {%- assign blurb = item.excerpt | split: '<br' | first | markdownify | strip_html | strip_newlines | strip -%}
+ <div class="entry">
+  <h3><a class="tl" href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+  <p>{{ blurb }}</p>
+  <p class="meta">{{ item.date | date: "%Y" }}{% if item.tags and item.tags.size > 0 %} <span class="sep">&middot;</span> {{ item.tags | join: " &middot; " }}{% endif %}</p>
+ </div>
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign related_test = related_html | strip -%}
+{%- if related_test == "" -%}
+  {%- capture related_html -%}
+    {%- assign pool = site.portfolio | sort: 'date' | reverse -%}
+    {%- assign found = 0 -%}
+    {%- for item in pool -%}
+      {%- if found < 3 and item.url != page.url -%}
+        {%- assign found = found | plus: 1 -%}
+        {%- assign blurb = item.excerpt | split: '<br' | first | markdownify | strip_html | strip_newlines | strip -%}
+ <div class="entry">
+  <h3><a class="tl" href="{{ item.url | relative_url }}">{{ item.title }}</a></h3>
+  <p>{{ blurb }}</p>
+  <p class="meta">{{ item.date | date: "%Y" }}{% if item.tags and item.tags.size > 0 %} <span class="sep">&middot;</span> {{ item.tags | join: " &middot; " }}{% endif %}</p>
+ </div>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+{%- endif -%}
+{%- assign related_test = related_html | strip -%}
+{%- if related_test != "" %}
+
+<section class="col">
+ <h2 id="related">{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg2"/></svg><svg><use href="#sg6"/></svg></div>
+{{ related_html }}
+</section>
+{%- endif %}

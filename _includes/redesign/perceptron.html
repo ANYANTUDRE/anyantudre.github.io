@@ -1,0 +1,52 @@
+<!-- THE PERCEPTRON — § 13 of the approved design, ported verbatim from
+     designs5/final.html (the WORK view, lines 974-1019). One artificial
+     neuron: three inputs weighted, summed with a bias, passed through an
+     activation. The gloss is the design's own essay copy, not a collection
+     entry, so it is kept word for word. Nothing here is data-driven. -->
+
+ <h2 id="perceptron">One unit, three inputs</h2>
+ <div class="rule" aria-hidden="true"><svg><use href="#sg6"/></svg></div>
+
+ <div class="wide duo duo--pc">
+  <div>
+  <svg class="pc" viewBox="0 0 360 200" role="img" aria-label="A single artificial neuron. Three inputs — vision, language and speech — are weighted, summed together with a bias, passed through an activation function, and produce one output.">
+  <g class="wire">
+  <path d="M74 44 176 100"/>
+  <path d="M74 100 176 100"/>
+  <path d="M74 156 176 100"/>
+  <path d="M190 176 190 116"/>
+  <path d="M206 100 236 100"/>
+  <path d="M266 100 312 100"/>
+  </g>
+  <circle class="nd" cx="70" cy="44" r="4"/>
+  <circle class="nd" cx="70" cy="100" r="4"/>
+  <circle class="nd" cx="70" cy="156" r="4"/>
+  <text class="vr" x="58" y="41" text-anchor="end">x<tspan dy="3" font-size="9">1</tspan></text>
+  <text class="lb" x="58" y="56" text-anchor="end">vision</text>
+  <text class="vr" x="58" y="97" text-anchor="end">x<tspan dy="3" font-size="9">2</tspan></text>
+  <text class="lb" x="58" y="112" text-anchor="end">language</text>
+  <text class="vr" x="58" y="153" text-anchor="end">x<tspan dy="3" font-size="9">3</tspan></text>
+  <text class="lb" x="58" y="168" text-anchor="end">speech</text>
+  <rect class="plate" x="112" y="64" width="24" height="15"/>
+  <rect class="plate" x="112" y="93" width="24" height="14"/>
+  <rect class="plate" x="112" y="121" width="24" height="15"/>
+  <text class="wt" x="124" y="75" text-anchor="middle">w<tspan dy="2.5" font-size="8.5">1</tspan></text>
+  <text class="wt" x="124" y="104" text-anchor="middle">w<tspan dy="2.5" font-size="8.5">2</tspan></text>
+  <text class="wt" x="124" y="132" text-anchor="middle">w<tspan dy="2.5" font-size="8.5">3</tspan></text>
+  <circle class="nd" cx="190" cy="100" r="15"/>
+  <text class="gl" x="190" y="106" text-anchor="middle">∑</text>
+  <circle class="nd hd" cx="251" cy="100" r="15"/>
+  <text class="gl" x="251" y="106" text-anchor="middle">φ</text>
+  <circle class="nd-b" cx="190" cy="180" r="4"/>
+  <text class="vr" x="178" y="184" text-anchor="end">b</text>
+  <path class="wire" d="M306 95 316 100 306 105"/>
+  <text class="vr" x="322" y="97">y</text>
+  <text class="lb" x="322" y="112">output</text>
+  </svg>
+  </div>
+  <div>
+  <p class="eqn" role="math" aria-label="y equals phi of the weighted sum plus b"><i>y</i> = <span class="op">φ</span><span class="pn">(</span> <span class="op">∑</span><sub><i>i</i></sub> <i>w</i><sub><i>i</i></sub><i>x</i><sub><i>i</i></sub> + <i>b</i> <span class="pn">)</span></p>
+  <p class="attrib">[one artificial neuron, Rosenblatt 1958, The Perceptron]</p>
+  <p class="gloss">The three inputs are the three things I actually work on. The weights are where the hours went — speech has been carrying the largest one for two years now. The bias is everything else: the teaching, the talks, and the reading that never reaches a repository. The activation is what any of it is worth to somebody who is not me.</p>
+  </div>
+ </div>

@@ -1,0 +1,46 @@
+<!-- THE ATTENTION SECTION — § "What the work attends to" of the approved
+     design (final.html L1124-1155), lifted verbatim.
+
+     An 8x8 affinity map over the eight words the writing keeps circling, the
+     scaled dot-product attention formula beside it, and the gloss that says
+     plainly what the grid is and is not. Nothing here comes from a
+     collection: it is a hand-built figure about the shape of the work, the
+     same way the perceptron on /projects/ and the loss surface in the footer
+     are. The cell tints are rgba(var(--acc-rgb), alpha) over --bg, so the map
+     re-tints itself in dark mode from one token.
+
+     Below 959px .duo--hm collapses to one column and the map keeps its own
+     max-content width, so the page still does not scroll sideways at 390px. -->
+
+ <h2 id="attention">What the work attends to</h2>
+ <div class="rule" aria-hidden="true"><svg><use href="#sg2"/></svg></div>
+
+ <div class="wide duo duo--hm">
+  <div>
+  <div class="hm">
+  <span class="hm-corner"></span>
+  <div class="hmcols" aria-hidden="true">
+  <span>vision</span><span>speech</span><span>language</span><span>low-resource</span><span>Moor&eacute;</span><span>ASR</span><span>VLM</span><span>data</span>
+  </div>
+  <div class="hmrows" aria-hidden="true">
+  <span>vision</span><span>speech</span><span>language</span><span>low-resource</span><span>Moor&eacute;</span><span>ASR</span><span>VLM</span><span>data</span>
+  </div>
+  <div class="mx" role="img" aria-label="An eight by eight affinity map over the keywords vision, speech, language, low-resource, Mooré, ASR, VLM and data. The diagonal is darkest. Off the diagonal the strongest cells are speech with Mooré, speech with ASR, speech with low-resource, low-resource with Mooré, and vision with VLM. Vision has no affinity at all with Mooré or ASR.">
+  <span class="a8"></span><span class="a2"></span><span class="a5"></span><span class="a2"></span><span></span><span></span><span class="a7"></span><span class="a3"></span>
+  <span class="a2"></span><span class="a8"></span><span class="a5"></span><span class="a7"></span><span class="a7"></span><span class="a7"></span><span class="a1"></span><span class="a4"></span>
+  <span class="a5"></span><span class="a5"></span><span class="a8"></span><span class="a6"></span><span class="a6"></span><span class="a5"></span><span class="a5"></span><span class="a3"></span>
+  <span class="a2"></span><span class="a7"></span><span class="a6"></span><span class="a8"></span><span class="a7"></span><span class="a6"></span><span class="a2"></span><span class="a5"></span>
+  <span></span><span class="a7"></span><span class="a6"></span><span class="a7"></span><span class="a8"></span><span class="a6"></span><span></span><span class="a4"></span>
+  <span></span><span class="a7"></span><span class="a5"></span><span class="a6"></span><span class="a6"></span><span class="a8"></span><span class="a1"></span><span class="a4"></span>
+  <span class="a7"></span><span class="a1"></span><span class="a5"></span><span class="a2"></span><span></span><span class="a1"></span><span class="a8"></span><span class="a3"></span>
+  <span class="a3"></span><span class="a4"></span><span class="a3"></span><span class="a5"></span><span class="a4"></span><span class="a4"></span><span class="a3"></span><span class="a8"></span>
+  </div>
+  </div>
+  <p class="hmkey"><span>Weak</span><span class="ramp" aria-hidden="true"><span class="sw a1"></span><span class="sw a2"></span><span class="sw a3"></span><span class="sw a4"></span><span class="sw a5"></span><span class="sw a6"></span><span class="sw a7"></span><span class="sw a8"></span></span><span>Strong</span></p>
+  </div>
+  <div>
+  <p class="eqn" role="math" aria-label="Attention of Q, K and V equals softmax of Q K transpose divided by the square root of d sub k, times V"><span class="op">Attention</span>(<i>Q</i>, <i>K</i>, <i>V</i>) = <span class="op">softmax</span><span class="pn">(</span><span class="frac"><span class="num"><i>Q</i><i>K</i><sup class="op">T</sup></span><span class="den"><span class="rad">&#8730;</span><span class="rand"><i>d</i><sub><i>k</i></sub></span></span></span><span class="pn">)</span> <i>V</i></p>
+  <p class="attrib">[attention, Vaswani et al. 2017, Attention Is All You Need]</p>
+  <p class="gloss">Eight words carry almost everything I have worked on. The grid is what each one attends to in the others: speech pulls hardest on Moor&eacute;, ASR and the whole low-resource problem; vision pulls almost entirely on VLM; language is the one term that touches every other. It is read symmetrically, which a real attention map never is &mdash; this is a portrait of which ideas keep turning up together, not a matrix lifted out of a trained model.</p>
+  </div>
+ </div>

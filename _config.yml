@@ -270,6 +270,11 @@ defaults:
       type: posts
     values:
       layout: blog_post
+      # `view` is what _layouts/redesign-default.html stamps on <html> as
+      # data-view. A post is the design's `post` view: it marks Writing in the
+      # navbar, widens the post's gutter to 4rem at 960px, gives it its own
+      # left lane at 1300px, and tells assets/js/redesign.js what to spy on.
+      view: post
       author_profile: true
       read_time: true
       comments: true
@@ -284,30 +289,38 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _teaching
+  # _teaching — INTEGRATION. A teaching entry and a talk are the same kind of
+  # thing here: they sit interleaved on one /teaching-talks/ page, and every
+  # title on it links through to one of these. They must therefore land on the
+  # SAME detail page, so both collections share _layouts/talk.html, whose
+  # rubric falls back from talk_type to this collection's `type`.
   - scope:
       path: ""
       type: teaching
     values:
-      layout: single
+      layout: talk
+      view: talks
       author_profile: true
       share: true
       comments: true
-  # _publications
+  # _publications — the collection is empty, but were an entry to land in it
+  # it would render on the redesign's shell like everything else.
   - scope:
       path: ""
       type: publications
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
       comments: true
-  # _portfolio
+  # _portfolio — the redesigned project detail page. `view: work` keeps the
+  # navbar marking Work while the reader is inside a project.
   - scope:
       path: ""
       type: portfolio
     values:
-      layout: single
+      layout: redesign-project
+      view: work
       author_profile: true
       share: true
       comment: true
@@ -319,20 +332,28 @@ defaults:
       layout: talk
       author_profile: true
       share: true
-  # _certifications
+      # marks "Teaching" in the redesigned navbar: _layouts/redesign-default.html
+      # writes data-view from page.view, and a layout's own front matter cannot
+      # supply it, so the section a talk belongs to is declared here.
+      view: talks
+  # _certifications — INTEGRATION. Each one is a real page of prose that
+  # /certifications/ and the CV both list; they were still rendering on the
+  # Academic Pages `single` layout, i.e. the old masthead and the old footer,
+  # one click away from the redesigned pages that name them. redesign-legacy
+  # is the thin restyled shell those kept routes were built for.
   - scope:
       path: ""
       type: certifications
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
-  # _awards
+  # _awards — same: listed on /certifications/, on the CV and on the home page.
   - scope:
       path: ""
       type: awards
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
   # _extra
@@ -340,7 +361,7 @@ defaults:
       path: ""
       type: extra
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
 
