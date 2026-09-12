@@ -37,8 +37,14 @@ blockquote cite{display:block;font-style:normal;font-family:var(--sans);font-siz
 // gone the head uses every column the sheet has, and text-wrap:balance is
 // left as the ONLY thing that breaks a line — and only when one truly will
 // not fit. Nothing here declares a width or a <br>.
-.posthead h1{font-size:var(--t-dsp);line-height:1.04;letter-spacing:-.02em;margin:0 0 var(--s2);max-width:none;text-wrap:balance}
-.dek{font-style:italic;color:var(--muted);margin-bottom:var(--s3);max-width:none;text-wrap:balance}
+/* overflow-wrap on the title is what stops a single long token running off a
+   phone. "MooreSpeechCorpora" at display size is 335px against a 294px column
+   at 375px wide, and with only text-wrap:balance it overflowed the page — the
+   one horizontal scrollbar left on the site. break-word breaks ONLY when a word
+   cannot fit on a line of its own, so normal titles are untouched and are still
+   free to use the full width on one line, as asked. */
+.posthead h1{font-size:var(--t-dsp);line-height:1.04;letter-spacing:-.02em;margin:0 0 var(--s2);max-width:none;text-wrap:balance;overflow-wrap:break-word}
+.dek{font-style:italic;color:var(--muted);margin-bottom:var(--s3);max-width:none;text-wrap:balance;overflow-wrap:break-word}
 .postgrid{display:grid;grid-template-columns:minmax(0,var(--wide))}
 .postside{font-family:var(--sans);font-size:var(--t-label);line-height:1.6;color:var(--muted);border-top:1px solid var(--border);padding-top:var(--s1);margin:0 0 var(--s6);max-width:var(--prose)}
 .postside p{margin:0 0 var(--s2)}

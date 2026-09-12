@@ -31,12 +31,18 @@ services:
   jekyll-site:
     image: jekyll-site
     build: .
+    restart: unless-stopped
     user: "0:0"
     volumes:
       - .:/usr/src/app
       - jekyll-bundle:/bundle
+    # 0.0.0.0 is explicit on purpose. Left as a bare "4000:4000" this once came
+    # up bound to ::1 and :: only — IPv6 with no IPv4 listener — so a browser
+    # resolving localhost to 127.0.0.1 got ERR_NO_BUFFER_SPACE / "site can't be
+    # reached" while the container looked perfectly healthy. Naming the IPv4
+    # address makes that binding non-negotiable.
     ports:
-      - "4000:4000"
+      - "0.0.0.0:4000:4000"
     environment:
       JEKYLL_ENV: docker
       BUNDLE_PATH: /bundle
