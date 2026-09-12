@@ -1,5 +1,6 @@
 ---
 title: "Winner - Grand Débat d'Oujda"
+title_fr: "Lauréat - Grand Débat d'Oujda"
 collection: awards
 date: 2023-03-01
 award_type: "Competition"
@@ -8,6 +9,7 @@ issuer: "ENCG Oujda, Morocco"
 image: "awards/grand-debat-award.jpeg"
 link: "https://bit.ly/grand_debat_oujda"
 excerpt: "National debate competition winner showcasing teamwork and analytical skills."
+excerpt_fr: "Vainqueur d'un concours national de débat, sur le travail d'équipe et l'esprit d'analyse."
 ---
 
 Won the **"Grand Débat d'Oujda"**, a prestigious national debate competition organized by ENCG Oujda, Morocco.

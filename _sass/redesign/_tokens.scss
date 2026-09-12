@@ -48,11 +48,11 @@
   --field-h:12.5rem;  // contour field
   --rule-h:.9rem;  // band height
   --rule-ink:.34;  // band loudness
-  --edge-o:.15; --edge-o2:.26; --edge-o3:.40; --edge-on:.7;  // MLP edges, stepping up toward the output layer
+  --edge-o:.15; --edge-on:.7;  // MLP edges: the two ends of the contribution-field ramp (§ 5)
   --ring-o:.85; --trail-o:.55;  // contours
 }
 
 // contrast on --bg #151515 : text 13.4:1 · muted 6.61:1 · accent 6.30:1
 :root[data-theme="dark"]{
-  --bg:#151515; --surface:#1D1D1B;--text:#DDDDD6; --muted:#9C9C94; --faint:#66665F; --border:#2A2A27;--accent:#E07B72; --accent-soft:#3A2523;--acc-rgb:224,123,114;--rule-ink:.46; --edge-o:.2; --edge-o2:.32; --edge-o3:.48; --edge-on:.8; --ring-o:.9; --trail-o:.68
+  --bg:#151515; --surface:#1D1D1B;--text:#DDDDD6; --muted:#9C9C94; --faint:#66665F; --border:#2A2A27;--accent:#E07B72; --accent-soft:#3A2523;--acc-rgb:224,123,114;--rule-ink:.46; --edge-o:.2; --edge-on:.8; --ring-o:.9; --trail-o:.68
 }

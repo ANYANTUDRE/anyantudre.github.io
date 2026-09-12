@@ -1,13 +1,15 @@
 /* THE ONLY SCRIPT the redesign adds. One IIFE: the copy button, and the
    scroll-spy that feeds both networks — the hero MLP and the mini-MLP in the
    bar — plus the outline highlight on the post. No library, and no scroll
-   handler: an IntersectionObserver marks the section in view, and the forward
-   path lit for it is a pure function of its index, so a section always lights
-   the same chain rather than re-randomising on every frame. With JS off none
-   of this is needed: the first output unit is already lit in the markup, the
-   copy button stays hidden, and no outline item is marked — never a wrong one,
-   never a blank box. Transitions are colour and opacity only, and CSS
-   suppresses even those under prefers-reduced-motion.
+   handler: an IntersectionObserver marks the section in view, and the
+   CONTRIBUTION FIELD drawn for it is a pure function of its index, so a
+   section always draws the same field rather than re-randomising on every
+   frame. Hovering or focusing an output unit overrides the spy for as long as
+   it lasts; letting go falls back to the section in view. With JS off none of
+   this is needed: the markup already carries a graded field with the first
+   unit lit, the copy button stays hidden, and no outline item is marked —
+   never a wrong one, never a blank box. Transitions are colour and opacity
+   only, and CSS suppresses even those under prefers-reduced-motion.
 
    ONE line differs from the design file, marked JEKYLL below: the mock-up held
    all six views in a single document and switched between them with
@@ -115,6 +117,60 @@
   }
  })();
 
+ /* 0. OFF-SITE LINKS OPEN IN A NEW TAB.
+
+    Done here rather than in the includes for two reasons: the links are spread
+    across the masthead, the profile column, the award rows, the project rows,
+    the footer and the post tail, and — more importantly — the ones inside a
+    post's body come from Kramdown rendering his Markdown, where no Liquid can
+    reach them. One rule catches every case.
+
+    "Off-site" is decided by comparing the resolved host to this one, so a
+    root-relative link, an in-page #anchor and an absolute link that happens to
+    point back at the site are all left alone. mailto:, tel: and the like have
+    no host and are skipped: they hand off to another application already, and
+    opening a blank tab for them leaves a dead window behind.
+
+    rel="noopener noreferrer" goes on with it. Without noopener the opened page
+    can reach back through window.opener and navigate this one; it is the one
+    genuine security cost of target="_blank".
+
+    A reader without JavaScript simply gets same-tab navigation — the link
+    still works, which is why this does not need to be in the markup.
+
+    One pass at load is not quite enough: the mapmyvisitors widget injects its
+    own link asynchronously, so it arrives after the pass has run. A debounced
+    MutationObserver re-runs the sweep for late arrivals and then gives up
+    after fifteen seconds — long enough for any third-party embed, short enough
+    that nothing is left watching the document for the life of the page. */
+ (function(){
+  var here=location.host;
+  function sweep(){
+   var as=d.getElementsByTagName("a");
+   for(var i=0;i<as.length;i++){
+    var a=as[i];
+    if(!a.host||a.host===here)continue;
+    if(!/^https?:$/.test(a.protocol))continue;
+    /* An existing target is normally an author's deliberate choice and is left
+       alone — except _self, _top and _parent, which on an OFF-SITE link all
+       mean "navigate away from the site in this tab", i.e. the exact behaviour
+       being fixed. The mapmyvisitors badge ships target="_top". A named frame
+       target, or an already-correct _blank, is respected. */
+    var tg=a.getAttribute("target");
+    if(tg&&!/^_(self|top|parent)$/.test(tg))continue;
+    a.setAttribute("target","_blank");
+    a.setAttribute("rel",(a.getAttribute("rel")?a.getAttribute("rel")+" ":"")+"noopener noreferrer");
+   }
+  }
+  sweep();
+  if(!window.MutationObserver)return;
+  var pending,mo=new MutationObserver(function(){
+   clearTimeout(pending);pending=setTimeout(sweep,150);
+  });
+  mo.observe(d.body,{childList:true,subtree:true});
+  setTimeout(function(){clearTimeout(pending);sweep();mo.disconnect();},15000);
+ })();
+
  /* 1. THE COPY BUTTON — only if the clipboard API is genuinely there, so
     there is never a dead control. */
  if(navigator.clipboard&&navigator.clipboard.writeText){
@@ -136,34 +192,154 @@
   })(bs[i]);
  }
 
- /* 2. THE TWO NETWORKS. Node coordinates, in their own user units. */
+ /* === 2. THE TWO NETWORKS — THE CONTRIBUTION FIELD (ROUND 6 § 5) ===
+
+    What the design shipped was ONE polyline: input unit, hidden unit, hidden
+    unit, output unit, redrawn per section. That is a wire. A network does not
+    compute along a wire — every unit of every layer contributes something to
+    every output, a few of them a great deal. And because the polyline was the
+    only thing that moved, hovering a unit changed nothing: the picture stayed
+    on whatever the scroll-spy had last said, which on a freshly loaded page is
+    News.
+
+    So: every edge and every node now carries its own weight in [0,1] for the
+    ACTIVE output, written as the custom property --w, and the stylesheet
+    renders that weight as accent strength — deep oxblood at the top of the
+    ramp, pale at the bottom, never zero. The markup already ships one such
+    field baked in for output 0, so a reader with no JavaScript sees the same
+    instrument, still.
+
+    THE FIELD IS COMPUTED BACKWARDS FROM THE ACTIVE OUTPUT, which is what
+    makes it read as a computation rather than as noise:
+
+      relevance of the output layer   1 for the active unit, 0.06 for the rest
+      every edge into a unit          that unit's relevance x the edge's own
+                                      conductance
+      relevance of a unit             0.16 + 0.84 x its strongest onward edge
+
+    so a unit wired strongly into a strongly-relevant unit is itself strongly
+    relevant, the effect fades layer by layer back towards the inputs, and
+    everything lands in [0,1] with no normalisation pass. Choosing the MAX
+    onward edge rather than the sum is what keeps the range bounded and what
+    makes the picture a set of paths of differing strength rather than a
+    uniform wash.
+
+    DETERMINISTIC, AND NO Math.random ANYWHERE. Every conductance is a hash of
+    (active output, depth from the output, source unit, target unit), computed
+    with 32-bit integer xorshift only — exact in every engine — so a section
+    always draws the same field and re-entering it reproduces it exactly. Each
+    field is computed once and cached by topology and index. */
  var hero=d.querySelector(".mlp"),mini=d.querySelector(".minimlp");
- var IN=[78,118,158],H=[40,79,118,157,196],OUT=[34,62,90,118,146,174,202];
- var mIN=[13,20,27],mH=[6,13,20,27,34],mOUT=[4,9.3,14.7,20,25.3,30.7,36];
- var outs=hero?hero.querySelectorAll(".out"):[],
-     fwd=hero?hero.querySelector(".fwd"):null,
-     fdot=hero?hero.querySelectorAll(".fdot circle"):[],
-     mnod=mini?mini.querySelectorAll(".mm-n"):[],
-     mpath=mini?mini.querySelector(".mm-p"):null,
-     mdot=mini?mini.querySelectorAll(".mm-d"):[];
 
- /* DETERMINISTIC per output index: a fixed hash of i picks the contributing
-    input and hidden units, so the same section lights the same path every
-    time — no re-draw, no drift. */
- function chain(i){return [(i*5+2)%3,(i*3+1)%5,(i*2+3)%5];}
- function at(c,x,y){c.setAttribute("cx",x);c.setAttribute("cy",y);}
- function only(list,k){for(var n=0;n<list.length;n++)list[n].classList.toggle("on",n===k);}
+ function hsh(){
+  var x=0,i;
+  for(i=0;i<arguments.length;i++){
+   x=(x+arguments[i]+1)|0;
+   x^=x<<13;x|=0; x^=x>>>17; x^=x<<5;x|=0;
+  }
+  return ((x>>>0)%100000)/100000;
+ }
 
- var cur=-1;
- function light(i){
-  if(i===cur)return; cur=i;
-  var c=chain(i),a=c[0],b=c[1],e=c[2],k;
-  if(outs.length){k=i%outs.length;only(outs,k);
-   if(fwd)fwd.setAttribute("d","M16 "+IN[a]+" L128 "+H[b]+" L248 "+H[e]+" L368 "+OUT[k]);
-   if(fdot.length>2){at(fdot[0],16,IN[a]);at(fdot[1],128,H[b]);at(fdot[2],248,H[e]);}}
-  if(mnod.length){k=i%mnod.length;only(mnod,k);
-   if(mpath)mpath.setAttribute("d","M5 "+mIN[a]+" L26 "+mH[b]+" L50 "+mOUT[k]);
-   if(mdot.length>1){at(mdot[0],5,mIN[a]);at(mdot[1],26,mH[b]);}}
+ var FC={};
+ function field(k,sizes){
+  var key=sizes.join("-")+":"+k;
+  if(FC[key])return FC[key];
+  var L=sizes.length,rel=[],ed=[],l,a,b,g,w,m;
+  rel[L-1]=[];
+  for(b=0;b<sizes[L-1];b++)rel[L-1][b]=(b===k)?1:0.06;
+  for(l=L-2;l>=0;l--){
+   var dep=L-1-l,na=sizes[l],nb=sizes[l+1],row=[];
+   rel[l]=[];
+   for(a=0;a<na;a++){
+    m=0;
+    for(b=0;b<nb;b++){
+     g=0.14+0.86*hsh(k,dep,a,b);
+     w=rel[l+1][b]*g;
+     row[a*nb+b]=w;
+     if(w>m)m=w;
+    }
+    rel[l][a]=0.16+0.84*m;
+   }
+   ed[l]=row;
+  }
+  FC[key]={e:ed,n:rel};
+  return FC[key];
+ }
+
+ /* Addressing. Each edge declares data-l (layer), data-a (source) and data-b
+    (target); each node declares data-n (layer) and data-k (unit). Document
+    order is therefore free — the fan of an output unit can live in the shared
+    edge group while the unit's own name lives in its <a> — and reordering the
+    sections cannot silently mis-wire the field. */
+ function wire(svg,sizes,esel,nsel){
+  if(!svg)return null;
+  var e=[],n=[],l,i,el,q;
+  for(l=0;l<sizes.length;l++){n[l]=[];if(l<sizes.length-1)e[l]=[];}
+  q=svg.querySelectorAll(esel);
+  for(i=0;i<q.length;i++){el=q[i];
+   l=+el.getAttribute("data-l");
+   if(e[l])e[l][(+el.getAttribute("data-a"))*sizes[l+1]+(+el.getAttribute("data-b"))]=el;}
+  q=svg.querySelectorAll(nsel);
+  for(i=0;i<q.length;i++){el=q[i];
+   l=+el.getAttribute("data-n");
+   if(n[l])n[l][+el.getAttribute("data-k")]=el;}
+  return {svg:svg,sizes:sizes,e:e,n:n,k:-1,
+          outs:[].slice.call(svg.querySelectorAll(".out"))};
+ }
+
+ /* The hero is 3–5–5–7 and the mark 3–5–7. Their last hidden layer and their
+    output layer are the same sizes, and the hash is keyed by DEPTH FROM THE
+    OUTPUT rather than by layer number, so the two agree on the relevance of
+    the hidden units they share: the mark is genuinely a small view of the same
+    computation, not a second unrelated drawing. */
+ var heroNet=wire(hero,[3,5,5,7],".edge[data-l]",".node[data-n]"),
+     miniNet=wire(mini,[3,5,7],".mm-e[data-l]",".mm-n[data-n]");
+
+ function paint(net,k){
+  if(!net||net.k===k)return;
+  net.k=k;
+  var f=field(k,net.sizes),l,i,row,els;
+  for(l=0;l<f.e.length;l++){row=f.e[l];els=net.e[l];
+   for(i=0;i<row.length;i++)if(els[i])els[i].style.setProperty("--w",row[i].toFixed(3));}
+  for(l=0;l<f.n.length;l++){row=f.n[l];els=net.n[l];
+   for(i=0;i<row.length;i++)if(els[i])els[i].style.setProperty("--w",row[i].toFixed(3));}
+  for(i=0;i<net.outs.length;i++)net.outs[i].classList.toggle("on",i===k);
+ }
+
+ /* TWO SOURCES OF TRUTH, one picture. `spy` is the section in view; `hov` is
+    the unit under the pointer or holding keyboard focus, and -1 when there is
+    none. Hover wins while it lasts; releasing it falls back to the section in
+    view — NOT to the first unit. Before the first heading has crossed the
+    reading line there is no section in view, and 0 is both the sensible
+    default and exactly what the static markup already draws. */
+ var NOUT=7,spy=-1,hov=-1;
+ function show(){
+  var k=hov>=0?hov:(spy>=0?spy:0);
+  paint(heroNet,k);paint(miniNet,k);
+ }
+
+ /* 2b. HOVER AND FOCUS, delegated so the seven units cost two listeners.
+    `out` walks up from the event target because an <a> in SVG is not an
+    HTMLElement and .closest() is not worth assuming. mouseout and focusout
+    both consult relatedTarget: moving from one unit straight to the next must
+    hand over, not blink through the scroll-spy state. Clicking is untouched —
+    the unit is still a plain <a href="#section">, so it still scrolls. */
+ if(heroNet&&heroNet.outs.length){
+  var sv=heroNet.svg;
+  var unit=function(t){
+   while(t&&t!==sv){
+    if(t.getAttribute&&t.getAttribute("data-i")!==null&&/(^|\s)out(\s|$)/.test(t.getAttribute("class")||""))
+     return +t.getAttribute("data-i");
+    t=t.parentNode;
+   }
+   return -1;
+  };
+  var enter=function(e){var i=unit(e.target);if(i>=0&&i!==hov){hov=i;show();}},
+      leave=function(e){var i=unit(e.relatedTarget);if(i!==hov){hov=i;show();}};
+  sv.addEventListener("mouseover",enter);
+  sv.addEventListener("mouseout",leave);
+  sv.addEventListener("focusin",enter);
+  sv.addEventListener("focusout",leave);
  }
 
  /* 3. ONE SCROLL-SPY drives all of it — the hero network, the mark in the
@@ -175,14 +351,30 @@
         design; on a real route the view IS the page, so #main is the scope. */
      page=d.querySelector('[data-page="'+view+'"]')||d.getElementById("main"),
      toc=d.querySelectorAll(".toc a");
+ /* THE OUTPUT UNITS NAME THEIR OWN SECTIONS, so the spy does not have to
+    count. Each unit's href is #<id>; the map inverts that, and a target whose
+    id is in it lights the unit that actually points at it. The home page can
+    then be reordered — ROUND 6 moved Latest posts to the end — by editing the
+    section list in _includes/redesign/mlp-hero.html alone, and a stray
+    h3[id] or [data-spy] in the middle of the page cannot shift every unit by
+    one. Off home there is no hero and no map, and the old modulo walk stands:
+    the mark still travels as the reader travels. */
+ var idOf={},oi;
+ if(heroNet)for(oi=0;oi<heroNet.outs.length;oi++){
+  var hr=heroNet.outs[oi].getAttribute("href")||"";
+  if(hr.charAt(0)==="#")idOf[hr.slice(1)]=oi;
+ }
+ show();
+
  if(!page||!("IntersectionObserver" in window))return;
  var targets=[].slice.call(page.querySelectorAll("[data-spy],h2[id],h3[id]"));
  if(!targets.length)targets=[].slice.call(page.querySelectorAll(".entry,.wrow,.cell,.list--d > li"));
  if(!targets.length)return;
 
  function mark(i){
-  light(i);
-  var id=targets[i].id;
+  var id=targets[i].id,k;
+  k=(id&&Object.prototype.hasOwnProperty.call(idOf,id))?idOf[id]:i%NOUT;
+  if(k!==spy){spy=k;show();}
   for(var n=0;n<toc.length;n++)toc[n].classList.toggle("on",!!id&&toc[n].getAttribute("href")==="#"+id);
  }
 

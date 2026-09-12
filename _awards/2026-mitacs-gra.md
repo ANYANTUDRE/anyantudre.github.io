@@ -1,5 +1,6 @@
 ---
 title: "Mitacs Globalink Research Award"
+title_fr: "Bourse de recherche Mitacs Globalink"
 collection: awards
 date: 2026-01-01
 award_type: "Research Grant"
@@ -8,6 +9,7 @@ issuer: "Mitacs Canada"
 image: "awards/mitacs.png"
 link: "https://www.mitacs.ca/en/programs/globalink/globalink-research-award"
 excerpt: "Competitive $12,000 CAD award supporting a research project at a Canadian university."
+excerpt_fr: "Bourse compétitive de 12 000 CAD finançant un projet de recherche dans une université canadienne."
 # The entry was filed under 2025 before the CV corrected the date to 01/2026;
 # keep the old URL alive for anything already linking to it.
 redirect_from:

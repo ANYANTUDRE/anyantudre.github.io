@@ -2,22 +2,53 @@
      L682-962), ported section for section and in the design's own order:
 
        hero (name · right profile column · the big MLP)
-       News · Latest posts · About me · Education · Experience
-       Selected work · Awards
+       News · About me · Education · Experience
+       Selected work · Awards · Latest posts
        the visitor map, then the footer the shell supplies.
 
-     Nothing here is typed out that a collection already knows. Latest posts
-     come from site.posts (English only, newest first, three of them), Selected
-     work from site.portfolio, Awards from site.awards — each with its own real
-     title, excerpt, date, tags, stars and links. News is the single exception
-     and lives in redesign/news.html, because there is no collection behind it.
+     ROUND 6 moved Latest posts from second to last. The hero MLP's seven
+     output units and the footer's seven descent waypoints were re-ordered to
+     match; nothing else here depends on the order, because the scroll-spy
+     reads the h2[id]s in document order.
 
-     The seven h2 ids — news · posts · about · education · experience · work ·
-     awards — are what assets/js/redesign.js spies on and what the hero MLP's
+     ROUND 6, § 1 — ONE FILE, TWO LANGUAGES. / and /fr/ are the same include:
+     the structure, the Liquid and the section ids are written once, and only
+     the PROSE branches on page.lang. His paragraphs carry inline links and
+     markup, and Liquid does not re-render the contents of a variable, so they
+     cannot live in _data/t.yml — but the two versions of a paragraph do sit
+     directly beside each other here, which is what keeps them in step. Labels
+     and headings, which carry no markup, do come from t.yml.
+
+     Nothing here is typed out that a collection already knows. Latest posts
+     come from site.posts, Selected work from site.portfolio, Awards from
+     site.awards, News from site.news — each with its own real title, excerpt,
+     date, tags, stars and links, and on the French page with its title_fr /
+     excerpt_fr where the entry has one.
+
+     The seven h2 ids — news · about · education · experience · work ·
+     awards · posts — are what assets/js/redesign.js spies on and what the hero MLP's
      seven output units and the footer's seven descent waypoints link to. Add
      or remove an h2[id] here and all three go out of step, so don't. -->
 
-{%- assign latest = site.posts | where_exp: "p", "p.lang == 'en'" | sort: 'date' | reverse -%}
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- comment -%} The front-matter key for this language: on /fr/ these resolve
+   to title_fr / excerpt_fr, and `| default:` falls back to the English value
+   for any entry not yet translated. On / they resolve to title_en /
+   excerpt_en, which nothing defines, so the fallback IS the value and the one
+   expression serves both pages. {%- endcomment -%}
+{%- assign kt = 'title_' | append: lang -%}
+{%- assign kx = 'excerpt_' | append: lang -%}
+{%- assign klbl = 'link_label_' | append: lang -%}
+{%- if lang == 'fr' -%}
+  {%- assign projects_url = '/fr/projects/' -%}
+  {%- assign blog_url = '/fr/blog/' -%}
+  {%- assign latest = site.posts | where_exp: "p", "p.lang == 'fr'" | sort: 'date' | reverse -%}
+{%- else -%}
+  {%- assign projects_url = '/projects/' -%}
+  {%- assign blog_url = '/blog/' -%}
+  {%- assign latest = site.posts | where_exp: "p", "p.lang == 'en'" | sort: 'date' | reverse -%}
+{%- endif -%}
 {%- assign projects = site.portfolio | sort: 'date' | reverse -%}
 {%- assign awards = site.awards | sort: 'date' | reverse -%}
 {%- assign wrinnn = site.portfolio | where_exp: "p", "p.title contains 'WrinnnAI'" | first -%}
@@ -28,12 +59,16 @@
   <img class="pt" src="{{ '/images/profile.jpg' | relative_url }}" alt="{{ site.author.name }}" width="200" height="250">
   <span class="pnames">
   <span class="pname">{{ site.author.name }}</span>
-  <span class="prole">Machine Learning Engineer{% if site.author.employer %}, {{ site.author.employer }}{% endif %}</span>
-  <span class="pplace">{{ site.author.location }}{% if site.author.pronouns %} &middot; {{ site.author.pronouns }}{% endif %}</span>
+  <span class="prole">{{ t.role }}{% if site.author.employer %}, {{ site.author.employer }}{% endif %}</span>
+  <span class="pplace">{{ t.places[site.author.location] | default: site.author.location }}{% if site.author.pronouns %} &middot; {% if lang == 'fr' %}il/lui{% else %}{{ site.author.pronouns }}{% endif %}{% endif %}</span>
   </span>
-  <ul class="socials">
+  {%- comment -%} ROUND 6 — the profile column is exactly TWO lines: the email
+     alone, then GitHub · LinkedIn · X. Kaggle and YouTube are not shown.
+     .socials--two makes the break structural (the email row takes the whole
+     width) rather than something the wrap happens to do at one width. {%- endcomment %}
+  <ul class="socials socials--two">
   {%- if site.author.email %}
-  <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-mail"/></svg><a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
+  <li class="s-first"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-mail"/></svg><a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
   {%- endif %}
   {%- if site.author.github %}
   <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-gh"/></svg><a href="https://github.com/{{ site.author.github }}">{{ site.author.github }}</a></li>
@@ -41,20 +76,18 @@
   {%- if site.author.linkedin %}
   <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-li"/></svg><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}">LinkedIn</a></li>
   {%- endif %}
-  {%- if site.author.kaggle %}
-  <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-kg"/></svg><a href="https://www.kaggle.com/{{ site.author.kaggle }}">Kaggle</a></li>
-  {%- endif %}
   {%- if site.author.twitter %}
   <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-x"/></svg><a href="https://x.com/{{ site.author.twitter }}">X</a></li>
-  {%- endif %}
-  {%- if site.author.youtube %}
-  <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-yt"/></svg><a href="https://www.youtube.com/@{{ site.author.youtube }}">YouTube</a></li>
   {%- endif %}
   </ul>
  </div>
 
  <h1 class="dsp">Alban Nyantudre</h1>
+{%- if lang == 'fr' %}
+ <p class="lede">L&rsquo;apprentissage profond pour la vision, le langage et la parole &mdash; avec une obstination particuli&egrave;re pour les langues qui n&rsquo;ont presque pas de donn&eacute;es.</p>
+{%- else %}
  <p class="lede">Deep learning for vision, language and speech &mdash; with a particular stubbornness about the languages that have almost no data.</p>
+{%- endif %}
 
  {% include redesign/mlp-hero.html %}
 
@@ -62,17 +95,181 @@
 
 <article class="col">
 
- <h2 id="news">News</h2>
+ <h2 id="news">{{ t.h_news }}</h2>
  <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg3"/></svg><svg><use href="#sg5"/></svg></div>
  <div class="sb">
  {% include redesign/news.html %}
  </div>
 
- <h2 id="posts">Latest posts</h2>
+</article>
+
+<article class="col">
+
+ <h2 id="about">{{ t.h_about }}</h2>
+ <div class="rule" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
+
+{%- comment -%} ROUND 6 — the margin note used to restate the degree, which the
+   sentence beside it and the Education section both already give. It explains
+   the route instead, which neither does. The Wikipedia article differs by
+   language: Diplôme d'Ingénieur for English readers, Études d'ingénieurs au
+   Maroc for French ones. {%- endcomment -%}
+{%- if lang == 'fr' -%}
+  {%- assign wiki_ingenieur = 'https://fr.wikipedia.org/wiki/%C3%89tudes_d%27ing%C3%A9nieurs_au_Maroc' -%}
+{%- else -%}
+  {%- assign wiki_ingenieur = 'https://en.wikipedia.org/wiki/Dipl%C3%B4me_d%27Ing%C3%A9nieur' -%}
+{%- endif -%}
+
+{%- if lang == 'fr' %}
+ <p>Je suis ing&eacute;nieur. En juillet 2026, j&rsquo;ai obtenu le <strong>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat en Informatique et Intelligence Artificielle</strong> &agrave; l&rsquo;<a href="https://ensas.uca.ma/">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</a> de Safi,<span class="marginnote"><span class="mn-label">Le parcours</span>La voie des <span class="mn-em">grandes &eacute;coles</span> marocaines&nbsp;: deux ans de <i>classes pr&eacute;paratoires</i>, un concours, puis trois ans de cycle ing&eacute;nieur &mdash; cinq en tout, qui m&egrave;nent au <a href="{{ wiki_ingenieur }}"><i>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat</i></a>.</span> sur des bases solides en math&eacute;matiques appliqu&eacute;es et en informatique. Je cherche aujourd&rsquo;hui une <strong>th&egrave;se en apprentissage profond</strong>, avec un int&eacute;r&ecirc;t particulier pour l&rsquo;<strong>apprentissage multimodal</strong>.</p>
+
+ <p>Je travaille sur l&rsquo;<strong>apprentissage profond pour la vision, le langage et la parole</strong>.{% if wrinnn %}<span class="marginnote"><span class="mn-label">{{ wrinnn[kt] | default: wrinnn.title | split: ' - ' | first | split: ' &mdash; ' | first }}</span>{{ wrinnn[kx] | default: wrinnn.excerpt | split: '<br' | first | strip_html | strip }} <a href="{{ wrinnn.url | relative_url }}">{{ t.see_project }}</a>.</span>{% endif %} Le fil conducteur, ce sont les <strong>langues africaines peu dot&eacute;es</strong>&nbsp;: chez GO AI Corporation, j&rsquo;ai entra&icirc;n&eacute; et d&eacute;ploy&eacute; des mod&egrave;les de traduction, de reconnaissance et de synth&egrave;se de la parole pour le moor&eacute;, une langue parl&eacute;e par plus de sept millions de personnes et presque absente des donn&eacute;es, et j&rsquo;ai contribu&eacute; &agrave; constituer l&rsquo;un des plus grands corpus moor&eacute; existants. Plus r&eacute;cemment, de mars &agrave; ao&ucirc;t 2026, j&rsquo;ai travaill&eacute; sur l&rsquo;apprentissage quantique g&eacute;n&eacute;ratif appliqu&eacute; &agrave; la d&eacute;couverte de m&eacute;dicaments, &agrave; l&rsquo;Universit&eacute; de Moncton.</p>
+
+ <p class="tail">N&rsquo;h&eacute;sitez pas &agrave; parcourir mes <a href="{{ projects_url | relative_url }}">travaux</a>, &agrave; lire le <a href="{{ blog_url | relative_url }}">blog</a>, ou &agrave; <a href="mailto:{{ site.author.email }}">m&rsquo;&eacute;crire</a>.</p>
+{%- else %}
+ <p>I&rsquo;m an engineer. In July 2026 I finished the <strong>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat in Computer Science and Artificial Intelligence</strong> at the <a href="https://ensas.uca.ma/">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</a> in Safi,<span class="marginnote"><span class="mn-label">The route</span>The Moroccan <span class="mn-em">grande &eacute;cole</span> path: two years of <i>classes pr&eacute;paratoires</i>, sat competitively, then three years of engineering &mdash; five in all, ending in the <a href="{{ wiki_ingenieur }}"><i>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat</i></a>.</span> on a foundation in applied mathematics and computer science. I am looking for a <strong>PhD in deep learning</strong>, with a particular interest in <strong>multimodal learning</strong>.</p>
+
+ <p>I work on <strong>deep learning for vision, language and speech</strong>.{% if wrinnn %}<span class="marginnote"><span class="mn-label">{{ wrinnn.title | split: ' - ' | first | split: ' &mdash; ' | first }}</span>{{ wrinnn.excerpt | split: '<br' | first | strip_html | strip }} <a href="{{ wrinnn.url | relative_url }}">{{ t.see_project }}</a>.</span>{% endif %} The through-line is <strong>low-resource African languages</strong>: at GO AI Corporation I trained and deployed translation, speech recognition and speech synthesis models for Moor&eacute;, a language with over 7 million speakers and very little data, and helped build one of the largest Moor&eacute; corpora to date. Most recently, from March to August 2026, I worked on generative quantum machine learning for drug discovery at the Universit&eacute; de Moncton.</p>
+
+ <p class="tail">Feel free to explore my <a href="{{ projects_url | relative_url }}">projects</a>, check out my <a href="{{ blog_url | relative_url }}">blog</a>, or <a href="mailto:{{ site.author.email }}">get in touch</a>.</p>
+{%- endif %}
+
+</article>
+
+<article class="col">
+
+ <h2 id="education">{{ t.h_education }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg1"/></svg><svg><use href="#sg3"/></svg></div>
+
+ <ul class="trail">
+{%- if lang == 'fr' %}
+  <li>
+  <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>Safi, Maroc. Universit&eacute; Cadi Ayyad. Boursier de la Coop&eacute;ration du Royaume du Maroc.</span>
+  <h3>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat (BAC+5) &mdash; Informatique &amp; Intelligence Artificielle</h3>
+  <span class="meta"><time datetime="2023-10">{% include redesign/date.html d='2023-10-01' f='my_abbr' %}</time> &mdash; <time datetime="2026-07">{% include redesign/date.html d='2026-07-01' f='my_abbr' %}</time></span>
+  <p>Mention tr&egrave;s bien, 17,25&#8202;/&#8202;20 &middot; Rang&nbsp;: 1<sup>er</sup>&#8202;/&#8202;19.<br>Enseignements&nbsp;: math&eacute;matiques appliqu&eacute;es, structures de donn&eacute;es &amp; algorithmique, mod&eacute;lisation stochastique, optimisation, TAL, heuristiques, apprentissage profond, fouille de donn&eacute;es, big data, vision par ordinateur, th&eacute;orie des jeux, cloud, syst&egrave;mes flous.</p>
+  </li>
+  <li>
+  <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>F&egrave;s, Maroc. Universit&eacute; Sidi Mohamed Ben Abdellah.</span>
+  <h3>Classes pr&eacute;paratoires &mdash; Math&eacute;matiques, Physique &amp; Informatique</h3>
+  <span class="meta"><time datetime="2021-10">{% include redesign/date.html d='2021-10-01' f='my_abbr' %}</time> &mdash; <time datetime="2023-07">{% include redesign/date.html d='2023-07-01' f='my_abbr' %}</time></span>
+  <p>Mention tr&egrave;s bien, 16,25&#8202;/&#8202;20 &middot; Rang&nbsp;: 3<sup>e</sup>&#8202;/&#8202;262.<br>Enseignements&nbsp;: analyse, probabilit&eacute;s &amp; statistiques, alg&egrave;bre lin&eacute;aire, algorithmique, structures de donn&eacute;es, programmation C, &eacute;lectronique &amp; architecture des ordinateurs, physique.</p>
+  </li>
+{%- else %}
+  <li>
+  <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>Safi, Morocco. Cadi Ayyad University. The National School of Applied Sciences. On a Kingdom of Morocco Cooperation Scholarship.</span>
+  <h3>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat (BAC+5) &mdash; Computer Science &amp; Artificial Intelligence</h3>
+  <span class="meta"><time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2026-07">Jul 2026</time></span>
+  <p>Highest Honours, 17.25&#8202;/&#8202;20 &middot; Rank: 1st&#8202;/&#8202;19.<br>Coursework: applied mathematics, data structures &amp; algorithms, stochastic modelling, optimisation, NLP, heuristics, deep learning, data mining, big data, computer vision, game theory, cloud computing, fuzzy systems.</p>
+  </li>
+  <li>
+  <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>Fez, Morocco. Sidi Mohammed Ben Abdellah University. The National School of Applied Sciences.</span>
+  <h3>Preparatory Class &mdash; Mathematics, Physics &amp; Computer Science</h3>
+  <span class="meta"><time datetime="2021-10">Oct 2021</time> &mdash; <time datetime="2023-07">Jul 2023</time></span>
+  <p>Highest Honours, 16.25&#8202;/&#8202;20 &middot; Rank: 3rd&#8202;/&#8202;262.<br>Coursework: calculus, probability &amp; statistics, linear algebra, algorithms, data structures, C programming, electronics &amp; computer architecture, physics.</p>
+  </li>
+{%- endif %}
+ </ul>
+
+ <h2 id="experience">{{ t.h_experience }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg6"/></svg><svg><use href="#sg4"/></svg></div>
+
+ <ul class="trail">
+{%- if lang == 'fr' %}
+  <li>
+  <span class="marginnote"><span class="mn-label">Universit&eacute; de Moncton</span>Moncton, Nouveau-Brunswick, Canada. Financ&eacute; par une bourse Mitacs Globalink Research Award.</span>
+  <h3>Assistant de recherche en IA</h3>
+  <span class="meta"><time datetime="2026-03">{% include redesign/date.html d='2026-03-01' f='my_abbr' %}</time> &mdash; <time datetime="2026-08">{% include redesign/date.html d='2026-08-01' f='my_abbr' %}</time></span>
+  <p>Revue de litt&eacute;rature sur l&rsquo;apprentissage automatique quantique pour la d&eacute;couverte de m&eacute;dicaments, des mod&egrave;les g&eacute;n&eacute;ratifs mol&eacute;culaires aux circuits quantiques variationnels. Constitution et curation d&rsquo;un jeu de donn&eacute;es d&rsquo;inhibiteurs de la 5-lipoxyg&eacute;nase (5-LOX) &agrave; partir de bases chimiques (ChEMBL, PubChem, BindingDB). Impl&eacute;mentation et &eacute;valuation d&rsquo;architectures g&eacute;n&eacute;ratives hybrides quantique-classique (QGAN, QVAE) et de Transformers pour la g&eacute;n&eacute;ration <i>de novo</i> d&rsquo;inhibiteurs de la 5-LOX.</p>
+  </li>
+  <li>
+  <span class="marginnote"><span class="mn-label">GO AI Corporation</span>&Agrave; distance. Donn&eacute;es et IA au service de l&rsquo;int&eacute;r&ecirc;t g&eacute;n&eacute;ral. <a href="https://goaicorporation.org/">goaicorporation.org</a></span>
+  <h3>Ing&eacute;nieur en apprentissage automatique (temps partiel)</h3>
+  <span class="meta"><time datetime="2024-03">{% include redesign/date.html d='2024-03-01' f='my_abbr' %}</time> &mdash; <time datetime="2025-08">{% include redesign/date.html d='2025-08-01' f='my_abbr' %}</time></span>
+  <p>Conception, entra&icirc;nement et d&eacute;ploiement de mod&egrave;les de traduction, de synth&egrave;se et de reconnaissance de la parole (TA, RAP et synth&egrave;se vocale) pour le moor&eacute;, une langue peu dot&eacute;e parl&eacute;e par plus de sept millions de personnes dans au moins cinq pays d&rsquo;Afrique de l&rsquo;Ouest. Contribution &agrave; la constitution de l&rsquo;un des plus grands corpus moor&eacute; existants.</p>
+  </li>
+  <li>
+  <span class="marginnote"><span class="mn-label">Technocolabs Softwares</span>&Agrave; distance. Titres adoss&eacute;s &agrave; des cr&eacute;ances hypoth&eacute;caires, pour des institutions financi&egrave;res.</span>
+  <h3>Stagiaire ing&eacute;nieur en apprentissage automatique</h3>
+  <span class="meta"><time datetime="2023-08">{% include redesign/date.html d='2023-08-01' f='my_abbr' %}</time> &mdash; <time datetime="2023-10">{% include redesign/date.html d='2023-10-01' f='my_abbr' %}</time></span>
+  <p>D&eacute;veloppement et d&eacute;ploiement de mod&egrave;les pr&eacute;disant le risque de remboursement anticip&eacute; de titres adoss&eacute;s &agrave; des cr&eacute;ances hypoth&eacute;caires, pour mieux &eacute;valuer le risque en institution financi&egrave;re.</p>
+  </li>
+{%- else %}
+  <li>
+  <span class="marginnote"><span class="mn-label">Universit&eacute; de Moncton</span>Moncton, New Brunswick, Canada. Supported by a Mitacs Globalink Research Award.</span>
+  <h3>AI Research Assistant</h3>
+  <span class="meta"><time datetime="2026-03">Mar 2026</time> &mdash; <time datetime="2026-08">Aug 2026</time></span>
+  <p>Literature review on quantum machine learning for drug discovery, covering molecular generative models and variational quantum circuits. Collected and curated a dataset of 5-lipoxygenase (5-LOX) inhibitors from chemical databases (ChEMBL, PubChem, BindingDB). Implemented and evaluated hybrid quantum-classical generative architectures (QGAN, QVAE) and Transformers for the <i>de novo</i> generation of 5-LOX inhibitors.</p>
+  </li>
+  <li>
+  <span class="marginnote"><span class="mn-label">GO AI Corporation</span>Remote. Data and AI systems for social good. <a href="https://goaicorporation.org/">goaicorporation.org</a></span>
+  <h3>Machine Learning Engineer (part-time)</h3>
+  <span class="meta"><time datetime="2024-03">Mar 2024</time> &mdash; <time datetime="2025-08">Aug 2025</time></span>
+  <p>Designed, trained and deployed translation, speech synthesis and speech recognition models (MT, ASR and TTS) for Moor&eacute;, a low-resource language with more than 7 million speakers across five or more West African countries. Contributed to building one of the largest Moor&eacute;-language corpora to date.</p>
+  </li>
+  <li>
+  <span class="marginnote"><span class="mn-label">Technocolabs Softwares</span>Remote. Mortgage-backed securities, for financial institutions.</span>
+  <h3>Machine Learning Engineering Intern</h3>
+  <span class="meta"><time datetime="2023-08">Aug</time> &mdash; <time datetime="2023-10">Oct 2023</time></span>
+  <p>Developed and deployed ML models to predict prepayment risk of mortgage-backed securities, supporting better risk assessment for financial institutions.</p>
+  </li>
+{%- endif %}
+ </ul>
+
+</article>
+
+<article class="col">
+
+ <h2 id="work">{{ t.h_work }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg5"/></svg><svg><use href="#sg1"/></svg></div>
+
+{%- for item in projects limit: 4 %}
+ <div class="entry">
+  <span class="marginnote">{% if item.tags.size > 0 %}<span class="mn-label">{{ t.tags }}</span>{{ item.tags | join: ' &middot; ' }}{% endif %}</span>
+  <h3><a class="tl" href="{{ item.url | relative_url }}" hreflang="en">{{ item[kt] | default: item.title }}</a></h3>
+  <p>{{ item[kx] | default: item.excerpt | split: '<br' | first | strip_html | strip }}</p>
+  <p class="res">{% if item.github_url %}<span class="g"><a href="{{ item.github_url }}">{{ t.code }}</a></span> {% endif %}<span class="g"><a href="{{ item.url | relative_url }}">{{ t.details }}</a></span><span class="stars">{% if item.github_stars %}&#9733; {{ item.github_stars }} {{ t.stars_many }} &middot; {% endif %}{{ item.date | date: '%Y' }}</span></p>
+ </div>
+{%- endfor %}
+
+ {%- comment -%} INTEGRATION: the design typed "All eleven projects", and
+    eleven is what site.portfolio currently holds — but /projects/ counts the
+    collection for its own standfirst, so a twelfth project would have left
+    the two pages disagreeing on the same page load. Counted here too. The
+    sentence is the design's; only the number is now read rather than typed,
+    and in French the number sits in a different place, which is why the
+    string carries a %s rather than being glued together from two halves.
+ {%- endcomment -%}
+ <p class="tail"><a href="{{ projects_url | relative_url }}">{{ t.all_projects | replace: '%s', site.portfolio.size }}</a></p>
+
+</article>
+
+<article class="col">
+
+ <h2 id="awards">{{ t.h_awards }}</h2>
+ <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg2"/></svg><svg><use href="#sg6"/></svg></div>
+ <div class="sb">
+ <ul class="list">
+{%- for award in awards %}
+  <li>
+  <span class="marginnote">{% if award.issuer %}<span class="mn-label">{{ t.orgs[award.issuer] | default: award.issuer | split: ' - ' | first }}</span>{% endif %}<span class="mn-em"><time datetime="{{ award.date | date: '%Y' }}">{{ award.date | date: '%Y' }}</time></span></span>
+  <span class="t">{{ award[kt] | default: award.title }}</span>{% if award.excerpt %}<br>
+  <span class="meta">{{ award[kx] | default: award.excerpt | strip_html | strip }}</span>{% endif %}{% if award.link %}<br>
+  <span class="res"><span class="g"><a href="{{ award.link }}">{{ award[klbl] | default: award.link_label | default: t.details }}</a></span></span>{% endif %}
+  </li>
+{%- endfor %}
+ </ul>
+ </div>
+
+</article>
+
+<article class="col">
+
+ <h2 id="posts">{{ t.h_posts }}</h2>
  <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg5"/></svg><svg><use href="#sg2"/></svg></div>
  <div class="sb">
 {%- for post in latest limit: 3 %}
  {%- assign cat = post.categories | first -%}
+ {%- assign cat_label = t.cat[cat] | default: cat | replace: '_', ' ' | replace: '-', ' ' | capitalize -%}
  {%- comment -%} INTEGRATION: the SAME reading time /blog/ and the post
     itself compute, word for word. This row used to capture the legacy
     _includes/read-time.html and rewrite "minute read" into "min read"
@@ -83,115 +280,22 @@
  {%- assign words = post.content | strip_html | number_of_words -%}
  {%- assign mins = words | divided_by: site.words_per_minute -%}
  {%- if mins < 1 %}{% assign mins = 1 %}{% endif -%}
+ {%- comment -%} The row states BOTH twins, whichever language the reader is
+    in: the current language points at the post above it, the other at its
+    counterpart, and a post with no twin simply shows the one. {%- endcomment -%}
+ {%- if lang == 'fr' -%}
+   {%- assign fr_href = post.url -%}{%- assign en_href = post.translation_en -%}
+ {%- else -%}
+   {%- assign en_href = post.url -%}{%- assign fr_href = post.translation_fr -%}
+ {%- endif %}
  <div class="wrow">
-  <span class="marginnote">{% if cat %}<span class="mn-label">{{ cat | replace: '_', ' ' | replace: '-', ' ' | capitalize }}</span>{% endif %}<span class="mn-em"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%-d %b %Y' }}</time></span>{% if post.tags.size > 0 %}<br>{% assign shown = 0 %}{% for tag in post.tags %}{% unless tag == cat %}{% if shown > 0 %} &middot; {% endif %}{{ tag | replace: '_', ' ' | replace: '-', ' ' }}{% assign shown = shown | plus: 1 %}{% endunless %}{% endfor %}{% endif %}</span>
-  <h3 class="wtitle"><a class="tl" href="{{ post.url | relative_url }}" hreflang="en">{{ post.title }}</a></h3>
-  <span class="res"><span class="gs"><a href="{{ post.url | relative_url }}" hreflang="en">EN</a></span>{% if post.translation_fr %} <span class="gs"><a href="{{ post.translation_fr | relative_url }}" hreflang="fr" lang="fr">FR</a></span>{% endif %} <span class="dot">&middot; {{ mins }} min read</span></span>
+  <span class="marginnote">{% if cat %}<span class="mn-label">{{ cat_label }}</span>{% endif %}<span class="mn-em"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=post.date f='dmy_abbr' %}</time></span>{% if post.tags.size > 0 %}<br>{% assign shown = 0 %}{% for tag in post.tags %}{% unless tag == cat %}{% if shown > 0 %} &middot; {% endif %}{{ tag | replace: '_', ' ' | replace: '-', ' ' }}{% assign shown = shown | plus: 1 %}{% endunless %}{% endfor %}{% endif %}</span>
+  <h3 class="wtitle"><a class="tl" href="{{ post.url | relative_url }}" hreflang="{{ lang }}"{% if lang == 'fr' %} lang="fr"{% endif %}>{{ post.title }}</a></h3>
+  <span class="res">{% if en_href %}<span class="gs"><a href="{{ en_href | relative_url }}" hreflang="en" lang="en">EN</a></span>{% endif %}{% if fr_href %} <span class="gs"><a href="{{ fr_href | relative_url }}" hreflang="fr" lang="fr">FR</a></span>{% endif %} <span class="dot">&middot; {{ mins }} {{ t.min_read }}</span></span>
  </div>
 {%- endfor %}
 
- <p class="tail"><a href="{{ '/blog/' | relative_url }}">All blog posts &rarr;</a></p>
- </div>
-
-</article>
-
-<article class="col">
-
- <h2 id="about">About me</h2>
- <div class="rule" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
-
- <p>I&rsquo;m an engineer. In July 2026 I finished the <strong>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat in Computer Science and Artificial Intelligence</strong> at <a href="https://ensas.uca.ma/">ENSA Safi</a>,<span class="marginnote"><span class="mn-label">Degree</span><span class="mn-em">Ing&eacute;nieur d&rsquo;&Eacute;tat, Computer Science &amp; AI</span><br>ENSA Safi, Cadi Ayyad University &middot; 2023&ndash;2026 &middot; Highest Honours, 17.25&#8202;/&#8202;20 &middot; Rank 1st&#8202;/&#8202;19</span> on a foundation in applied mathematics and computer science. I am looking for a <strong>PhD in deep learning</strong>, with a particular interest in <strong>multimodal learning</strong>.</p>
-
- <p>I work on <strong>deep learning for vision, language and speech</strong>.{% if wrinnn %}<span class="marginnote"><span class="mn-label">{{ wrinnn.title | split: ' - ' | first | split: ' &mdash; ' | first }}</span>{{ wrinnn.excerpt | split: '<br' | first | strip_html | strip }} <a href="{{ wrinnn.url | relative_url }}">See the project</a>.</span>{% endif %} The through-line is <strong>low-resource African languages</strong>: at GO AI Corporation I trained and deployed translation, speech recognition and speech synthesis models for Moor&eacute;, a language with over 7 million speakers and very little data, and helped build one of the largest Moor&eacute; corpora to date. Most recently, from March to August 2026, I worked on generative quantum machine learning for drug discovery at the Universit&eacute; de Moncton.</p>
-
- <p class="tail">Feel free to explore my <a href="{{ '/projects/' | relative_url }}">projects</a>, check out my <a href="{{ '/blog/' | relative_url }}">blog</a>, or <a href="mailto:{{ site.author.email }}">get in touch</a>.</p>
-
-</article>
-
-<article class="col">
-
- <h2 id="education">Education</h2>
- <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg1"/></svg><svg><use href="#sg3"/></svg></div>
-
- <ul class="trail">
-  <li>
-  <span class="marginnote"><span class="mn-label">ENSA Safi</span>Safi, Morocco. Cadi Ayyad University. On a Kingdom of Morocco Cooperation Scholarship.</span>
-  <h3>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat (BAC+5) &mdash; Computer Science &amp; Artificial Intelligence</h3>
-  <span class="meta"><time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2026-07">Jul 2026</time> &middot; ENSA Safi, Cadi Ayyad University</span>
-  <p>Highest Honours, 17.25&#8202;/&#8202;20 &middot; Rank: 1st&#8202;/&#8202;19. Coursework: applied mathematics, data structures &amp; algorithms, stochastic modelling, optimisation, NLP, heuristics, deep learning, data mining, big data, computer vision, game theory, cloud computing, fuzzy systems.</p>
-  </li>
-  <li>
-  <span class="marginnote"><span class="mn-label">ENSA Fez</span>Fez, Morocco. Sidi Mohammed Ben Abdellah University.</span>
-  <h3>Preparatory Class &mdash; Mathematics, Physics &amp; Computer Science</h3>
-  <span class="meta"><time datetime="2021-10">Oct 2021</time> &mdash; <time datetime="2023-07">Jul 2023</time> &middot; ENSA Fez, Sidi Mohammed Ben Abdellah University</span>
-  <p>Highest Honours, 16.25&#8202;/&#8202;20 &middot; Rank: 3rd&#8202;/&#8202;262. Coursework: calculus, probability &amp; statistics, linear algebra, algorithms, data structures, C programming, electronics &amp; computer architecture, physics.</p>
-  </li>
- </ul>
-
- <h2 id="experience">Experience</h2>
- <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg6"/></svg><svg><use href="#sg4"/></svg></div>
-
- <ul class="trail">
-  <li>
-  <span class="marginnote"><span class="mn-label">Universit&eacute; de Moncton</span>Moncton, New Brunswick, Canada. Supported by a Mitacs Globalink Research Award.</span>
-  <h3>AI Research Assistant</h3>
-  <span class="meta"><time datetime="2026-03">Mar 2026</time> &mdash; <time datetime="2026-08">Aug 2026</time> &middot; Universit&eacute; de Moncton</span>
-  <p>Literature review on quantum machine learning for drug discovery, covering molecular generative models and variational quantum circuits. Collected and curated a dataset of 5-lipoxygenase (5-LOX) inhibitors from chemical databases (ChEMBL, PubChem, BindingDB). Implemented and evaluated hybrid quantum-classical generative architectures (QGAN, QVAE) and Transformers for the <i>de novo</i> generation of 5-LOX inhibitors.</p>
-  </li>
-  <li>
-  <span class="marginnote"><span class="mn-label">GO AI Corporation</span>Remote. Data and AI systems for social good. <a href="https://goaicorporation.org/">goaicorporation.org</a></span>
-  <h3>Machine Learning Engineer (part-time)</h3>
-  <span class="meta"><time datetime="2024-03">Mar 2024</time> &mdash; <time datetime="2025-08">Aug 2025</time> &middot; GO AI Corporation</span>
-  <p>Designed, trained and deployed translation, speech synthesis and speech recognition models (MT, ASR and TTS) for Moor&eacute;, a low-resource language with more than 7 million speakers across five or more West African countries. Contributed to building one of the largest Moor&eacute;-language corpora to date.</p>
-  </li>
-  <li>
-  <span class="marginnote"><span class="mn-label">Technocolabs Softwares</span>Remote. Mortgage-backed securities, for financial institutions.</span>
-  <h3>Machine Learning Engineering Intern</h3>
-  <span class="meta"><time datetime="2023-08">Aug</time> &mdash; <time datetime="2023-10">Oct 2023</time> &middot; Technocolabs Softwares Inc.</span>
-  <p>Developed and deployed ML models to predict prepayment risk of mortgage-backed securities, supporting better risk assessment for financial institutions.</p>
-  </li>
- </ul>
-
-</article>
-
-<article class="col">
-
- <h2 id="work">Selected work</h2>
- <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg5"/></svg><svg><use href="#sg1"/></svg></div>
-
-{%- for item in projects limit: 4 %}
- <div class="entry">
-  <span class="marginnote">{% if item.tags.size > 0 %}<span class="mn-label">Tags</span>{{ item.tags | join: ' &middot; ' }}{% endif %}</span>
-  <h3><a class="tl" href="{{ item.url | relative_url }}" hreflang="en">{{ item.title }}</a></h3>
-  <p>{{ item.excerpt | split: '<br' | first | strip_html | strip }}</p>
-  <p class="res">{% if item.github_url %}<span class="g"><a href="{{ item.github_url }}">Code</a></span> {% endif %}<span class="g"><a href="{{ item.url | relative_url }}">Details</a></span><span class="stars">{% if item.github_stars %}&#9733; {{ item.github_stars }} stars &middot; {% endif %}{{ item.date | date: '%Y' }}</span></p>
- </div>
-{%- endfor %}
-
- {%- comment -%} INTEGRATION: the design typed "All eleven projects", and
-    eleven is what site.portfolio currently holds — but /projects/ counts the
-    collection for its own standfirst, so a twelfth project would have left
-    the two pages disagreeing on the same page load. Counted here too. The
-    sentence is the design's; only the number is now read rather than typed.
- {%- endcomment -%}
- <p class="tail"><a href="{{ '/projects/' | relative_url }}">All {{ site.portfolio | size }} projects &rarr;</a></p>
-
-</article>
-
-<article class="col">
-
- <h2 id="awards">Awards</h2>
- <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg2"/></svg><svg><use href="#sg6"/></svg></div>
- <div class="sb">
- <ul class="list">
-{%- for award in awards %}
-  <li>
-  <span class="marginnote">{% if award.issuer %}<span class="mn-label">{{ award.issuer | split: ' - ' | first }}</span>{% endif %}<span class="mn-em"><time datetime="{{ award.date | date: '%Y' }}">{{ award.date | date: '%Y' }}</time></span></span>
-  <span class="t">{{ award.title }}</span>{% if award.excerpt %}<br>
-  <span class="meta">{{ award.excerpt | strip_html | strip }}</span>{% endif %}
-  </li>
-{%- endfor %}
- </ul>
+ <p class="tail"><a href="{{ blog_url | relative_url }}">{{ t.all_posts }}</a></p>
  </div>
 
 </article>
@@ -201,7 +305,7 @@
      no fill, no radius — a rubric, a hairline, and the widget itself, sitting
      in the metadata type the rest of the page already speaks. -->
 <aside class="col vmap">
- <p class="rubric">Where readers come from</p>
+ <p class="rubric">{{ t.map_rubric }}</p>
  <div class="visitors-map">
   <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=fcPVyWoP2WbbJvz9GDQRP0i4pizFz-OPfy4uC9NQiMk&cl=ffffff&w=a"></script>
  </div>

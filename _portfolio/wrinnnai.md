@@ -1,6 +1,8 @@
 ---
 title: "WrinnnAI - AI Mobile Assistant for the Visually Impaired"
+title_fr: "WrinnnAI - assistant mobile par IA pour les personnes déficientes visuelles"
 excerpt: "Real-time streaming mobile assistant using Computer Vision and Speech processing to help visually impaired users navigate their environment.<br/><br/>**Technologies:** Python, Computer Vision, VLMs, TTS, Flutter, FastAPI"
+excerpt_fr: "Assistant mobile en flux continu, fondé sur la vision par ordinateur et le traitement de la parole, pour aider les personnes déficientes visuelles à se déplacer dans leur environnement.<br/><br/>**Technologies :** Python, vision par ordinateur, VLM, synthèse vocale, Flutter, FastAPI"
 collection: portfolio
 date: 2025-05-01
 image: "portfolio/wrrinai-icon.png"

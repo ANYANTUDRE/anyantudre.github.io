@@ -1,0 +1,298 @@
+{%- comment -%}
+  THE CV — § 17 of the approved design. A notebook: a right-set mono prompt,
+  one hairline gutter, no cell backgrounds. The right margin still belongs to
+  the notes. Awards, certifications, teaching and talks are driven from the
+  collections; identity, experience, education, skills, leadership and
+  languages are his own CV copy, restyled, not rewritten.
+
+  ROUND 6, § 1 — the body moved out of _pages/cv.md into this include so /cv/
+  and /fr/cv/ are one notebook in two languages: the cell structure, the
+  prompts and the collection loops are written once, and only the copy
+  branches on page.lang. A French CV is the one page on this site a French
+  reader is most likely to have been sent, so nothing here is left in English
+  except proper names and the credential titles awarding bodies issue in
+  English.
+
+  The In[n] / Out[n] prompts are Python, not prose, and read the same in both
+  languages — they still come from t.yml so that a future locale can change
+  them.
+{%- endcomment -%}
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign kt = 'title_' | append: lang -%}
+{%- assign kx = 'excerpt_' | append: lang -%}
+{%- if lang == 'fr' -%}
+  {%- assign talks_url = '/fr/teaching-talks/' -%}
+{%- else -%}
+  {%- assign talks_url = '/teaching-talks/' -%}
+{%- endif -%}
+
+<header class="cvhead band">
+ <div class="cvtop">
+ <h1>{{ t.cv_title }}</h1>
+ <a class="pdf" href="{{ page.cv_pdf | relative_url }}" download><svg class="dl" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3v11.4"/><path d="M7 9.9l5 5 5-5"/><path d="M3.6 15.4V19a2 2 0 0 0 2 2h12.8a2 2 0 0 0 2-2v-3.6"/></svg>{{ t.pdf_version }}</a>
+ </div>
+{%- if lang == 'fr' %}
+ <p class="lede">Un carnet&nbsp;: chaque ligne <span class="call">In</span> est une question, chaque ligne <span class="call">Out</span> sa r&eacute;ponse.</p>
+{%- else %}
+ <p class="lede">A notebook: each <span class="call">In</span> row is a question, each <span class="call">Out</span> row its answer.</p>
+{%- endif %}
+ <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg5"/></svg></div>
+</header>
+
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}1{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-identity">{{ t.cv_identity }}</h2><span class="call">alban.identity</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg3"/></svg></div>
+ <div class="pr">{{ t.cv_out }}1{{ t.cv_close }}</div>
+ <div class="cellbody col">
+ <div class="marginnote profile">
+ <img class="pt" src="{{ '/images/profile.jpg' | relative_url }}" alt="{{ site.author.name }}" width="200" height="250">
+ <span class="pnames">
+ <span class="pname">{{ site.author.name }}</span>
+ <span class="prole">{% if lang == 'fr' %}Ing&eacute;nieur en apprentissage automatique &mdash; apprentissage profond pour la vision, le langage et la parole &mdash; en recherche de th&egrave;se{% else %}{{ site.author.bio }}{% endif %}</span>
+ <span class="pplace">{{ t.places[site.author.location] | default: site.author.location }}{% if site.author.pronouns %} <span class="sep">&middot;</span> {% if lang == 'fr' %}il/lui{% else %}{{ site.author.pronouns }}{% endif %}{% endif %}</span>
+ </span>
+ <ul class="socials">
+ {%- if site.author.email %}
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-mail"/></svg><a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></li>
+ {%- endif %}
+ {%- if site.author.github %}
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-gh"/></svg><a href="https://github.com/{{ site.author.github }}">{{ site.author.github }}</a></li>
+ {%- endif %}
+ {%- if site.author.linkedin %}
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-li"/></svg><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}">LinkedIn</a></li>
+ {%- endif %}
+ {%- if site.author.twitter %}
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-x"/></svg><a href="https://x.com/{{ site.author.twitter }}">X</a></li>
+ {%- endif %}
+ </ul>
+ </div>
+{%- if lang == 'fr' %}
+ <p class="lede">Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat en Informatique et Intelligence Artificielle, &Eacute;cole Nationale des Sciences Appliqu&eacute;es de Safi, juillet 2026. Apprentissage profond pour la vision, le langage et la parole &mdash; avec une obstination particuli&egrave;re pour les langues qui n&rsquo;ont presque pas de donn&eacute;es. &Agrave; la recherche d&rsquo;une th&egrave;se en apprentissage profond, avec un int&eacute;r&ecirc;t pour l&rsquo;apprentissage multimodal.</p>
+{%- else %}
+ <p class="lede">Dipl&ocirc;me d'Ing&eacute;nieur d'&Eacute;tat in Computer Science and Artificial Intelligence, &Eacute;cole Nationale des Sciences Appliqu&eacute;es, Safi, July 2026. Deep learning for vision, language and speech &mdash; with a particular stubbornness about the languages that have almost no data. Looking for a PhD in deep learning, with an interest in multimodal learning.</p>
+{%- endif %}
+ </div>
+</div>
+
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}2{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-experience">{{ t.cv_experience }}</h2><span class="call">alban.experience</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg2"/></svg></div>
+ <div class="pr">{{ t.cv_out }}2{{ t.cv_close }}</div>
+ <div class="cellbody col">
+ <ul class="trail">
+{%- if lang == 'fr' %}
+ <li>
+ <span class="marginnote"><span class="mn-label">5-LOX</span>La 5-lipoxyg&eacute;nase, l&rsquo;enzyme cible. Les inhibiteurs candidats ont &eacute;t&eacute; extraits de ChEMBL, PubChem et BindingDB.</span>
+ <h3>Assistant de recherche en IA</h3>
+ <span class="meta"><time datetime="2026-03">{% include redesign/date.html d='2026-03-01' f='month_abbr' %}</time> &mdash; <time datetime="2026-08">{% include redesign/date.html d='2026-08-01' f='my_abbr' %}</time> <span class="sep">&middot;</span> Universit&eacute; de Moncton <span class="sep">&middot;</span> Moncton, Canada</span>
+ <p>Revue de litt&eacute;rature sur l&rsquo;apprentissage automatique quantique pour la d&eacute;couverte de m&eacute;dicaments, des mod&egrave;les g&eacute;n&eacute;ratifs mol&eacute;culaires aux circuits quantiques variationnels. Constitution et curation d&rsquo;un jeu de donn&eacute;es d&rsquo;inhibiteurs de la 5-lipoxyg&eacute;nase (5-LOX) &agrave; partir de bases chimiques. Impl&eacute;mentation et &eacute;valuation d&rsquo;architectures g&eacute;n&eacute;ratives hybrides quantique-classique &mdash; QGAN, QVAE &mdash; et de Transformers pour la g&eacute;n&eacute;ration <i>de novo</i> d&rsquo;inhibiteurs de la 5-LOX.</p>
+ </li>
+ <li>
+ <span class="marginnote"><span class="mn-label">Moor&eacute;</span>Plus de sept millions de locuteurs dans au moins cinq pays d&rsquo;Afrique de l&rsquo;Ouest, et presque aucune donn&eacute;e exploitable par une machine.</span>
+ <h3>Ing&eacute;nieur en apprentissage automatique (temps partiel)</h3>
+ <span class="meta"><time datetime="2024-03">{% include redesign/date.html d='2024-03-01' f='my_abbr' %}</time> &mdash; <time datetime="2025-08">{% include redesign/date.html d='2025-08-01' f='my_abbr' %}</time> <span class="sep">&middot;</span> GO AI Corporation <span class="sep">&middot;</span> &agrave; distance</span>
+ <p>Conception, entra&icirc;nement et d&eacute;ploiement de mod&egrave;les de traduction, de synth&egrave;se et de reconnaissance de la parole &mdash; TA, RAP et synth&egrave;se vocale &mdash; pour le moor&eacute;, une langue peu dot&eacute;e. Contribution &agrave; la constitution de l&rsquo;un des plus grands corpus moor&eacute; existants, pour le TAL en langues peu dot&eacute;es.</p>
+ </li>
+ <li>
+ <h3>Stagiaire ing&eacute;nieur en apprentissage automatique</h3>
+ <span class="meta"><time datetime="2023-08">{% include redesign/date.html d='2023-08-01' f='month_abbr' %}</time> &mdash; <time datetime="2023-10">{% include redesign/date.html d='2023-10-01' f='my_abbr' %}</time> <span class="sep">&middot;</span> Technocolabs Softwares Inc. <span class="sep">&middot;</span> &agrave; distance</span>
+ <p>D&eacute;veloppement et d&eacute;ploiement de mod&egrave;les pr&eacute;disant le risque de remboursement anticip&eacute; de titres adoss&eacute;s &agrave; des cr&eacute;ances hypoth&eacute;caires, pour l&rsquo;&eacute;valuation du risque en institution financi&egrave;re.</p>
+ </li>
+{%- else %}
+ <li>
+ <span class="marginnote"><span class="mn-label">5-LOX</span>5-lipoxygenase, the enzyme target. Candidate inhibitors were pulled from ChEMBL, PubChem and BindingDB.</span>
+ <h3>AI Research Assistant</h3>
+ <span class="meta"><time datetime="2026-03">Mar</time> &mdash; <time datetime="2026-08">Aug 2026</time> <span class="sep">&middot;</span> Universit&eacute; de Moncton <span class="sep">&middot;</span> Moncton, Canada</span>
+ <p>Literature review on quantum machine learning for drug discovery, covering molecular generative models and variational quantum circuits. Collected and curated a dataset of 5-lipoxygenase (5-LOX) inhibitors from chemical databases. Implemented and evaluated hybrid quantum-classical generative architectures &mdash; QGAN, QVAE &mdash; and Transformers for the <i>de novo</i> generation of 5-LOX inhibitors.</p>
+ </li>
+ <li>
+ <span class="marginnote"><span class="mn-label">Moor&eacute;</span>More than seven million speakers across five or more West African countries, and almost no machine-readable data.</span>
+ <h3>Machine Learning Engineer (part-time)</h3>
+ <span class="meta"><time datetime="2024-03">Mar 2024</time> &mdash; <time datetime="2025-08">Aug 2025</time> <span class="sep">&middot;</span> GO AI Corporation <span class="sep">&middot;</span> Remote</span>
+ <p>Designed, trained and deployed translation, speech synthesis and speech recognition models &mdash; MT, ASR and TTS &mdash; for Moor&eacute;, a low-resource language. Contributed to building one of the largest Moor&eacute;-language corpora to date, for low-resource NLP applications.</p>
+ </li>
+ <li>
+ <h3>Machine Learning Engineering Intern</h3>
+ <span class="meta"><time datetime="2023-08">Aug</time> &mdash; <time datetime="2023-10">Oct 2023</time> <span class="sep">&middot;</span> Technocolabs Softwares Inc. <span class="sep">&middot;</span> Remote</span>
+ <p>Developed and deployed models predicting the prepayment risk of mortgage-backed securities, for risk assessment at financial institutions.</p>
+ </li>
+{%- endif %}
+ </ul>
+ </div>
+</div>
+
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}3{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-education">{{ t.cv_education }}</h2><span class="call">alban.education</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg5"/></svg></div>
+ <div class="pr">{{ t.cv_out }}3{{ t.cv_close }}</div>
+ <div class="cellbody col">
+ <ul class="trail">
+{%- if lang == 'fr' %}
+ <li>
+ <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>Safi, Maroc. Universit&eacute; Cadi Ayyad. Boursier de la Coop&eacute;ration du Royaume du Maroc.</span>
+ <h3>Dipl&ocirc;me d&rsquo;Ing&eacute;nieur d&rsquo;&Eacute;tat (BAC+5) &mdash; Informatique et Intelligence Artificielle</h3>
+ <span class="meta"><time datetime="2023-10">{% include redesign/date.html d='2023-10-01' f='my_abbr' %}</time> &mdash; <time datetime="2026-07">{% include redesign/date.html d='2026-07-01' f='my_abbr' %}</time> <span class="sep">&middot;</span> Mention tr&egrave;s bien, 17,25/20 <span class="sep">&middot;</span> Rang 1<sup>er</sup>/19</span>
+ <p>Math&eacute;matiques appliqu&eacute;es, structures de donn&eacute;es et algorithmique, mod&eacute;lisation stochastique, optimisation, TAL, heuristiques, apprentissage profond, fouille de donn&eacute;es, big data, vision par ordinateur, th&eacute;orie des jeux, cloud, syst&egrave;mes flous.</p>
+ </li>
+ <li>
+ <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>F&egrave;s, Maroc. Universit&eacute; Sidi Mohamed Ben Abdellah. Le cycle pr&eacute;paratoire de deux ans qui pr&eacute;c&egrave;de le cycle ing&eacute;nieur.</span>
+ <h3>Classes pr&eacute;paratoires &mdash; Math&eacute;matiques, Physique et Informatique</h3>
+ <span class="meta"><time datetime="2021-10">{% include redesign/date.html d='2021-10-01' f='my_abbr' %}</time> &mdash; <time datetime="2023-07">{% include redesign/date.html d='2023-07-01' f='my_abbr' %}</time> <span class="sep">&middot;</span> Mention tr&egrave;s bien, 16,25/20 <span class="sep">&middot;</span> Rang 3<sup>e</sup>/262</span>
+ <p>Analyse, probabilit&eacute;s et statistiques, alg&egrave;bre lin&eacute;aire, algorithmique, structures de donn&eacute;es, programmation C, &eacute;lectronique et architecture des ordinateurs, physique.</p>
+ </li>
+{%- else %}
+ <li>
+ <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>Safi, Morocco. Cadi Ayyad University. The National School of Applied Sciences. Studied on a Kingdom of Morocco Cooperation Scholarship.</span>
+ <h3>Dipl&ocirc;me d'Ing&eacute;nieur d'&Eacute;tat (BAC+5) &mdash; Computer Science and Artificial Intelligence</h3>
+ <span class="meta"><time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2026-07">Jul 2026</time> <span class="sep">&middot;</span> Highest Honours, 17.25/20 <span class="sep">&middot;</span> Rank 1st/19</span>
+ <p>Applied mathematics, data structures and algorithms, stochastic modelling, optimisation, NLP, heuristics, deep learning, data mining, big data, computer vision, game theory, cloud computing, fuzzy systems.</p>
+ </li>
+ <li>
+ <span class="marginnote"><span class="mn-label">&Eacute;cole Nationale des Sciences Appliqu&eacute;es</span>Fez, Morocco. Sidi Mohammed Ben Abdellah University. The two-year preparatory cycle before the engineering one.</span>
+ <h3>Preparatory Class &mdash; Mathematics, Physics and Computer Science</h3>
+ <span class="meta"><time datetime="2021-10">Oct 2021</time> &mdash; <time datetime="2023-07">Jul 2023</time> <span class="sep">&middot;</span> Highest Honours, 16.25/20 <span class="sep">&middot;</span> Rank 3rd/262</span>
+ <p>Calculus, probability and statistics, linear algebra, algorithms, data structures, C programming, electronics and computer architecture, physics.</p>
+ </li>
+{%- endif %}
+ </ul>
+ </div>
+</div>
+
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}4{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-skills">{{ t.cv_skills }}</h2><span class="call">alban.stack</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
+ <div class="pr">{{ t.cv_out }}4{{ t.cv_close }}</div>
+ <div class="cellbody col">
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">En toutes lettres</span>Une liste group&eacute;e dit comment quelqu&rsquo;un voit les outils se r&eacute;pondre&nbsp;; une grille de logos ne dit que ce qu&rsquo;il a install&eacute;.</span>
+ <dl class="sk">
+ <dt>Programmation</dt><dd>Python <span class="sep">&middot;</span> R <span class="sep">&middot;</span> SQL <span class="sep">&middot;</span> Java <span class="sep">&middot;</span> C/C++</dd>
+ <dt>IA &amp; donn&eacute;es</dt><dd>PyTorch <span class="sep">&middot;</span> TensorFlow <span class="sep">&middot;</span> Hugging Face <span class="sep">&middot;</span> SQL/PostgreSQL <span class="sep">&middot;</span> MongoDB <span class="sep">&middot;</span> Redis <span class="sep">&middot;</span> Spark <span class="sep">&middot;</span> Airflow</dd>
+ <dt>Cloud &amp; MLOps</dt><dd>AWS <span class="sep">&middot;</span> Azure <span class="sep">&middot;</span> Docker <span class="sep">&middot;</span> Git <span class="sep">&middot;</span> MLflow <span class="sep">&middot;</span> FastAPI <span class="sep">&middot;</span> Django</dd>
+ <dt>Apprentissage profond</dt><dd>Mod&eacute;lisation du langage (RNN, Transformers/LLM, affinage supervis&eacute;, quantification, LoRA) <span class="sep">&middot;</span> vision par ordinateur (CNN, VAE, ViT, VLM) <span class="sep">&middot;</span> apprentissage par renforcement &amp; alignement (DPO, PPO, GRPO)</dd>
+ <dt>Traitement de la parole</dt><dd>Synth&egrave;se vocale (spectrogrammes de Mel, vocodeurs, G2P) <span class="sep">&middot;</span> reconnaissance de la parole (CTC, Seq2Seq/Whisper, encodeurs auto-supervis&eacute;s wav2vec2/XLS-R) <span class="sep">&middot;</span> pseudo-&eacute;tiquetage &amp; distillation <span class="sep">&middot;</span> outillage audio (librosa, torchaudio, soundfile, ffmpeg)</dd>
+ </dl>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">As text</span>A grouped list says how somebody thinks the tools relate; a logo grid only says what they installed.</span>
+ <dl class="sk">
+ <dt>Programming</dt><dd>Python <span class="sep">&middot;</span> R <span class="sep">&middot;</span> SQL <span class="sep">&middot;</span> Java <span class="sep">&middot;</span> C/C++</dd>
+ <dt>AI &amp; data</dt><dd>PyTorch <span class="sep">&middot;</span> TensorFlow <span class="sep">&middot;</span> Hugging Face <span class="sep">&middot;</span> SQL/PostgreSQL <span class="sep">&middot;</span> MongoDB <span class="sep">&middot;</span> Redis <span class="sep">&middot;</span> Spark <span class="sep">&middot;</span> Airflow</dd>
+ <dt>Cloud &amp; MLOps</dt><dd>AWS <span class="sep">&middot;</span> Azure <span class="sep">&middot;</span> Docker <span class="sep">&middot;</span> Git <span class="sep">&middot;</span> MLflow <span class="sep">&middot;</span> FastAPI <span class="sep">&middot;</span> Django</dd>
+ <dt>Deep learning</dt><dd>Language modelling (RNN, Transformers/LLM, supervised fine-tuning, quantisation, LoRA) <span class="sep">&middot;</span> computer vision (CNNs, VAE, ViT, VLM) <span class="sep">&middot;</span> RL &amp; alignment (DPO, PPO, GRPO)</dd>
+ <dt>Speech processing</dt><dd>Text-to-speech (mel-spectrograms, vocoders, G2P) <span class="sep">&middot;</span> ASR (CTC, Seq2Seq/Whisper, self-supervised encoders wav2vec2/XLS-R) <span class="sep">&middot;</span> pseudo-labelling &amp; distillation <span class="sep">&middot;</span> audio tooling (librosa, torchaudio, soundfile, ffmpeg)</dd>
+ </dl>
+{%- endif %}
+ </div>
+</div>
+
+{%- assign cv_awards = site.awards | sort: 'date' | reverse -%}
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}5{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-awards">{{ t.cv_awards }}</h2><span class="call">alban.awards</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg1"/></svg></div>
+ <div class="pr">{{ t.cv_out }}5{{ t.cv_close }}</div>
+ <div class="cellbody col">
+ <ul class="list list--d">
+ {%- for award in cv_awards %}
+ {%- assign a_title = award[kt] | default: award.title -%}
+ {%- assign a_excerpt = award[kx] | default: award.excerpt -%}
+ <li><span class="t">{% if award.link %}<a class="tl" href="{{ award.link }}">{{ a_title | escape_once }}</a>{% else %}{{ a_title | escape_once }}{% endif %}</span>{% if a_excerpt %}<span class="d">{{ a_excerpt | strip_html | strip | escape_once }}</span>{% endif %}<span class="meta">{{ t.orgs[award.issuer] | default: award.issuer | escape_once }} <span class="sep">&middot;</span> <time datetime="{{ award.date | date: '%Y-%m' }}">{{ award.date | date: '%Y' }}</time>{% if award.award_type %} <span class="sep">&middot;</span> {{ t.kinds[award.award_type] | default: award.award_type | escape_once }}{% endif %}</span></li>
+ {%- endfor %}
+ </ul>
+ </div>
+</div>
+
+{%- assign cv_certs = site.certifications | sort: 'date' | reverse -%}
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}6{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-certs">{{ t.cv_certifications }}</h2><span class="call">alban.certifications</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg3"/></svg></div>
+ <div class="pr">{{ t.cv_out }}6{{ t.cv_close }}</div>
+ <div class="cellbody band">
+ {%- comment -%} A certification keeps the name its awarding body issued it
+    under, in both languages: "Microsoft Certified: Azure Data Scientist
+    Associate" is the credential, not a description of it. {%- endcomment %}
+ <ul class="certs">
+ {%- for cert in cv_certs %}
+ <li><span class="t"><a class="tl" href="{{ cert.url | relative_url }}" hreflang="en">{{ cert[kt] | default: cert.title | escape_once }}</a></span><span class="iss">{{ t.orgs[cert.issuer] | default: cert.issuer | escape_once }}</span><span class="cy"><time datetime="{{ cert.date | date: '%Y-%m' }}">{{ cert.date | date: '%Y' }}</time></span></li>
+ {%- endfor %}
+ </ul>
+ </div>
+</div>
+
+{%- assign cv_teaching = site.teaching | sort: 'date' | reverse -%}
+{%- assign cv_talks = site.talks | sort: 'date' | reverse -%}
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}7{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-talks">{{ t.cv_teaching }}</h2><span class="call">alban.teaching</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg6"/></svg></div>
+ <div class="pr">{{ t.cv_out }}7{{ t.cv_close }}</div>
+ <div class="cellbody col">
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">{{ t.cv_in_full }}</span>Chaque s&eacute;ance avec sa propre page&nbsp;: <a href="{{ talks_url | relative_url }}">Enseignement &amp; conf&eacute;rences</a>.</span>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">{{ t.cv_in_full }}</span>Every session with its own page: <a href="{{ talks_url | relative_url }}">Teaching &amp; talks</a>.</span>
+{%- endif %}
+ <ul class="list">
+ {%- for item in cv_teaching %}
+ <li><span class="t"><a class="tl" href="{{ item.url | relative_url }}" hreflang="en">{{ item[kt] | default: item.title | escape_once }}</a></span><br><span class="meta">{{ t.instructor }} <span class="sep">&middot;</span> {{ t.places[item.venue] | default: item.venue | escape_once }} <span class="sep">&middot;</span> <time datetime="{{ item.date | date: '%Y-%m' }}">{% include redesign/date.html d=item.date f='my_abbr' %}</time>{% if item.location %} <span class="sep">&middot;</span> {{ t.places[item.location] | default: item.location | escape_once }}{% endif %}</span></li>
+ {%- endfor %}
+ {%- for item in cv_talks %}
+ <li><span class="t"><a class="tl" href="{{ item.url | relative_url }}">{{ item[kt] | default: item.title | escape_once }}</a></span><br><span class="meta">{{ t.kinds[item.talk_type] | default: item.talk_type | default: t.talk | escape_once }} <span class="sep">&middot;</span> {{ t.places[item.venue] | default: item.venue | escape_once }} <span class="sep">&middot;</span> <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=item.date f='dmy_abbr' %}</time>{% if item.location %} <span class="sep">&middot;</span> {{ t.places[item.location] | default: item.location | escape_once }}{% endif %}</span></li>
+ {%- endfor %}
+ </ul>
+ </div>
+</div>
+
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}8{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-additional">{{ t.cv_additional }}</h2><span class="call">alban.extras</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg1"/></svg></div>
+ <div class="pr">{{ t.cv_out }}8{{ t.cv_close }}</div>
+ <div class="cellbody col">
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">Niveaux</span>CECRL&nbsp;: C2 correspond &agrave; la ma&icirc;trise compl&egrave;te, A1 au niveau d&eacute;butant.</span>
+ <dl class="sk">
+ <dt>Langues</dt><dd>Fran&ccedil;ais (C2) <span class="sep">&middot;</span> anglais (C1) <span class="sep">&middot;</span> espagnol (A1) <span class="sep">&middot;</span> moor&eacute; (langue maternelle)</dd>
+ <dt>Qualit&eacute;s</dt><dd>Esprit critique <span class="sep">&middot;</span> leadership &amp; travail d&rsquo;&eacute;quipe <span class="sep">&middot;</span> curiosit&eacute; scientifique <span class="sep">&middot;</span> travail en profondeur</dd>
+ <dt>Enseignement</dt><dd>Programmation Python, plus de 60 &eacute;tudiants <span class="sep">&middot;</span> bootcamps data science et IA, plus de 200 &eacute;tudiants</dd>
+ <dt>Divers</dt><dd><a href="https://www.kaggle.com/{{ site.author.kaggle | default: 'waalbannyantudre' }}">Kaggle Datasets Master</a> <span class="sep">&middot;</span> <a href="https://www.linkedin.com/posts/speak-up-ensa-safi_daezbat-leadership-engagementaeztudiant-activity-7329903188252192768-BqQt">2&times; laur&eacute;at de concours d&rsquo;art oratoire</a></dd>
+ </dl>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">Levels</span>CEFR, where C2 is full mastery and A1 a beginner's.</span>
+ <dl class="sk">
+ <dt>Languages</dt><dd>French (C2) <span class="sep">&middot;</span> English (C1) <span class="sep">&middot;</span> Spanish (A1) <span class="sep">&middot;</span> Moor&eacute; (native)</dd>
+ <dt>Soft skills</dt><dd>Critical thinking <span class="sep">&middot;</span> leadership &amp; teamwork <span class="sep">&middot;</span> scientific curiosity <span class="sep">&middot;</span> deep work</dd>
+ <dt>Teaching</dt><dd>Python programming, 60+ students <span class="sep">&middot;</span> data science and AI bootcamps, 200+ students</dd>
+ <dt>Other</dt><dd><a href="https://www.kaggle.com/{{ site.author.kaggle | default: 'waalbannyantudre' }}">Kaggle Datasets Master</a> <span class="sep">&middot;</span> <a href="https://www.linkedin.com/posts/speak-up-ensa-safi_daezbat-leadership-engagementaeztudiant-activity-7329903188252192768-BqQt">2&times; public speaking competition winner</a></dd>
+ </dl>
+{%- endif %}
+ </div>
+</div>
+
+<div class="cell">
+ <div class="pr pr-in">{{ t.cv_in }}9{{ t.cv_close }}</div>
+ <div class="cellbody cell-in"><h2 id="cv-leadership">{{ t.cv_leadership }}</h2><span class="call">alban.service</span></div>
+ <div class="rule rule--cv" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
+ <div class="pr">{{ t.cv_out }}9{{ t.cv_close }}</div>
+ <div class="cellbody col">
+{%- if lang == 'fr' %}
+ <ul class="list list--d">
+ <li><span class="t">Responsable du p&ocirc;le D&eacute;bat, club SpeakUp</span><span class="d">Ateliers de d&eacute;bat hebdomadaires pour plus de 150 membres, et une &eacute;quipe men&eacute;e &agrave; la victoire dans une grande comp&eacute;tition.</span><span class="meta">ENSA Safi <span class="sep">&middot;</span> <time datetime="2023-10">{% include redesign/date.html d='2023-10-01' f='my_abbr' %}</time> &mdash; <time datetime="2025-09">{% include redesign/date.html d='2025-09-01' f='my_abbr' %}</time></span></li>
+ <li><span class="t">Coordinateur p&eacute;dagogique</span><span class="d">Accompagnement de plus de 100 &eacute;tudiants dans leur inscription et les d&eacute;marches administratives qui suivent.</span><span class="meta">AEBM, F&egrave;s <span class="sep">&middot;</span> <time datetime="2022-09">{% include redesign/date.html d='2022-09-01' f='my_abbr' %}</time> &mdash; <time datetime="2023-09">{% include redesign/date.html d='2023-09-01' f='my_abbr' %}</time></span></li>
+ </ul>
+ <p class="tail"><a href="{{ '/extra/' | relative_url }}" hreflang="en">{{ t.cv_extras }}</a></p>
+{%- else %}
+ <ul class="list list--d">
+ <li><span class="t">Head of Debate Section, SpeakUp Club</span><span class="d">Weekly debate workshops for 150+ members, and a team led to a win at a major competition.</span><span class="meta">ENSA Safi <span class="sep">&middot;</span> <time datetime="2023-10">Oct 2023</time> &mdash; <time datetime="2025-09">Sep 2025</time></span></li>
+ <li><span class="t">Academic Coordinator</span><span class="d">Helped 100+ students through enrolment and the administrative processes that follow it.</span><span class="meta">AEBM, Fez <span class="sep">&middot;</span> <time datetime="2022-09">Sep 2022</time> &mdash; <time datetime="2023-09">Sep 2023</time></span></li>
+ </ul>
+ <p class="tail"><a href="{{ '/extra/' | relative_url }}">{{ t.cv_extras }}</a></p>
+{%- endif %}
+ </div>
+</div>

@@ -1,0 +1,458 @@
+# ─────────────────────────────────────────────────────────────────────────────
+#  t.yml — THE UI STRING CATALOGUE.  ROUND 6, § 1.
+#
+#  GitHub Pages builds this site with its own Jekyll and ignores _plugins/, so
+#  there is no i18n plugin and there never will be one. The French site is
+#  therefore plain pages plus this file: every string a layout or an include
+#  EMITS ITSELF lives here under `en:` and `fr:`, and the templates read
+#
+#      {%- assign lang = page.lang | default: 'en' -%}
+#      {%- assign t = site.data.t[lang] -%}
+#
+#  and then `{{ t.something }}`. A bare English literal in a template is a bug:
+#  it would show up untranslated in the middle of a French page.
+#
+#  WHAT DOES NOT LIVE HERE: his prose. Paragraphs carry inline links and markup,
+#  and Liquid does not re-render the contents of a variable, so `{{ t.para }}`
+#  could never produce a working <a href="{{ … | relative_url }}">. Prose is
+#  branched with {% if page.lang == 'fr' %} inside the include that holds it,
+#  where the two versions sit next to each other and are edited together.
+#  Collection content — titles and excerpts — lives in each item's own front
+#  matter as `title_fr:` / `excerpt_fr:`, one file per entry, never two.
+#
+#  DATES. Jekyll's `date:` filter cannot localise, so `months` / `months_abbr`
+#  are indexed by hand. Use _includes/redesign/date.html, never a bare
+#  `date: '%-d %B %Y'`, anywhere a French page can reach.
+#
+#  PLACEHOLDERS. A few strings carry %s / %1 / %2, filled with `replace`:
+#      {{ t.all_projects | replace: '%s', count }}
+#  so the number can sit in a different place in each language.
+#
+#  The two blocks must stay key-for-key identical. A key present in `en:` and
+#  missing from `fr:` prints nothing at all on the French page.
+# ─────────────────────────────────────────────────────────────────────────────
+
+en:
+  code: en
+  name: English
+  other_code: fr
+  other_name: Français
+
+  months:
+    - January
+    - February
+    - March
+    - April
+    - May
+    - June
+    - July
+    - August
+    - September
+    - October
+    - November
+    - December
+  months_abbr:
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - May
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+
+  # ── the shell ──────────────────────────────────────────────────────────────
+  skip: "Skip to content"
+  toggle_theme: "toggle theme"
+  primary_nav: "Primary"
+  language: "Language"
+  nav:
+    home: "About"
+    work: "Work"
+    blog: "Writing"
+    talks: "Teaching"
+    cv: "CV"
+
+  # ── the home page ──────────────────────────────────────────────────────────
+  h_news: "News"
+  h_about: "About me"
+  h_education: "Education"
+  h_experience: "Experience"
+  h_work: "Selected work"
+  h_awards: "Awards"
+  h_posts: "Latest posts"
+  role: "Machine Learning Engineer"
+  news_page: "News, page %1 of %2"
+  all_projects: "All %s projects &rarr;"
+  all_posts: "All blog posts &rarr;"
+  min_read: "min read"
+  map_rubric: "Where readers come from"
+
+  # ── the footer ─────────────────────────────────────────────────────────────
+  back_up: "Back up the page"
+  the_minimum: "the minimum"
+  rights: "All rights reserved."
+  set_in: "set in EB Garamond &amp; Karla"
+  last_updated: "Site last updated"
+  rss: "RSS feed"
+  sitemap: "Sitemap"
+  descent_attrib: "[gradient descent, Cauchy 1847, M&eacute;thode g&eacute;n&eacute;rale]"
+  descent_alt: "A loss surface drawn as faint concentric contour lines, with a gradient-descent path entering from the upper right and stepping down to a marked minimum where the name sits."
+  descent_eq_alt: "theta is updated to theta minus eta times the gradient of the loss"
+
+  # ── the work index and the project pages ───────────────────────────────────
+  work_title: "Work"
+  about_this_list: "About this list"
+  tags: "Tags"
+  rubric_project: "Project"
+  this_project: "This project"
+  links: "Links"
+  code: "Code"
+  writeup: "Write-up"
+  details: "Details"
+  see_project: "See the project"
+  all_projects_short: "All&nbsp;projects"
+  all_projects_arrow: "All projects &rarr;"
+  the_repository: "The repository &rarr;"
+  stars_one: "star"
+  stars_many: "stars"
+  star_one: "star on GitHub"
+  star_many: "stars on GitHub"
+  related: "You may also enjoy"
+  full_cv: "The full CV &rarr;"
+  back_home: "Back to the home page &rarr;"
+
+  # ── news detail ────────────────────────────────────────────────────────────
+  rubric_news: "News"
+  this_milestone: "This milestone"
+  more: "More"
+  all_news_short: "All&nbsp;news"
+  all_news_arrow: "All news &rarr;"
+  more_news: "More news"
+
+  # ── the blog index and the post pages ──────────────────────────────────────
+  blog_title: "Writing"
+  cat:
+    paper_review: "Paper reviews"
+    tutorial: "Tutorials"
+  both_languages: "Both languages"
+  colophon: "Colophon"
+  on_this_page: "On this page"
+  filed_under: "Filed under"
+  everything_in_cat: "Everything in this category"
+  published: "Published"
+  length: "Length"
+  words: "words"
+  also_in: "Also in"
+  categories: "Categories"
+  share_on: "Share on"
+  prev_next: "Previous &amp; next"
+  previous: "Previous"
+  next: "Next"
+  comments: "Comments"
+  in_other_lang: "En fran&ccedil;ais &rarr;"
+  visits_alt: "Visits to this page"
+
+  # ── the CV ─────────────────────────────────────────────────────────────────
+  cv_title: "Curriculum vitae"
+  cv_in: "In ["
+  cv_out: "Out["
+  cv_close: "]:"
+  pdf_version: "PDF version"
+  cv_identity: "Identity"
+  cv_experience: "Experience"
+  cv_education: "Education"
+  cv_skills: "Technical skills"
+  cv_awards: "Awards"
+  cv_certifications: "Certifications"
+  cv_teaching: "Teaching &amp; talks"
+  cv_additional: "Additional information"
+  cv_leadership: "Leadership &amp; volunteering"
+  cv_in_full: "In full"
+  cv_extras: "Everything outside the CV &rarr;"
+
+  # ── teaching and talks ─────────────────────────────────────────────────────
+  talks_title: "Teaching &amp; talks"
+  h_teaching: "Teaching"
+  h_talks: "Talks"
+  instructor: "Instructor"
+  talk: "Talk"
+  slides: "Slides (PDF)"
+  nothing_yet: "Nothing here yet."
+
+  # ── the three drawn figures: the hero network, the perceptron, the map ─────
+  #  Their captions and glosses are essay copy, but they carry no links and no
+  #  markup beyond an entity or two, so unlike the page prose they can live
+  #  here and the SVGs stay single-sourced.
+  in_vision: "vision"
+  in_language: "language"
+  in_speech: "speech"
+  mlp_nav: "Sections of this page"
+  mlp_title: "This page, drawn as a 3&#8211;5&#8211;5&#8211;7 multilayer perceptron: vision, language and speech feed forward to seven output units, and every output unit is a section below. One unit is active at a time &#8212; the section in view."
+  mlp_cap: "A 3&#8211;5&#8211;5&#8211;7 network: vision, language and speech in; the sections of this page out. One output unit fires at a time &#8212; the section you are reading &#8212; and the path that feeds it is drawn back through the hidden layers. Follow an output unit and the page goes there."
+  pc_h2: "One unit, three inputs"
+  pc_alt: "A single artificial neuron. Three inputs — vision, language and speech — are weighted, summed together with a bias, passed through an activation function, and produce one output."
+  pc_output: "output"
+  pc_eqn_alt: "y equals phi of the weighted sum plus b"
+  pc_attrib: "[one artificial neuron, Rosenblatt 1958, The Perceptron]"
+  pc_gloss: "The three inputs are the three things I actually work on. The weights are where the hours went — speech has been carrying the largest one for two years now. The bias is everything else: the teaching, the talks, and the reading that never reaches a repository. The activation is what any of it is worth to somebody who is not me."
+  at_h2: "What the work attends to"
+  at_terms:
+    - vision
+    - speech
+    - language
+    - low-resource
+    - "Moor&eacute;"
+    - ASR
+    - VLM
+    - data
+  at_alt: "An eight by eight affinity map over the keywords vision, speech, language, low-resource, Mooré, ASR, VLM and data. The diagonal is darkest. Off the diagonal the strongest cells are speech with Mooré, speech with ASR, speech with low-resource, low-resource with Mooré, and vision with VLM. Vision has no affinity at all with Mooré or ASR."
+  at_weak: "Weak"
+  at_strong: "Strong"
+  at_eqn_alt: "Attention of Q, K and V equals softmax of Q K transpose divided by the square root of d sub k, times V"
+  at_attrib: "[attention, Vaswani et al. 2017, Attention Is All You Need]"
+  at_gloss: "Eight words carry almost everything I have worked on. The grid is what each one attends to in the others: speech pulls hardest on Moor&eacute;, ASR and the whole low-resource problem; vision pulls almost entirely on VLM; language is the one term that touches every other. It is read symmetrically, which a real attention map never is &mdash; this is a portrait of which ideas keep turning up together, not a matrix lifted out of a trained model."
+
+  # ── the handful of front-matter values that are prose, not proper nouns ────
+  #  A teaching entry's `type`, a talk's `talk_type`, and the venues and
+  #  locations that are words rather than place names. Looked up by their
+  #  English value and falling back to it, so an entry keeps ONE file and a
+  #  value not listed here simply passes through untouched.
+  kinds:
+    Intensive Bootcamp: "Intensive Bootcamp"
+    Community Course: "Community Course"
+    Webinar: "Webinar"
+    Conference Stand: "Conference Stand"
+    Scholarship: "Scholarship"
+    National Recognition: "National Recognition"
+    Competition: "Competition"
+    Academic Excellence: "Academic Excellence"
+    Research Grant: "Research Grant"
+  places:
+    Online: "Online"
+    Remote: "Remote"
+    Burkina Faso / Remote: "Burkina Faso / Remote"
+    UM6P, Morocco: "UM6P, Morocco"
+    Community Initiative: "Community Initiative"
+    Safi, Morocco: "Safi, Morocco"
+  orgs:
+    Presidency of Burkina Faso: "Presidency of Burkina Faso"
+    ENCG Oujda, Morocco: "ENCG Oujda, Morocco"
+    Association of Burkinabe Students in Morocco: "Association of Burkinabe Students in Morocco"
+    Google Research and Zindi: "Google Research and Zindi"
+    Stanford University & DeepLearning.AI: "Stanford University & DeepLearning.AI"
+    AWS & DeepLearning.AI: "AWS & DeepLearning.AI"
+    AI for Global Goals: "AI for Global Goals"
+
+fr:
+  code: fr
+  name: "Français"
+  other_code: en
+  other_name: English
+
+  months:
+    - janvier
+    - février
+    - mars
+    - avril
+    - mai
+    - juin
+    - juillet
+    - août
+    - septembre
+    - octobre
+    - novembre
+    - décembre
+  months_abbr:
+    - "janv."
+    - "févr."
+    - mars
+    - "avr."
+    - mai
+    - juin
+    - "juil."
+    - août
+    - "sept."
+    - "oct."
+    - "nov."
+    - "déc."
+
+  # ── the shell ──────────────────────────────────────────────────────────────
+  skip: "Aller au contenu"
+  toggle_theme: "changer de thème"
+  primary_nav: "Principale"
+  language: "Langue"
+  nav:
+    home: "À propos"
+    work: "Travaux"
+    blog: "Écrits"
+    talks: "Enseignement"
+    cv: "CV"
+
+  # ── the home page ──────────────────────────────────────────────────────────
+  h_news: "Actualités"
+  h_about: "À propos"
+  h_education: "Formation"
+  h_experience: "Expérience"
+  h_work: "Travaux choisis"
+  h_awards: "Distinctions"
+  h_posts: "Derniers articles"
+  role: "Ingénieur en apprentissage automatique"
+  news_page: "Actualités, page %1 sur %2"
+  all_projects: "Les %s projets &rarr;"
+  all_posts: "Tous les articles &rarr;"
+  min_read: "min de lecture"
+  map_rubric: "D&rsquo;o&ugrave; viennent les lecteurs"
+
+  # ── the footer ─────────────────────────────────────────────────────────────
+  back_up: "Remonter la page"
+  the_minimum: "le minimum"
+  rights: "Tous droits réservés."
+  set_in: "composé en EB Garamond &amp; Karla"
+  last_updated: "Dernière mise à jour"
+  rss: "Flux RSS"
+  sitemap: "Plan du site"
+  descent_attrib: "[descente de gradient, Cauchy 1847, M&eacute;thode g&eacute;n&eacute;rale]"
+  descent_alt: "Une surface de perte dessinée en courbes de niveau pâles, avec une trajectoire de descente de gradient qui entre par le haut à droite et descend par paliers jusqu&rsquo;au minimum, là où se trouve le nom."
+  descent_eq_alt: "thêta est remplacé par thêta moins êta fois le gradient de la perte"
+
+  # ── the work index and the project pages ───────────────────────────────────
+  work_title: "Travaux"
+  about_this_list: "À propos de cette liste"
+  tags: "Mots-clés"
+  rubric_project: "Projet"
+  this_project: "Ce projet"
+  links: "Liens"
+  code: "Code"
+  writeup: "Le détail"
+  details: "Détails"
+  see_project: "Voir le projet"
+  all_projects_short: "Tous&nbsp;les&nbsp;projets"
+  all_projects_arrow: "Tous les projets &rarr;"
+  the_repository: "Le dépôt &rarr;"
+  stars_one: "étoile"
+  stars_many: "étoiles"
+  star_one: "étoile sur GitHub"
+  star_many: "étoiles sur GitHub"
+  related: "À lire aussi"
+  full_cv: "Le CV complet &rarr;"
+  back_home: "Retour à l&rsquo;accueil &rarr;"
+
+  # ── news detail ────────────────────────────────────────────────────────────
+  rubric_news: "Actualité"
+  this_milestone: "Cette étape"
+  more: "En savoir plus"
+  all_news_short: "Toutes&nbsp;les&nbsp;actualités"
+  all_news_arrow: "Toutes les actualités &rarr;"
+  more_news: "Autres actualités"
+
+  # ── the blog index and the post pages ──────────────────────────────────────
+  blog_title: "Écrits"
+  cat:
+    paper_review: "Revues d&rsquo;articles"
+    tutorial: "Tutoriels"
+  both_languages: "Les deux langues"
+  colophon: "Colophon"
+  on_this_page: "Sur cette page"
+  filed_under: "Classé dans"
+  everything_in_cat: "Tout ce qui est classé ici"
+  published: "Publié le"
+  length: "Longueur"
+  words: "mots"
+  also_in: "Aussi en"
+  categories: "Catégories"
+  share_on: "Partager sur"
+  prev_next: "Précédent et suivant"
+  previous: "Précédent"
+  next: "Suivant"
+  comments: "Commentaires"
+  in_other_lang: "In English &rarr;"
+  visits_alt: "Visites sur cette page"
+
+  # ── the CV ─────────────────────────────────────────────────────────────────
+  cv_title: "Curriculum vitæ"
+  cv_in: "In ["
+  cv_out: "Out["
+  cv_close: "]:"
+  pdf_version: "Version PDF"
+  cv_identity: "Identité"
+  cv_experience: "Expérience"
+  cv_education: "Formation"
+  cv_skills: "Compétences techniques"
+  cv_awards: "Distinctions"
+  cv_certifications: "Certifications"
+  cv_teaching: "Enseignement &amp; conférences"
+  cv_additional: "Informations complémentaires"
+  cv_leadership: "Engagement associatif &amp; bénévolat"
+  cv_in_full: "En entier"
+  cv_extras: "Tout ce qui ne tient pas dans le CV &rarr;"
+
+  # ── teaching and talks ─────────────────────────────────────────────────────
+  talks_title: "Enseignement &amp; conférences"
+  h_teaching: "Enseignement"
+  h_talks: "Conférences"
+  instructor: "Formateur"
+  talk: "Conférence"
+  slides: "Diapositives (PDF)"
+  nothing_yet: "Rien ici pour l&rsquo;instant."
+
+  # ── les trois figures dessinées ───────────────────────────────────────────
+  in_vision: "vision"
+  in_language: "langage"
+  in_speech: "parole"
+  mlp_nav: "Sections de cette page"
+  mlp_title: "Cette page, dessinée comme un perceptron multicouche 3&#8211;5&#8211;5&#8211;7 : la vision, le langage et la parole en entrée, sept unités de sortie, et chaque unité de sortie est une section ci-dessous. Une seule unité est active à la fois &#8212; la section à l&rsquo;écran."
+  mlp_cap: "Un réseau 3&#8211;5&#8211;5&#8211;7 : la vision, le langage et la parole en entrée&#8202;; les sections de cette page en sortie. Une seule unité de sortie s&rsquo;active à la fois &#8212; la section que vous lisez &#8212; et le chemin qui l&rsquo;alimente est retracé à travers les couches cachées. Suivez une unité de sortie et la page vous y emmène."
+  pc_h2: "Un neurone, trois entrées"
+  pc_alt: "Un seul neurone artificiel. Trois entrées — vision, langage et parole — sont pondérées, sommées avec un biais, passées dans une fonction d&rsquo;activation, et produisent une sortie."
+  pc_output: "sortie"
+  pc_eqn_alt: "y égale phi de la somme pondérée plus b"
+  pc_attrib: "[un neurone artificiel, Rosenblatt 1958, The Perceptron]"
+  pc_gloss: "Les trois entrées sont les trois choses sur lesquelles je travaille vraiment. Les poids, c&rsquo;est là que les heures sont passées — la parole porte le plus lourd depuis deux ans. Le biais, c&rsquo;est tout le reste : l&rsquo;enseignement, les conférences, et les lectures qui n&rsquo;aboutissent jamais à un dépôt. L&rsquo;activation, c&rsquo;est ce que tout cela vaut pour quelqu&rsquo;un qui n&rsquo;est pas moi."
+  at_h2: "Ce à quoi le travail prête attention"
+  at_terms:
+    - vision
+    - parole
+    - langage
+    - "peu doté"
+    - "moor&eacute;"
+    - ASR
+    - VLM
+    - "données"
+  at_alt: "Une carte d&rsquo;affinité de huit sur huit entre les mots vision, parole, langage, peu doté, mooré, ASR, VLM et données. La diagonale est la plus sombre. Hors diagonale, les cases les plus fortes sont parole avec mooré, parole avec ASR, parole avec peu doté, peu doté avec mooré, et vision avec VLM. La vision n&rsquo;a aucune affinité avec mooré ni avec ASR."
+  at_weak: "Faible"
+  at_strong: "Fort"
+  at_eqn_alt: "Attention de Q, K et V égale softmax de Q K transposée divisé par la racine carrée de d indice k, le tout multiplié par V"
+  at_attrib: "[attention, Vaswani et al. 2017, Attention Is All You Need]"
+  at_gloss: "Huit mots portent presque tout ce sur quoi j&rsquo;ai travaillé. La grille dit ce que chacun retient des autres&#8202;: la parole tire le plus fort sur le moor&eacute;, l&rsquo;ASR et tout le problème des langues peu dotées&#8202;; la vision tire presque uniquement sur les VLM&#8202;; le langage est le seul terme qui touche tous les autres. Elle se lit symétriquement, ce qu&rsquo;une vraie carte d&rsquo;attention n&rsquo;est jamais &mdash; c&rsquo;est le portrait des idées qui reviennent ensemble, pas une matrice extraite d&rsquo;un modèle entraîné."
+
+  # ── les valeurs de front matter qui sont de la prose, pas des noms propres ─
+  kinds:
+    Intensive Bootcamp: "Bootcamp intensif"
+    Community Course: "Cours associatif"
+    Webinar: "Webinaire"
+    Conference Stand: "Stand de conférence"
+    Scholarship: "Bourse"
+    National Recognition: "Distinction nationale"
+    Competition: "Concours"
+    Academic Excellence: "Excellence académique"
+    Research Grant: "Bourse de recherche"
+  places:
+    Online: "En ligne"
+    Remote: "À distance"
+    Burkina Faso / Remote: "Burkina Faso / à distance"
+    UM6P, Morocco: "UM6P, Maroc"
+    Community Initiative: "Initiative associative"
+    Safi, Morocco: "Safi, Maroc"
+  orgs:
+    Presidency of Burkina Faso: "Présidence du Burkina Faso"
+    ENCG Oujda, Morocco: "ENCG Oujda, Maroc"
+    Association of Burkinabe Students in Morocco: "Association des Étudiants Burkinabè au Maroc"
+    Google Research and Zindi: "Google Research et Zindi"
+    Stanford University & DeepLearning.AI: "Université Stanford & DeepLearning.AI"
+    AWS & DeepLearning.AI: "AWS & DeepLearning.AI"
+    AI for Global Goals: "AI for Global Goals"

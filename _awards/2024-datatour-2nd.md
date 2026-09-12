@@ -1,5 +1,6 @@
 ---
 title: "2nd Place - Pan-African Data Science Nations Cup"
+title_fr: "2e place - Coupe panafricaine des nations de data science"
 collection: awards
 date: 2024-12-01
 award_type: "Competition"
@@ -8,6 +9,7 @@ issuer: "Data Afrique Hub"
 image: "awards/datatour-award.jpeg"
 link: "https://bit.ly/datatour2024"
 excerpt: "Team Lead - Competed against 100+ teams across Africa."
+excerpt_fr: "Chef d'équipe - face à plus de 100 équipes venues de toute l'Afrique."
 ---
 
 Led a team to **2nd place** at the **DataTour 2024 - Pan-African Data Science Nations Cup**, a major competition featuring over 100 teams from across Africa.

@@ -14,31 +14,125 @@
      localStorage, which is precisely what :root[data-theme="dark"] wants. Only
      its wrapper changed, from a masthead <li> to the nav's own trailing span. -->
 
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+
 <header class="mast">
  <div class="band">
   <div class="top">
   <div class="brand">
-  <svg class="minimlp" viewBox="0 0 56 40" aria-hidden="true" focusable="false"><path class="mm-e" d="M5 13 26 6M5 13 26 13M5 13 26 20M5 13 26 27M5 13 26 34M5 20 26 6M5 20 26 13M5 20 26 20M5 20 26 27M5 20 26 34M5 27 26 6M5 27 26 13M5 27 26 20M5 27 26 27M5 27 26 34"/><path class="mm-e" d="M26 6 50 4M26 6 50 9.3M26 6 50 14.7M26 6 50 20M26 6 50 25.3M26 6 50 30.7M26 6 50 36M26 13 50 4M26 13 50 9.3M26 13 50 14.7M26 13 50 20M26 13 50 25.3M26 13 50 30.7M26 13 50 36M26 20 50 4M26 20 50 9.3M26 20 50 14.7M26 20 50 20M26 20 50 25.3M26 20 50 30.7M26 20 50 36M26 27 50 4M26 27 50 9.3M26 27 50 14.7M26 27 50 20M26 27 50 25.3M26 27 50 30.7M26 27 50 36M26 34 50 4M26 34 50 9.3M26 34 50 14.7M26 34 50 20M26 34 50 25.3M26 34 50 30.7M26 34 50 36"/><g class="mm-i"><circle cx="5" cy="13" r="1.3"/><circle cx="5" cy="20" r="1.3"/><circle cx="5" cy="27" r="1.3"/><circle cx="26" cy="6" r="1.3"/><circle cx="26" cy="13" r="1.3"/><circle cx="26" cy="20" r="1.3"/><circle cx="26" cy="27" r="1.3"/><circle cx="26" cy="34" r="1.3"/></g><circle class="mm-n on" cx="50" cy="4" r="1.7"/><circle class="mm-n" cx="50" cy="9.3" r="1.7"/><circle class="mm-n" cx="50" cy="14.7" r="1.7"/><circle class="mm-n" cx="50" cy="20" r="1.7"/><circle class="mm-n" cx="50" cy="25.3" r="1.7"/><circle class="mm-n" cx="50" cy="30.7" r="1.7"/><circle class="mm-n" cx="50" cy="36" r="1.7"/><path class="mm-p" d="M5 27 L26 13 L50 4"/><circle class="mm-d" cx="5" cy="27" r="1.5"/><circle class="mm-d" cx="26" cy="13" r="1.5"/></svg>
+  {%- comment -%}
+    THE MARK — ROUND 6 § 5.4. The hero network at logo scale, a 3–5–7, and it
+    now does exactly what the big one does: every edge and every node carries
+    its own weight `--w` in [0,1] for the active output, so the contribution of
+    each layer through to the lit section is legible even at 2.4rem. The single
+    lit polyline it used to draw is gone. Because the last hidden layer and the
+    output layer are the same sizes as the hero's, redesign.js feeds it the
+    SAME relevances from the same hash — the mark and the figure agree.
+
+    At this size opacity alone under-reads, so the mini grades stroke-width as
+    well; only opacity is transitioned. With JS off it shows the same still as
+    the hero, News lit. Generated rather than hand-written so the geometry and
+    the weights cannot drift apart.
+  {%- endcomment -%}
+  {%- assign mm_in = '13,20,27' | split: ',' -%}
+  {%- assign mm_h = '6,13,20,27,34' | split: ',' -%}
+  {%- assign mm_out = '4,9.3,14.7,20,25.3,30.7,36' | split: ',' -%}
+  {%- assign wtab = '0.62,0.21,0.88,0.34,0.71,0.15,0.95,0.44,0.28,0.79,0.52,0.18,0.66,0.37,0.83,0.24,0.57,0.91,0.31,0.48,0.74,0.20,0.60' | split: ',' -%}
+  <svg class="minimlp" viewBox="0 0 56 40" aria-hidden="true" focusable="false">
+  <g class="mm-edges">
+  {%- for a in (0..2) -%}{%- for b in (0..4) -%}
+  {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 11 | modulo: 23 -%}
+  <path class="mm-e" data-l="0" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ wtab[wi] }}" d="M5 {{ mm_in[a] }} 26 {{ mm_h[b] }}"/>
+  {%- endfor -%}{%- endfor -%}
+  {%- for a in (0..4) -%}{%- for b in (0..6) -%}
+  {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 19 | modulo: 23 -%}
+  {%- if b == 0 -%}{%- assign w = wtab[wi] -%}{%- else -%}{%- assign w = wtab[wi] | times: 0.06 | round: 3 -%}{%- endif -%}
+  <path class="mm-e" data-l="1" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ w }}" d="M26 {{ mm_h[a] }} 50 {{ mm_out[b] }}"/>
+  {%- endfor -%}{%- endfor -%}
+  </g>
+  <g class="mm-nodes">
+  {%- for a in (0..2) -%}
+  {%- assign wi = a | times: 7 | times: 3 | plus: 5 | modulo: 23 -%}
+  <circle class="mm-pl" cx="5" cy="{{ mm_in[a] }}" r="1.3"/><circle class="mm-n" data-n="0" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="5" cy="{{ mm_in[a] }}" r="1.3"/>
+  {%- endfor -%}
+  {%- for a in (0..4) -%}
+  {%- assign wi = a | times: 7 | times: 3 | plus: 17 | modulo: 23 -%}
+  <circle class="mm-pl" cx="26" cy="{{ mm_h[a] }}" r="1.3"/><circle class="mm-n" data-n="1" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="26" cy="{{ mm_h[a] }}" r="1.3"/>
+  {%- endfor -%}
+  {%- for b in (0..6) -%}
+  {%- if b == 0 -%}{%- assign w = '1' -%}{%- else -%}{%- assign w = '0.12' -%}{%- endif -%}
+  <circle class="mm-pl" cx="50" cy="{{ mm_out[b] }}" r="1.7"/><circle class="mm-n mm-n--out" data-n="2" data-k="{{ b }}" style="--w:{{ w }}" cx="50" cy="{{ mm_out[b] }}" r="1.7"/>
+  {%- endfor -%}
+  </g>
+  </svg>
   <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.title }}</a>
   </div>
-  <nav class="nav" aria-label="Primary">
+  <nav class="nav" aria-label="{{ t.primary_nav }}">
   {%- for link in site.data.navigation.main %}
-  <a class="nav-{{ link.key }}" href="{{ link.url | relative_url }}">{{ link.title }}</a>
+  {%- assign nav_label = t.nav[link.key] | default: link.title -%}
+  {%- if lang == 'fr' -%}
+    {%- assign nav_url = link.url | prepend: '/fr' | replace: '//', '/' -%}
+    {%- assign nav_page = site.pages | where: 'url', nav_url | first -%}
+    {%- unless nav_page %}{% assign nav_url = link.url %}{% endunless -%}
+  {%- else -%}
+    {%- assign nav_url = link.url -%}
+  {%- endif %}
+  <a class="nav-{{ link.key }}" href="{{ nav_url | relative_url }}">{{ nav_label }}</a>
   {%- endfor %}
   <span class="navtail">
   {%- comment -%}
-    [ EN ] / [ FR ]. A page carrying translation_en IS the French one, so the
-    pair flips; a page with no counterpart shows the other language as plain
-    bracketed text rather than a link into a route that does not exist.
+    [ EN ] / [ FR ].  ROUND 6, § 1.
+
+    The rule is DERIVED FROM THE PERMALINK, never typed, so it cannot drift as
+    pages are added: the French counterpart of /x/ is /fr/x/ and the English
+    counterpart of /fr/x/ is /x/. `site.pages | where: 'url'` then asks whether
+    that page actually exists in this build — so a route with no counterpart
+    can never produce a 404.
+
+    Three cases, in order of authority:
+
+      1. translation_en / translation_fr in front matter WINS. Blog posts are
+         written twice rather than translated once and already carry the pair;
+         that mechanism is untouched, this rule simply defers to it.
+      2. A counterpart page exists at the mirrored permalink — link to it.
+      3. Nothing mirrors this page (a project, an award, a milestone, a legacy
+         route). The link then goes to the French INDEX for the section the
+         reader is in, read from page.view, which is exactly where a reader who
+         asked for French wants to land. Never a dead link, never inert text.
+
+    `lang_home` is the last resort for a page with no view at all.
   {%- endcomment -%}
-  {%- if page.translation_en %}
-  <span class="lang"><span class="gs"><a href="{{ page.translation_en | relative_url }}" hreflang="en" lang="en">EN</a></span> <span class="sl">/</span> <span class="gs"><span class="cur" aria-current="true">FR</span></span></span>
-  {%- elsif page.translation_fr %}
-  <span class="lang"><span class="gs"><span class="cur" aria-current="true">EN</span></span> <span class="sl">/</span> <span class="gs"><a href="{{ page.translation_fr | relative_url }}" hreflang="fr" lang="fr">FR</a></span></span>
-  {%- else %}
-  <span class="lang"><span class="gs"><span class="cur" aria-current="true">EN</span></span> <span class="sl">/</span> <span class="gs">FR</span></span>
+  {%- case page.view -%}
+    {%- when 'work' -%}{%- assign lang_home = '/fr/projects/' -%}
+    {%- when 'blog' -%}{%- assign lang_home = '/fr/blog/' -%}
+    {%- when 'post' -%}{%- assign lang_home = '/fr/blog/' -%}
+    {%- when 'talks' -%}{%- assign lang_home = '/fr/teaching-talks/' -%}
+    {%- when 'cv' -%}{%- assign lang_home = '/fr/cv/' -%}
+    {%- else -%}{%- assign lang_home = '/fr/' -%}
+  {%- endcase -%}
+  {%- if lang == 'fr' -%}
+    {%- assign other_url = page.translation_en -%}
+    {%- unless other_url -%}
+      {%- assign mirror = page.url | remove_first: '/fr' -%}
+      {%- if mirror == '' -%}{%- assign mirror = '/' -%}{%- endif -%}
+      {%- assign mirror_page = site.pages | where: 'url', mirror | first -%}
+      {%- if mirror_page -%}{%- assign other_url = mirror -%}{%- else -%}{%- assign other_url = '/' -%}{%- endif -%}
+    {%- endunless -%}
+  {%- else -%}
+    {%- assign other_url = page.translation_fr -%}
+    {%- unless other_url -%}
+      {%- assign mirror = page.url | prepend: '/fr' | replace: '//', '/' -%}
+      {%- assign mirror_page = site.pages | where: 'url', mirror | first -%}
+      {%- if mirror_page -%}{%- assign other_url = mirror -%}{%- else -%}{%- assign other_url = lang_home -%}{%- endif -%}
+    {%- endunless -%}
   {%- endif %}
-  <span id="theme-toggle" class="tgl"><a role="button" aria-labelledby="theme-icon"><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a></span>
+  {%- if lang == 'fr' %}
+  <span class="lang"><span class="gs"><a href="{{ other_url | relative_url }}" hreflang="en" lang="en">EN</a></span> <span class="sl">/</span> <span class="gs"><span class="cur" aria-current="true">FR</span></span></span>
+  {%- else %}
+  <span class="lang"><span class="gs"><span class="cur" aria-current="true">EN</span></span> <span class="sl">/</span> <span class="gs"><a href="{{ other_url | relative_url }}" hreflang="fr" lang="fr">FR</a></span></span>
+  {%- endif %}
+  <span id="theme-toggle" class="tgl"><a role="button" aria-labelledby="theme-icon"><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="{{ t.toggle_theme }}"></i></a></span>
   </span>
   </nav>
   </div>

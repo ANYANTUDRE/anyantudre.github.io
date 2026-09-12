@@ -9,17 +9,60 @@
   on. A page that sets nothing marks nothing, which is correct for the legacy
   routes that borrow this shell.
 
-  data-theme is NOT written here: assets/js/_main.js owns it, reading
-  localStorage on load and toggling the attribute from the control in the
-  navbar — exactly the mechanism :root[data-theme="dark"] in the redesign
-  stylesheet is written against.
+  data-theme is stamped by the blocking boot script at the top of <head>, then
+  owned by assets/js/_main.js, which toggles it from the control in the navbar
+  — exactly the mechanism :root[data-theme="dark"] in the redesign stylesheet
+  is written against. The boot script exists because _main.js is a deferred
+  module and cannot run before the first paint; see the comment there.
 
   No `layout: compress`: the sprite's <symbol> paths and the posts' <pre>
   listings are both whitespace-significant, and the compressor is not worth
   the risk for what it saves.
 {%- endcomment -%}
-<html lang="{{ site.locale | slice: 0,2 }}" class="no-js" data-view="{{ page.view }}"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
+{%- comment -%}
+  ROUND 6 — the page's OWN language, not the site's. A page (or a post, or a
+  collection item) declares `lang: fr` and everything follows from it: the
+  <html lang> a screen reader switches voice on, and site.data.t[lang], the
+  catalogue every string in the chrome is read from.
+{%- endcomment -%}
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+<html lang="{{ lang }}" class="no-js" data-view="{{ page.view }}"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
   <head>
+    {%- comment -%}
+      THEME BOOT — must stay FIRST in <head>, above {% include head.html %},
+      because that include carries main.css.
+
+      assets/js/_main.js still owns the theme, but it ships as
+      <script type="module"> at the very END of <body>: modules are deferred,
+      so it ran after the whole document had parsed AND after the mapmyvisitors
+      script and the CDN polyfill. The stylesheet painted light in the meantime,
+      so a reader with dark selected watched the page flash white on every
+      navigation — for seconds, not milliseconds.
+
+      This blocking script stamps the attribute before the first paint. It
+      mirrors setTheme() in _main.js exactly: "dark" sets data-theme, "light"
+      REMOVES it (light is the unstamped state), anything else — "system" or
+      nothing stored — follows prefers-color-scheme. _main.js then finds the
+      attribute already correct and only has to fix the toggle's icon.
+
+      try/catch because reading localStorage throws outright in some privacy
+      modes; the catch leaves the light default, which is the design's primary
+      state.
+    {%- endcomment -%}
+    <script>
+      (function () {
+        try {
+          var s = localStorage.getItem("theme");
+          var dark = s === "dark" ||
+            (s !== "light" && window.matchMedia &&
+             window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.setAttribute("data-theme", "dark");
+          else document.documentElement.removeAttribute("data-theme");
+        } catch (e) {}
+      })();
+    </script>
+
     {% include head.html %}
     {% include head/custom.html %}
 
@@ -34,7 +77,7 @@
 
     {% include browser-upgrade.html %}
 
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">{{ t.skip }}</a>
 
     {% include redesign/sprite.html %}
 

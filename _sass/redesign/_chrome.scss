@@ -22,13 +22,29 @@
 // `width:auto` on a flex item in that state is the one sizing path engines
 // still disagree on — some resolve it from the ratio, some fall back to the
 // containing block and the mark swallows the name. 56/40 is the viewBox.
-.minimlp{display:block;height:2.4rem;width:auto;aspect-ratio:56 / 40;flex:0 0 auto;color:var(--text);overflow:visible}
-.minimlp .mm-e{fill:none;stroke:currentColor;stroke-width:.6;opacity:var(--edge-o)}
-.minimlp .mm-i{fill:var(--bg);stroke:currentColor;stroke-width:.7;opacity:.8}
-.minimlp .mm-n{fill:var(--bg);stroke:var(--accent);stroke-width:.9;transition:fill 180ms ease}
-.minimlp .mm-n.on{fill:var(--accent)}
-.minimlp .mm-p{fill:none;stroke:var(--accent);stroke-width:1.1;stroke-linecap:round;stroke-linejoin:round}
-.minimlp .mm-d{fill:var(--accent);stroke:none}
+//
+// ROUND 6 § 5.4 — the mark runs the SAME contribution field as the hero
+// figure, at its own scale: every edge and every node carries a weight --w in
+// [0,1] written by assets/js/redesign.js, and the lit polyline is gone. At
+// 2.4rem, fifty edges graded by opacity alone collapse into one grey haze, so
+// the mini grades STROKE-WIDTH as well — .28 to 1.0 user units, about a third
+// of a pixel to a full one at this size, which is what makes the layer-by-
+// layer contribution legible on a logo. Only opacity is transitioned; the
+// width change is sub-pixel and lands with it.
+.minimlp{display:block;height:2.4rem;width:auto;aspect-ratio:56 / 40;flex:0 0 auto;color:var(--text);overflow:visible;
+  --e-lo:.08;--e-hi:.85}
+.minimlp .mm-e{fill:none;stroke:var(--accent);
+  stroke-width:#{"calc(.28 + .72 * var(--w, .3))"};
+  opacity:#{"calc(var(--e-lo) + (var(--e-hi) - var(--e-lo)) * var(--w, .3))"};
+  transition:opacity 180ms ease}
+.minimlp .mm-pl{fill:var(--bg);stroke:none}
+.minimlp .mm-n{fill:var(--accent);stroke:var(--accent);stroke-width:.5;
+  fill-opacity:#{"calc(.05 + .95 * var(--w, .35))"};
+  stroke-opacity:#{"calc(.35 + .65 * var(--w, .35))"};
+  transition:fill-opacity 180ms ease,stroke-opacity 180ms ease}
+// all seven output discs stay outlined, as on the hero figure: the ring says
+// there are seven sections, the fill says which one you are in
+.minimlp .mm-n--out{stroke-width:.7;stroke-opacity:#{"calc(.58 + .42 * var(--w, .35))"}}
 .nav{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s1) var(--s3)}
 .nav a{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent}
 .nav a:hover{color:var(--text)}
@@ -75,11 +91,12 @@ html[data-view="talks"] .nav-talks{color:var(--text);border-bottom-color:var(--a
 .fv--dn .l{top:10px}
 .fv:hover .l,.fv:focus-visible .l{color:var(--accent)}
 .fv:hover .d,.fv:focus-visible .d{background:var(--accent);border-color:var(--accent)}
-// the formula on its own line; the citation DIRECTLY below it, hard against
-// the right edge, in the same tensor-shape bracket form as .attrib uses
+// ROUND 6 — the formula and its citation are one right-aligned pair: the
+// update rule on its own line, hard against the right edge, and the
+// tensor-shape citation DIRECTLY below it in the bracket form .attrib uses
 // everywhere else on the site — same face, size, colour and brackets.
 .flegend{margin:0 0 var(--s4)}
-.flegend .eq{display:block;font-family:var(--math);font-size:1.06rem;line-height:1.4;color:var(--text);margin:0}
+.flegend .eq{display:block;text-align:right;font-family:var(--math);font-size:1.06rem;line-height:1.4;color:var(--text);margin:0}
 .flegend .attrib{text-align:right;margin:.15rem 0 0}
 // name at the left, social glyphs at the right
 .foot-band{padding-top:var(--s2);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--s2) var(--s4)}

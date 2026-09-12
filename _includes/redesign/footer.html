@@ -11,10 +11,20 @@
      Carried over from the old footer: "Site last updated", the RSS feed and
      the sitemap, all in the metadata type the band already speaks. -->
 
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- comment -%} ROUND 6 — the descent's waypoints point at the home page of the
+   page's OWN language, so a French reader is never returned to the English one
+   by a footer link. On the home page itself they stay in-page. {%- endcomment -%}
+{%- if lang == 'fr' -%}
+  {%- assign home_path = '/fr/' -%}
+{%- else -%}
+  {%- assign home_path = '/' -%}
+{%- endif -%}
 {%- if page.view == 'home' -%}
   {%- assign home_anchor = '' -%}
 {%- else -%}
-  {%- assign home_anchor = '/' | relative_url -%}
+  {%- assign home_anchor = home_path | relative_url -%}
 {%- endif -%}
 {%- if site.atom_feed.path -%}
   {%- assign feed_url = site.atom_feed.path -%}
@@ -24,11 +34,11 @@
 
 <footer class="foot">
  <div class="band">
-  <p class="rubric">Back up the page</p>
+  <p class="rubric">{{ t.back_up }}</p>
   <div class="rule rule--foot rule--acc" aria-hidden="true"><svg><use href="#sg5"/></svg></div>
 
   <div class="field">
-  <svg class="contours" viewBox="0 0 1000 300" preserveAspectRatio="none" role="img" aria-label="A loss surface drawn as faint concentric contour lines, with a gradient-descent path entering from the upper right and stepping down to a marked minimum where the name sits.">
+  <svg class="contours" viewBox="0 0 1000 300" preserveAspectRatio="none" role="img" aria-label="{{ t.descent_alt }}">
   <g class="rings">
   <ellipse cx="250" cy="214" rx="86" ry="26" transform="rotate(-18 250 214)" opacity=".11"/>
   <ellipse cx="250" cy="214" rx="155" ry="47" transform="rotate(-18 250 214)" opacity=".10"/>
@@ -41,26 +51,31 @@
   <polyline class="trail-l" points="920,46 846,96 752,64 656,120 560,88 462,150 368,118 300,176 250,214"/>
   </svg>
 
-  <span class="fmin"><a href="{{ home_anchor }}#main">{{ site.author.name | default: site.title }}</a><span>the minimum</span></span>
+  <span class="fmin"><a href="{{ home_anchor }}#main">{{ site.author.name | default: site.title }}</a><span>{{ t.the_minimum }}</span></span>
 
-  <a class="fv fv--up" style="left:36.8%;top:39.33%" href="{{ home_anchor }}#news"><span class="d"></span><span class="l">News</span></a>
-  <a class="fv fv--dn" style="left:46.2%;top:50%" href="{{ home_anchor }}#posts"><span class="d"></span><span class="l">Latest posts</span></a>
-  <a class="fv fv--up" style="left:56%;top:29.33%" href="{{ home_anchor }}#about"><span class="d"></span><span class="l">About me</span></a>
-  <a class="fv fv--dn" style="left:65.6%;top:40%" href="{{ home_anchor }}#education"><span class="d"></span><span class="l">Education</span></a>
-  <a class="fv fv--up" style="left:75.2%;top:21.33%" href="{{ home_anchor }}#experience"><span class="d"></span><span class="l">Experience</span></a>
-  <a class="fv fv--dn" style="left:84.6%;top:32%" href="{{ home_anchor }}#work"><span class="d"></span><span class="l">Selected work</span></a>
-  <a class="fv fv--up" style="left:92%;top:15.33%" href="{{ home_anchor }}#awards"><span class="d"></span><span class="l">Awards</span></a>
+  {%- comment -%} ROUND 6 — the waypoints run left to right in the home page's
+     own section order, the leftmost iterate (nearest the minimum) being the
+     first section. Latest posts moved to the end of the page, so it moved to
+     the far end of the descent; the coordinates are unchanged, only which
+     section sits on each iterate. {%- endcomment %}
+  <a class="fv fv--up" style="left:36.8%;top:39.33%" href="{{ home_anchor }}#news"><span class="d"></span><span class="l">{{ t.h_news }}</span></a>
+  <a class="fv fv--dn" style="left:46.2%;top:50%" href="{{ home_anchor }}#about"><span class="d"></span><span class="l">{{ t.h_about }}</span></a>
+  <a class="fv fv--up" style="left:56%;top:29.33%" href="{{ home_anchor }}#education"><span class="d"></span><span class="l">{{ t.h_education }}</span></a>
+  <a class="fv fv--dn" style="left:65.6%;top:40%" href="{{ home_anchor }}#experience"><span class="d"></span><span class="l">{{ t.h_experience }}</span></a>
+  <a class="fv fv--up" style="left:75.2%;top:21.33%" href="{{ home_anchor }}#work"><span class="d"></span><span class="l">{{ t.h_work }}</span></a>
+  <a class="fv fv--dn" style="left:84.6%;top:32%" href="{{ home_anchor }}#awards"><span class="d"></span><span class="l">{{ t.h_awards }}</span></a>
+  <a class="fv fv--up" style="left:92%;top:15.33%" href="{{ home_anchor }}#posts"><span class="d"></span><span class="l">{{ t.h_posts }}</span></a>
   </div>
 
   <div class="flegend">
-  <p class="eq" role="math" aria-label="theta is updated to theta minus eta times the gradient of the loss"><i>&#952;</i> &#8592; <i>&#952;</i> &#8722; <i>&#951;</i> &#8711;<sub><i>&#952;</i></sub> &#8466;(<i>&#952;</i>)</p>
-  <p class="attrib">[gradient descent, Cauchy 1847, M&eacute;thode g&eacute;n&eacute;rale]</p>
+  <p class="eq" role="math" aria-label="{{ t.descent_eq_alt }}"><i>&#952;</i> &#8592; <i>&#952;</i> &#8722; <i>&#951;</i> &#8711;<sub><i>&#952;</i></sub> &#8466;(<i>&#952;</i>)</p>
+  <p class="attrib">{{ t.descent_attrib }}</p>
   </div>
 
   <div class="foot-band">
   <div class="foot-id">
-  <p>&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. All rights reserved.</p>
-  <p>{{ site.author.location }} &middot; set in EB Garamond &amp; Karla &middot; Site last updated {{ site.time | date: '%Y-%m-%d' }}</p>
+  <p>&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ t.rights }}</p>
+  <p>{{ t.places[site.author.location] | default: site.author.location }} &middot; {{ t.set_in }} &middot; {{ t.last_updated }} {{ site.time | date: '%Y-%m-%d' }}</p>
   </div>
   <div class="foot-links">
   <ul class="socials socials--foot">
@@ -73,17 +88,13 @@
   {%- if site.author.linkedin %}
   <li><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-li"/></svg></a></li>
   {%- endif %}
-  {%- if site.author.kaggle %}
-  <li><a href="https://www.kaggle.com/{{ site.author.kaggle }}" aria-label="Kaggle"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-kg"/></svg></a></li>
-  {%- endif %}
+  {%- comment -%} ROUND 6 — Kaggle and YouTube are hidden site-wide, here as
+     well as in the profile column, so the two runs name the same four. {%- endcomment %}
   {%- if site.author.twitter %}
   <li><a href="https://x.com/{{ site.author.twitter }}" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-x"/></svg></a></li>
   {%- endif %}
-  {%- if site.author.youtube %}
-  <li><a href="https://www.youtube.com/@{{ site.author.youtube }}" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-yt"/></svg></a></li>
-  {%- endif %}
   </ul>
-  <p>{% if site.atom_feed.hide != true %}<a href="{{ feed_url }}">RSS feed</a> <span class="sep">&middot;</span> {% endif %}<a href="{{ '/sitemap/' | relative_url }}">Sitemap</a></p>
+  <p>{% if site.atom_feed.hide != true %}<a href="{{ feed_url }}">{{ t.rss }}</a> <span class="sep">&middot;</span> {% endif %}<a href="{{ '/sitemap/' | relative_url }}">{{ t.sitemap }}</a></p>
   </div>
   </div>
  </div>

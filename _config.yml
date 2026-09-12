@@ -257,6 +257,14 @@ collections:
   awards:
     output: true
     permalink: /:collection/:path/
+  # _news — ROUND 6. The home page's News section used to be four rows typed
+  # into an include, linking to anchors on the page they already sat on. Each
+  # milestone is now a real item with a real page of its own at /news/<slug>/,
+  # so a row can be linked to from outside the site and can carry the detail
+  # that never fitted on one line.
+  news:
+    output: true
+    permalink: /news/:path/
   extra:
     output: true
     permalink: /:collection/:path/
@@ -356,6 +364,17 @@ defaults:
       layout: redesign-legacy
       author_profile: true
       share: true
+  # _news — ROUND 6. A milestone gets the same detail page a project gets:
+  # the full-width title band, the prose column and the right margin column.
+  # `view: home` is deliberate — News is a section of the home page, so the
+  # navbar keeps marking About while the reader is inside a milestone.
+  - scope:
+      path: ""
+      type: news
+    values:
+      layout: redesign-news
+      view: home
+      author_profile: true
   # _extra
   - scope:
       path: ""

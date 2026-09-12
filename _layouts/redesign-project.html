@@ -24,6 +24,8 @@ layout: redesign-default
   jobs used to be duplicated per layout; they are one pass now.
 {%- endcomment -%}
 
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
 {%- assign lead = page.excerpt | split: '<br' | first | markdownify | strip_html | strip_newlines | strip -%}
 {%- if page.excerpt contains 'Technologies:**' -%}
   {%- assign stack = page.excerpt | split: 'Technologies:**' | last | strip_html | strip -%}
@@ -37,12 +39,12 @@ layout: redesign-default
 {%- endif -%}
 
 <header class="posthead band">
- <p class="rubric">Project</p>
+ <p class="rubric">{{ t.rubric_project }}</p>
  <h1>{{ page.title }}</h1>
  {%- if lead and lead != "" %}
  <p class="dek">{{ lead }}</p>
  {%- endif %}
- <p class="byline">{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%-d %B %Y" }}</time>{% endif %}{% if page.tags and page.tags.size > 0 %} <span class="sep">&middot;</span> {{ page.tags | join: ", " }}{% endif %}{% if page.github_stars %} <span class="sep">&middot;</span> &#9733; {{ page.github_stars }} star{% if page.github_stars != 1 %}s{% endif %} on GitHub{% endif %}</p>
+ <p class="byline">{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{% include redesign/date.html d=page.date %}</time>{% endif %}{% if page.tags and page.tags.size > 0 %} <span class="sep">&middot;</span> {{ page.tags | join: ", " }}{% endif %}{% if page.github_stars %} <span class="sep">&middot;</span> &#9733; {{ page.github_stars }} {% if page.github_stars == 1 %}{{ t.star_one }}{% else %}{{ t.star_many }}{% endif %}{% endif %}</p>
  <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
 </header>
 
@@ -50,17 +52,17 @@ layout: redesign-default
 
  {%- comment -%} THE RIGHT MARGIN — metadata first, then the links. {%- endcomment %}
  <span class="marginnote">
-  <span class="mn-label">This project</span>
-  {%- if page.date %}<span class="mn-em">{{ page.date | date: "%B %Y" }}</span><br>{% endif -%}
+  <span class="mn-label">{{ t.this_project }}</span>
+  {%- if page.date %}<span class="mn-em">{% include redesign/date.html d=page.date f='my' %}</span><br>{% endif -%}
   {%- if page.tags and page.tags.size > 0 %}{{ page.tags | join: " &middot; " }}{% endif -%}
   {%- if stack %}<br>{{ stack }}{% endif -%}
-  {%- if page.github_stars %}<br>&#9733; {{ page.github_stars }} star{% if page.github_stars != 1 %}s{% endif %} on GitHub{% endif -%}
+  {%- if page.github_stars %}<br>&#9733; {{ page.github_stars }} {% if page.github_stars == 1 %}{{ t.star_one }}{% else %}{{ t.star_many }}{% endif %}{% endif -%}
  </span>
 
  <span class="marginnote">
-  <span class="mn-label">Links</span>
-  {%- if page.github_url %}<span class="g"><a href="{{ page.github_url }}">Code</a></span> {% endif -%}
-  <span class="g"><a href="{{ '/projects/' | relative_url }}">All&nbsp;projects</a></span>
+  <span class="mn-label">{{ t.links }}</span>
+  {%- if page.github_url %}<span class="g"><a href="{{ page.github_url }}">{{ t.code }}</a></span> {% endif -%}
+  <span class="g"><a href="{{ '/projects/' | relative_url }}">{{ t.all_projects_short }}</a></span>
  </span>
 
  {%- if lead_image %}
@@ -71,7 +73,7 @@ layout: redesign-default
 
  {{ content }}
 
- <p class="tail"><a href="{{ '/projects/' | relative_url }}">All projects &rarr;</a>{% if page.github_url %} <span class="sep">&middot;</span> <a href="{{ page.github_url }}">The repository &rarr;</a>{% endif %}</p>
+ <p class="tail"><a href="{{ '/projects/' | relative_url }}">{{ t.all_projects_arrow }}</a>{% if page.github_url %} <span class="sep">&middot;</span> <a href="{{ page.github_url }}">{{ t.the_repository }}</a>{% endif %}</p>
 
 </article>
 
@@ -125,7 +127,7 @@ layout: redesign-default
 {%- if related_test != "" %}
 
 <section class="col">
- <h2 id="related">{{ site.data.ui-text[site.locale].related_label | default: "You May Also Enjoy" }}</h2>
+ <h2 id="related">{{ t.related }}</h2>
  <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg2"/></svg><svg><use href="#sg6"/></svg></div>
 {{ related_html }}
 </section>

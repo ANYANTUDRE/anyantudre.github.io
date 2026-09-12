@@ -21,31 +21,35 @@ layout: redesign-default
   column by .col so it can never overflow into the rail.
 {%- endcomment -%}
 
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
 {%- assign words = content | strip_html | number_of_words -%}
 {%- assign mins = words | divided_by: site.words_per_minute -%}
 {%- if mins < 1 %}{% assign mins = 1 %}{% endif -%}
 {%- assign cat = page.categories[0] -%}
-{%- assign cat_label = cat | replace: '_', ' ' | replace: '-', ' ' -%}
+{%- assign cat_label = t.cat[cat] | default: cat | replace: '_', ' ' | replace: '-', ' ' | capitalize -%}
 {%- assign hits = page.url | absolute_url | url_encode -%}
 
 {%- comment -%}
-  The shell stamps site.locale on <html>, so the French twin has to declare
-  its own language on the three elements that actually hold French — the
-  title, the dek and the prose — or a screen reader reads them in an English
-  voice. The labels around them (the rubric, "min read", the apparatus column)
-  stay English on both twins, so they are deliberately left alone.
+  ROUND 6 — the shell now stamps the PAGE's own lang on <html>, so the French
+  twin is French all the way down: its chrome reads site.data.t['fr'] like any
+  other French page, and the rubric, "min de lecture" and the apparatus column
+  are translated rather than left sitting in English around French prose.
+
+  post_lang survives for the one case the shell cannot cover: a post that
+  declares no lang of its own but carries French in its title or body.
 {%- endcomment -%}
 {%- if page.lang and page.lang != 'en' %}{% assign post_lang = ' lang="' | append: page.lang | append: '"' %}{% else %}{% assign post_lang = '' %}{% endif -%}
 
 <header class="posthead band">
 {%- if cat %}
- <p class="rubric">{{ cat_label | capitalize }}</p>
+ <p class="rubric">{{ cat_label }}</p>
 {%- endif %}
  <h1{{ post_lang }}>{{ page.title }}</h1>
 {%- if page.description %}
  <p class="dek"{{ post_lang }}>{{ page.description }}</p>
 {%- endif %}
- <p class="byline"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%-d %B %Y' }}</time> <span class="sep">&middot;</span> {{ mins }} min read{% if page.tags.size > 0 %} <span class="sep">&middot;</span> {% for tag in page.tags %}{{ tag | replace: '_', ' ' | replace: '-', ' ' }}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endif %}<br>
+ <p class="byline"><time datetime="{{ page.date | date_to_xmlschema }}">{% include redesign/date.html d=page.date %}</time> <span class="sep">&middot;</span> {{ mins }} {{ t.min_read }}{% if page.tags.size > 0 %} <span class="sep">&middot;</span> {% for tag in page.tags %}{{ tag | replace: '_', ' ' | replace: '-', ' ' }}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endif %}<br>
  {%- if page.translation_en %}
  <span class="lang"><span class="gs"><a href="{{ page.translation_en | relative_url }}" hreflang="en" lang="en">EN</a></span> <span class="sl">/</span> <span class="gs"><span class="cur" aria-current="true">FR</span></span></span>
  {%- elsif page.translation_fr %}
@@ -53,7 +57,7 @@ layout: redesign-default
  {%- else %}
  <span class="lang"><span class="gs"><span class="cur" aria-current="true">{{ page.lang | default: 'en' | upcase }}</span></span></span>
  {%- endif %}
- <span class="sep">&middot;</span> <img src="https://hitscounter.dev/api/hit?url={{ hits }}&amp;label=visits&amp;icon=&amp;color=%235C5C57&amp;message=&amp;style=flat-square&amp;tz=UTC" alt="Visits to this page" width="80" height="20" loading="lazy" style="display:inline-block;height:1.15em;width:auto;vertical-align:-.2em;opacity:.75"></p>
+ <span class="sep">&middot;</span> <img src="https://hitscounter.dev/api/hit?url={{ hits }}&amp;label=visits&amp;icon=&amp;color=%235C5C57&amp;message=&amp;style=flat-square&amp;tz=UTC" alt="{{ t.visits_alt }}" width="80" height="20" loading="lazy" style="display:inline-block;height:1.15em;width:auto;vertical-align:-.2em;opacity:.75"></p>
  <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
 </header>
 
@@ -61,14 +65,14 @@ layout: redesign-default
 
  <aside class="postside">
  {%- if cat %}
-  <p><span class="ps-l">Filed under</span><span class="ps-t">{{ cat_label | capitalize }}</span><a href="{{ '/blog/categories/' | relative_url }}#{{ cat | slugify }}">Everything in this category</a></p>
+  <p><span class="ps-l">{{ t.filed_under }}</span><span class="ps-t">{{ cat_label }}</span><a href="{{ '/blog/categories/' | relative_url }}#{{ cat | slugify }}">{{ t.everything_in_cat }}</a></p>
  {%- endif %}
-  <p><span class="ps-l">Published</span><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%-d %B %Y' }}</time></p>
-  <p><span class="ps-l">Length</span>{{ words }} words &middot; {{ mins }} min read</p>
+  <p><span class="ps-l">{{ t.published }}</span><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=page.date %}</time></p>
+  <p><span class="ps-l">{{ t.length }}</span>{{ words }} {{ t.words }} &middot; {{ mins }} {{ t.min_read }}</p>
  {%- if page.translation_fr %}
-  <p><span class="ps-l">Also in</span><a href="{{ page.translation_fr | relative_url }}" hreflang="fr" lang="fr">Fran&ccedil;ais</a></p>
+  <p><span class="ps-l">{{ t.also_in }}</span><a href="{{ page.translation_fr | relative_url }}" hreflang="fr" lang="fr">{{ t.other_name }}</a></p>
  {%- elsif page.translation_en %}
-  <p><span class="ps-l">Also in</span><a href="{{ page.translation_en | relative_url }}" hreflang="en" lang="en">English</a></p>
+  <p><span class="ps-l">{{ t.also_in }}</span><a href="{{ page.translation_en | relative_url }}" hreflang="en" lang="en">{{ t.other_name }}</a></p>
  {%- endif %}
  </aside>
 
@@ -84,7 +88,7 @@ layout: redesign-default
   {%- endcomment %}
   <div class="tocwrap" hidden>
   <nav class="toc" aria-label="On this page">
-  <p class="rubric">On this page</p>
+  <p class="rubric">{{ t.on_this_page }}</p>
   <ol></ol>
   </nav>
   </div>

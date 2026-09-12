@@ -1,6 +1,7 @@
 ---
 title: "Barbados Traffic Analysis Challenge"
 excerpt: "ML solution for predicting traffic congestion using video analysis. Implemented YOLO detection, VideoMAE embeddings, and ensemble models.<br/><br/>**Technologies:** PyTorch, YOLOv11, VideoMAE, XGBoost, OpenCV"
+excerpt_fr: "Solution d'apprentissage automatique pour prédire la congestion routière à partir d'analyses vidéo. Détection YOLO, plongements VideoMAE et modèles d'ensemble.<br/><br/>**Technologies :** PyTorch, YOLOv11, VideoMAE, XGBoost, OpenCV"
 collection: portfolio
 date: 2026-01-15
 image: "portfolio/barbados-traffic.png"

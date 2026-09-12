@@ -1,6 +1,8 @@
 ---
 title: "Energy Demand Forecasting for Africa - DataTour 2024"
+title_fr: "Prévision de la demande énergétique en Afrique - DataTour 2024"
 excerpt: "2nd place solution at the pan-African Data Science Nations Cup. Developed regression models to predict energy demand across 50+ African countries.<br/><br/>**Technologies:** Scikit-learn, Pandas, NumPy, Data Visualization"
+excerpt_fr: "Solution classée 2e à la Coupe panafricaine des nations de data science. Modèles de régression prédisant la demande énergétique dans plus de 50 pays africains.<br/><br/>**Technologies :** Scikit-learn, Pandas, NumPy, visualisation de données"
 collection: portfolio
 date: 2024-12-31
 image: "portfolio/energy.jpg"

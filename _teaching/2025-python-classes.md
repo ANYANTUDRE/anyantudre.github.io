@@ -1,5 +1,6 @@
 ---
 title: "Python Programming Classes"
+title_fr: "Cours de programmation Python"
 collection: teaching
 type: "Community Course"
 permalink: /teaching/2025-python-classes
@@ -8,6 +9,7 @@ date: 2025-03-01
 location: "Remote"
 image: "teaching/zams_python.png" 
 excerpt: "Weekly Python programming classes for 60+ students."
+excerpt_fr: "Cours hebdomadaires de programmation Python pour plus de 60 étudiants."
 ---
 
 Delivered weekly Python programming classes to **60+ students** through a community initiative from March to July 2025.

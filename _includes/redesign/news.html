@@ -1,34 +1,67 @@
-<!-- NEWS — the one section on the home page with no collection behind it.
+<!-- NEWS — ROUND 6.
 
-     Four dated milestones, written into the approved design (final.html
-     L771-798) and ported here. The four rows are the four real milestones of
-     2026, newest first, each traceable to the CV; they are typed out because
-     no collection holds them, and each links to the section of the page (or
-     the page) that carries the detail.
+     The four dated milestones used to be typed into this file, because no
+     collection held them. _news does now (registered in _config.yml, one page
+     each under /news/<slug>/), so every row here is read, never written, and
+     a row links to its own page rather than to an anchor on the page it is
+     already sitting on.
 
-     Each row is the design's .wrow: a right marginnote carrying the date and
-     the place, the headline as a .wtitle, and a .res line underneath. -->
+     THREE AT A TIME. Older milestones are a click away on the oxblood dots
+     under the section, and the paging is CSS only: one hidden radio per page,
+     a label per radio drawn as a dot, and `:checked ~` showing the matching
+     .np-page. No JavaScript is involved, so the section pages exactly as well
+     with scripting off as with it on — which is the rule the rest of the site
+     already follows. The radios are focusable (clipped, not display:none), so
+     the dots are reachable and operable from the keyboard, and each label
+     carries its own visually-hidden name.
 
-<div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2026-08">Aug 2026</time></span>Google Research &middot; Zindi</span>
- <h3 class="wtitle"><a class="tl" href="#awards">2nd place and Best African Participant, Google WAXAL ASR Challenge</a></h3>
- <span class="res"><span class="dot">$4,000 USD out of 242 teams &middot; multilingual ASR for three low-resource African languages</span></span>
+     THE ROW IS A GRID, date and organisation LEFT, title RIGHT — the opposite
+     of .wrow, whose metadata floats into the right margin. Title only: no
+     excerpt, no subtitle. The whole row is one link.
+
+     Styles: _sass/redesign/_sections.scss, § 12. -->
+
+{%- comment -%} ROUND 6, § 1 — one collection, two languages. `kt` / `kx` are
+     the front-matter keys for the page's own language: on a French page they
+     resolve to title_fr / excerpt_fr, and item[kt] falls back to the English
+     value when the entry has not been translated yet. On an English page
+     item['title_en'] is nil and the fallback IS the value, so the same
+     expression serves both and there is no branch to keep in step. {%- endcomment -%}
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign kt = 'title_' | append: lang -%}
+{%- assign news_items = site.news | sort: 'date' | reverse -%}
+{%- assign news_total = news_items | size -%}
+{%- assign news_per = 3 -%}
+{%- comment -%} ceil(total / per), without a ceil filter {%- endcomment -%}
+{%- assign news_pages = news_total | plus: news_per | minus: 1 | divided_by: news_per -%}
+
+{%- if news_total > 0 -%}
+<div class="news">
+{%- for p in (1..news_pages) %}
+ <input class="np-in" type="radio" name="news-page" id="news-p{{ p }}"{% if p == 1 %} checked{% endif %}>
+{%- endfor %}
+
+ <div class="np-track">
+{%- for p in (1..news_pages) %}
+ {%- assign news_start = p | minus: 1 | times: news_per %}
+  <div class="np-page">
+  {%- for item in news_items offset: news_start limit: news_per %}
+  <a class="nrow" href="{{ item.url | relative_url }}">
+   <span class="nwhen"><time datetime="{{ item.date | date: '%Y-%m' }}">{% include redesign/date.html d=item.date f='my_abbr' %}</time>{% if item.organisation %}<span class="nwho">{{ t.orgs[item.organisation] | default: item.organisation }}</span>{% endif %}</span>
+   <span class="nwhat tl">{{ item[kt] | default: item.title }}</span>
+  </a>
+  {%- endfor %}
+  </div>
+{%- endfor %}
+ </div>
+
+{%- if news_pages > 1 %}
+ <div class="np-dots">
+{%- for p in (1..news_pages) %}
+  <label class="np-dot" for="news-p{{ p }}"><span class="vh">{{ t.news_page | replace: '%1', p | replace: '%2', news_pages }}</span></label>
+{%- endfor %}
+ </div>
+{%- endif %}
 </div>
-
-<div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2026-07">Jul 2026</time></span>ENSA Safi &middot; Cadi Ayyad University</span>
- <h3 class="wtitle"><a class="tl" href="#education">Graduated Ing&eacute;nieur d&rsquo;&Eacute;tat in Computer Science and Artificial Intelligence</a></h3>
- <span class="res"><span class="dot">Highest Honours, 17.25&#8202;/&#8202;20 &middot; ranked 1st&#8202;/&#8202;19</span></span>
-</div>
-
-<div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2026-03">Mar 2026</time></span>Universit&eacute; de Moncton &middot; New Brunswick</span>
- <h3 class="wtitle"><a class="tl" href="#experience">Began quantum machine learning research for drug discovery at Universit&eacute; de Moncton</a></h3>
- <span class="res"><span class="dot">Generative models for 5-LOX inhibitors</span></span>
-</div>
-
-<div class="wrow">
- <span class="marginnote"><span class="mn-label"><time datetime="2026-01">Jan 2026</time></span>Mitacs Canada</span>
- <h3 class="wtitle"><a class="tl" href="#awards">Awarded the Mitacs Globalink Research Award</a></h3>
- <span class="res"><span class="dot">$12,000 CAD for research at a Canadian university</span></span>
-</div>
+{%- endif -%}

@@ -1,6 +1,8 @@
 ---
 title: "Generative Adversarial Networks (GANs)"
+title_fr: "Réseaux antagonistes génératifs (GAN)"
 excerpt: "Deep Convolutional GAN implementation in PyTorch for generating realistic handwritten digits from the MNIST dataset.<br/><br/>**Technologies:** PyTorch, Deep Learning, Generative Models"
+excerpt_fr: "Implémentation d'un GAN convolutif profond en PyTorch, pour générer des chiffres manuscrits réalistes à partir du jeu de données MNIST.<br/><br/>**Technologies :** PyTorch, apprentissage profond, modèles génératifs"
 collection: portfolio
 date: 2023-08-01
 image: "portfolio/gan-mnist.png"

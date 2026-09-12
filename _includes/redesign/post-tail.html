@@ -17,6 +17,8 @@
   id kramdown generates from a heading inside the post itself.
 {%- endcomment -%}
 
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
 {%- assign share_url = page.url | absolute_url | url_encode -%}
 {%- assign share_title = page.title | url_encode -%}
 {%- assign siblings = site.posts | where_exp: "p", "p.lang == page.lang" -%}
@@ -24,17 +26,17 @@
 {%- for p in siblings -%}{%- if p.url == page.url -%}{%- assign here = forloop.index0 -%}{%- endif -%}{%- endfor -%}
 
 {% if page.tags.size > 0 or page.categories.size > 0 %}
- <h2 id="post-filed">Filed under</h2>
+ <h2 id="post-filed">{{ t.filed_under }}</h2>
  <div class="rule" aria-hidden="true"><svg><use href="#sg5"/></svg></div>
  {%- if page.categories.size > 0 %}
- <p class="res"><span class="br">Categories</span> {% for cat in page.categories %}<span class="g"><a href="{{ '/blog/categories/' | relative_url }}#{{ cat | slugify }}">{{ cat | replace: '_', ' ' | replace: '-', ' ' }}</a></span> {% endfor %}</p>
+ <p class="res"><span class="br">{{ t.categories }}</span> {% for cat in page.categories %}<span class="g"><a href="{{ '/blog/categories/' | relative_url }}#{{ cat | slugify }}">{{ cat | replace: '_', ' ' | replace: '-', ' ' }}</a></span> {% endfor %}</p>
  {%- endif %}
  {%- if page.tags.size > 0 %}
- <p class="res"><span class="br">Tags</span> {% for tag in page.tags %}<span class="g"><a href="{{ '/blog/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag | replace: '_', ' ' | replace: '-', ' ' }}</a></span> {% endfor %}</p>
+ <p class="res"><span class="br">{{ t.tags }}</span> {% for tag in page.tags %}<span class="g"><a href="{{ '/blog/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag | replace: '_', ' ' | replace: '-', ' ' }}</a></span> {% endfor %}</p>
  {%- endif %}
 {% endif %}
 
- <h2 id="post-share">Share on</h2>
+ <h2 id="post-share">{{ t.share_on }}</h2>
  <div class="rule" aria-hidden="true"><svg><use href="#sg2"/></svg></div>
  <p class="res"><span class="g"><a href="https://bsky.app/intent/compose?text={{ share_title }}%20{{ share_url }}" rel="noopener">Bluesky</a></span> <span class="g"><a href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ share_url }}&amp;title={{ share_title }}" rel="noopener">LinkedIn</a></span> <span class="g"><a href="https://x.com/intent/post?text={{ share_title }}&amp;url={{ share_url }}" rel="noopener">X</a></span> <span class="g"><a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" rel="noopener">Facebook</a></span> <span class="g"><a href="mailto:?subject={{ share_title }}&amp;body={{ share_url }}">Email</a></span></p>
 
@@ -45,14 +47,14 @@
   {%- if oi < siblings.size -%}{%- assign older = siblings[oi] -%}{%- endif -%}
 {%- endif -%}
 {% if newer or older %}
- <h2 id="post-nav">Previous &amp; next</h2>
+ <h2 id="post-nav">{{ t.prev_next }}</h2>
  <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg6"/></svg><svg><use href="#sg1"/></svg></div>
  <ul class="list">
  {%- if older %}
-  <li><span class="meta">Previous</span><br><span class="t"><a class="tl" href="{{ older.url | relative_url }}">{{ older.title }}</a></span><br><span class="meta"><time datetime="{{ older.date | date: '%Y-%m-%d' }}">{{ older.date | date: '%-d %B %Y' }}</time></span></li>
+  <li><span class="meta">{{ t.previous }}</span><br><span class="t"><a class="tl" href="{{ older.url | relative_url }}">{{ older.title }}</a></span><br><span class="meta"><time datetime="{{ older.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=older.date %}</time></span></li>
  {%- endif %}
  {%- if newer %}
-  <li><span class="meta">Next</span><br><span class="t"><a class="tl" href="{{ newer.url | relative_url }}">{{ newer.title }}</a></span><br><span class="meta"><time datetime="{{ newer.date | date: '%Y-%m-%d' }}">{{ newer.date | date: '%-d %B %Y' }}</time></span></li>
+  <li><span class="meta">{{ t.next }}</span><br><span class="t"><a class="tl" href="{{ newer.url | relative_url }}">{{ newer.title }}</a></span><br><span class="meta"><time datetime="{{ newer.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=newer.date %}</time></span></li>
  {%- endif %}
  </ul>
 {% endif %}
@@ -61,19 +63,19 @@
   {%- assign related_en = site.related_posts | where_exp: "item", "item.lang != 'fr'" | where_exp: "item", "item.url != page.url" -%}
 {%- endif -%}
 {% if related_en and related_en.size > 0 %}
- <h2 id="post-related">You may also enjoy</h2>
+ <h2 id="post-related">{{ t.related }}</h2>
  <div class="rule rule--2" aria-hidden="true"><svg><use href="#sg3"/></svg><svg><use href="#sg4"/></svg></div>
  <ul class="list">
  {%- for rel in related_en limit: 3 %}
-  <li><span class="t"><a class="tl" href="{{ rel.url | relative_url }}">{{ rel.title }}</a></span>{% if rel.description %}<span class="d">{{ rel.description }}</span>{% endif %}<span class="meta"><time datetime="{{ rel.date | date: '%Y-%m-%d' }}">{{ rel.date | date: '%-d %B %Y' }}</time>{% if rel.categories.size > 0 %} &middot; {{ rel.categories[0] | replace: '_', ' ' | replace: '-', ' ' }}{% endif %}</span></li>
+  <li><span class="t"><a class="tl" href="{{ rel.url | relative_url }}">{{ rel.title }}</a></span>{% if rel.description %}<span class="d">{{ rel.description }}</span>{% endif %}<span class="meta"><time datetime="{{ rel.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=rel.date %}</time>{% if rel.categories.size > 0 %} &middot; {{ rel.categories[0] | replace: '_', ' ' | replace: '-', ' ' }}{% endif %}</span></li>
  {%- endfor %}
  </ul>
 {% endif %}
 
 {% if site.giscus.repo and page.comments != false %}
- <h2 id="post-comments">Comments</h2>
+ <h2 id="post-comments">{{ t.comments }}</h2>
  <div class="rule" aria-hidden="true"><svg><use href="#sg1"/></svg></div>
  {% include giscus.html %}
 {% endif %}
 
- <p class="tail"><a href="{{ '/blog/' | relative_url }}">All blog posts &rarr;</a>{% if page.translation_fr %} <span class="sep">&middot;</span> <a href="{{ page.translation_fr | relative_url }}" hreflang="fr" lang="fr">En fran&ccedil;ais &rarr;</a>{% elsif page.translation_en %} <span class="sep">&middot;</span> <a href="{{ page.translation_en | relative_url }}" hreflang="en" lang="en">In English &rarr;</a>{% endif %}</p>
+ <p class="tail">{% if lang == 'fr' %}<a href="{{ '/fr/blog/' | relative_url }}">{{ t.all_posts }}</a>{% else %}<a href="{{ '/blog/' | relative_url }}">{{ t.all_posts }}</a>{% endif %}{% if page.translation_fr %} <span class="sep">&middot;</span> <a href="{{ page.translation_fr | relative_url }}" hreflang="fr" lang="fr">{{ t.in_other_lang }}</a>{% elsif page.translation_en %} <span class="sep">&middot;</span> <a href="{{ page.translation_en | relative_url }}" hreflang="en" lang="en">{{ t.in_other_lang }}</a>{% endif %}</p>

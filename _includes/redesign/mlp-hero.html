@@ -1,76 +1,124 @@
-<!-- THE HERO NETWORK — § 14 of the approved design (final.html L705-765),
-     ported verbatim. A 3–5–5–7 multilayer perceptron: vision, language and
-     speech in, and the seven sections of the home page out. Every output unit
-     is a real anchor into the page below, so it doubles as the table of
-     contents; assets/js/redesign.js lights the unit for the section in view
-     and redraws the forward path that feeds it.
+<!-- THE HERO NETWORK — § 14 of the approved design, rebuilt for ROUND 6 § 5.
 
-     The seven outputs are in the home page's own section order, and their
-     hrefs are the ids the page below carries: news · posts · about ·
-     education · experience · work · awards. The scroll-spy walks that same
-     list of h2[id]s in document order, so the indexes cannot drift.
+     A 3–5–5–7 multilayer perceptron: vision, language and speech in, and the
+     seven sections of the home page out. Every output unit is a real anchor
+     into the page below, so the figure doubles as a table of contents.
+
+     WHAT CHANGED IN ROUND 6. The design lit ONE polyline — input, hidden,
+     hidden, output — which is a wire, not a computation, and it was stuck on
+     the first unit. Every edge and every node is now its OWN element carrying
+     a weight `--w` in [0,1] for the active output, and the stylesheet renders
+     that weight as accent strength. assets/js/redesign.js recomputes the whole
+     field when the section in view changes, when a unit is hovered, and when
+     one takes keyboard focus; on mouse-out it returns to the section in view,
+     not to the first unit.
+
+     THE OUTPUT ORDER LIVES IN ONE PLACE — the `sect_id` list below, in the
+     home page's own section order (ROUND 6 § 3 moved Latest posts to the end).
+     The hrefs are the ids the page below carries, and redesign.js maps the
+     scroll-spy's target ids back through those same hrefs, so the two lists
+     cannot drift out of step however the page is reordered.
+
+     WITH JAVASCRIPT OFF the markup still shows a graded field with News lit:
+     each element carries an inline `--w` drawn from the fixed `wtab` table
+     below, indexed by a deterministic function of its layer and endpoints. It
+     is a still of the same instrument, never a blank box and never a slab.
 
      Nothing here moves: the transitions are colour and opacity only, and the
      stylesheet suppresses even those under prefers-reduced-motion. -->
 
-<nav class="mlpwrap" aria-label="Sections of this page">
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+
+{%- comment -%}
+  GEOMETRY — the design's own coordinates, unchanged. Four layers at
+  x = 16 · 128 · 248 · 368, in a viewBox that leaves room for the input
+  labels on the left and the section names on the right.
+{%- endcomment -%}
+{%- assign in_y   = '78,118,158' | split: ',' -%}
+{%- assign h1_y   = '40,79,118,157,196' | split: ',' -%}
+{%- assign h2_y   = '40,79,118,157,196' | split: ',' -%}
+{%- assign out_y  = '34,62,90,118,146,174,202' | split: ',' -%}
+{%- assign hit_y  = '23,51,79,107,135,163,191' | split: ',' -%}
+{%- assign lab_y  = '38,66,94,122,150,178,206' | split: ',' -%}
+{%- assign sect_id = 'news,about,education,experience,work,awards,posts' | split: ',' -%}
+{%- capture sect_lab -%}{{ t.h_news }}|{{ t.h_about }}|{{ t.h_education }}|{{ t.h_experience }}|{{ t.h_work }}|{{ t.h_awards }}|{{ t.h_posts }}{%- endcapture -%}
+{%- assign sect_lab = sect_lab | split: '|' -%}
+{%- comment -%}
+  THE NO-JS WEIGHT TABLE. Twenty-three fixed values, indexed by
+  ((a * 7 + b) * 3 + layer_seed) modulo 23 — deterministic, no randomness
+  anywhere, and two filter calls per element instead of a hash.
+{%- endcomment -%}
+{%- assign wtab = '0.62,0.21,0.88,0.34,0.71,0.15,0.95,0.44,0.28,0.79,0.52,0.18,0.66,0.37,0.83,0.24,0.57,0.91,0.31,0.48,0.74,0.20,0.60' | split: ',' -%}
+
+<nav class="mlpwrap" aria-label="{{ t.mlp_nav }}">
  <svg class="mlp" viewBox="-66 0 662 236">
- <title>This page, drawn as a 3&#8211;5&#8211;5&#8211;7 multilayer perceptron: vision, language and speech feed forward to seven output units, and every output unit is a section below. One unit is active at a time &#8212; the section in view.</title>
+ <title>{{ t.mlp_title }}</title>
  <g aria-hidden="true">
- <text class="inlab" x="-8" y="82" text-anchor="end">vision</text>
- <text class="inlab" x="-8" y="122" text-anchor="end">language</text>
- <text class="inlab" x="-8" y="162" text-anchor="end">speech</text>
+ <text class="inlab" x="-8" y="82" text-anchor="end">{{ t.in_vision }}</text>
+ <text class="inlab" x="-8" y="122" text-anchor="end">{{ t.in_language }}</text>
+ <text class="inlab" x="-8" y="162" text-anchor="end">{{ t.in_speech }}</text>
  </g>
- <g aria-hidden="true">
- <path class="edge" d="M16 78 128 40M16 78 128 79M16 78 128 118M16 78 128 157M16 78 128 196M16 118 128 40M16 118 128 79M16 118 128 118M16 118 128 157M16 118 128 196M16 158 128 40M16 158 128 79M16 158 128 118M16 158 128 157M16 158 128 196"/>
- <path class="edge e2" d="M128 40 248 40M128 40 248 79M128 40 248 118M128 40 248 157M128 40 248 196M128 79 248 40M128 79 248 79M128 79 248 118M128 79 248 157M128 79 248 196M128 118 248 40M128 118 248 79M128 118 248 118M128 118 248 157M128 118 248 196M128 157 248 40M128 157 248 79M128 157 248 118M128 157 248 157M128 157 248 196M128 196 248 40M128 196 248 79M128 196 248 118M128 196 248 157M128 196 248 196"/>
+
+ {%- comment -%}
+   ALL 75 EDGES, one element each, in one group painted beneath the nodes.
+   data-l is the layer, data-a the source unit, data-b the target unit;
+   redesign.js addresses each edge by that triple, so document order is free
+   to change without breaking the field.
+ {%- endcomment -%}
+ <g class="edges" aria-hidden="true">
+ {%- for a in (0..2) -%}{%- for b in (0..4) -%}
+ {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 2 | modulo: 23 -%}
+ <path class="edge" data-l="0" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ wtab[wi] }}" d="M16 {{ in_y[a] }} 128 {{ h1_y[b] }}"/>
+ {%- endfor -%}{%- endfor -%}
+ {%- for a in (0..4) -%}{%- for b in (0..4) -%}
+ {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 11 | modulo: 23 -%}
+ <path class="edge" data-l="1" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ wtab[wi] }}" d="M128 {{ h1_y[a] }} 248 {{ h2_y[b] }}"/>
+ {%- endfor -%}{%- endfor -%}
+ {%- comment -%} the fan into every output; with no JS only unit 0's fan carries weight {%- endcomment -%}
+ {%- for a in (0..4) -%}{%- for b in (0..6) -%}
+ {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 19 | modulo: 23 -%}
+ {%- if b == 0 -%}{%- assign w = wtab[wi] -%}{%- else -%}{%- assign w = wtab[wi] | times: 0.06 | round: 3 -%}{%- endif -%}
+ <path class="edge" data-l="2" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ w }}" d="M248 {{ h2_y[a] }} 368 {{ out_y[b] }}"/>
+ {%- endfor -%}{%- endfor -%}
  </g>
- <a class="out on" href="#news" data-i="0"><title>News</title>
- <path class="edge" d="M248 40 368 34M248 79 368 34M248 118 368 34M248 157 368 34M248 196 368 34"/>
- <circle class="node" cx="368" cy="34" r="4.6"/>
- <rect class="hit" x="357" y="23" width="239" height="22"/>
- <text class="lab" x="386" y="38">News</text>
+
+ {%- comment -%}
+   THE NODES. Each is a two-circle stack: an opaque .plate in the page colour
+   so the edge field cannot show through the disc, and the graded .node on top
+   whose fill-opacity is its own weight. Painted after every edge, so the
+   discs close the fans off cleanly.
+ {%- endcomment -%}
+ <g class="nodes" aria-hidden="true">
+ {%- for a in (0..2) -%}
+ {%- assign wi = a | times: 7 | times: 3 | plus: 5 | modulo: 23 -%}
+ <circle class="plate" cx="16" cy="{{ in_y[a] }}" r="4"/><circle class="node" data-n="0" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="16" cy="{{ in_y[a] }}" r="4"/>
+ {%- endfor -%}
+ {%- for a in (0..4) -%}
+ {%- assign wi = a | times: 7 | times: 3 | plus: 13 | modulo: 23 -%}
+ <circle class="plate" cx="128" cy="{{ h1_y[a] }}" r="4"/><circle class="node" data-n="1" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="128" cy="{{ h1_y[a] }}" r="4"/>
+ {%- endfor -%}
+ {%- for a in (0..4) -%}
+ {%- assign wi = a | times: 7 | times: 3 | plus: 17 | modulo: 23 -%}
+ <circle class="plate" cx="248" cy="{{ h2_y[a] }}" r="4"/><circle class="node" data-n="2" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="248" cy="{{ h2_y[a] }}" r="4"/>
+ {%- endfor -%}
+ {%- for b in (0..6) -%}
+ {%- if b == 0 -%}{%- assign w = '1' -%}{%- else -%}{%- assign w = '0.12' -%}{%- endif -%}
+ <circle class="plate" cx="368" cy="{{ out_y[b] }}" r="4.6"/><circle class="node node--out" data-n="3" data-k="{{ b }}" style="--w:{{ w }}" cx="368" cy="{{ out_y[b] }}" r="4.6"/>
+ {%- endfor -%}
+ </g>
+
+ {%- comment -%}
+   THE SEVEN OUTPUT UNITS AS LINKS. The transparent .hit rect covers the disc
+   and its name, so the whole row is the hover, focus and click target; the
+   node itself is pointer-events:none and simply shows through.
+ {%- endcomment -%}
+ {%- for b in (0..6) -%}
+ <a class="out{% if b == 0 %} on{% endif %}" href="#{{ sect_id[b] }}" data-i="{{ b }}"><title>{{ sect_lab[b] }}</title>
+ <rect class="hit" x="357" y="{{ hit_y[b] }}" width="239" height="22"/>
+ <text class="lab" x="386" y="{{ lab_y[b] }}">{{ sect_lab[b] }}</text>
  </a>
- <a class="out" href="#posts" data-i="1"><title>Latest posts</title>
- <path class="edge" d="M248 40 368 62M248 79 368 62M248 118 368 62M248 157 368 62M248 196 368 62"/>
- <circle class="node" cx="368" cy="62" r="4.6"/>
- <rect class="hit" x="357" y="51" width="239" height="22"/>
- <text class="lab" x="386" y="66">Latest posts</text>
- </a>
- <a class="out" href="#about" data-i="2"><title>About me</title>
- <path class="edge" d="M248 40 368 90M248 79 368 90M248 118 368 90M248 157 368 90M248 196 368 90"/>
- <circle class="node" cx="368" cy="90" r="4.6"/>
- <rect class="hit" x="357" y="79" width="239" height="22"/>
- <text class="lab" x="386" y="94">About me</text>
- </a>
- <a class="out" href="#education" data-i="3"><title>Education</title>
- <path class="edge" d="M248 40 368 118M248 79 368 118M248 118 368 118M248 157 368 118M248 196 368 118"/>
- <circle class="node" cx="368" cy="118" r="4.6"/>
- <rect class="hit" x="357" y="107" width="239" height="22"/>
- <text class="lab" x="386" y="122">Education</text>
- </a>
- <a class="out" href="#experience" data-i="4"><title>Experience</title>
- <path class="edge" d="M248 40 368 146M248 79 368 146M248 118 368 146M248 157 368 146M248 196 368 146"/>
- <circle class="node" cx="368" cy="146" r="4.6"/>
- <rect class="hit" x="357" y="135" width="239" height="22"/>
- <text class="lab" x="386" y="150">Experience</text>
- </a>
- <a class="out" href="#work" data-i="5"><title>Selected work</title>
- <path class="edge" d="M248 40 368 174M248 79 368 174M248 118 368 174M248 157 368 174M248 196 368 174"/>
- <circle class="node" cx="368" cy="174" r="4.6"/>
- <rect class="hit" x="357" y="163" width="239" height="22"/>
- <text class="lab" x="386" y="178">Selected work</text>
- </a>
- <a class="out" href="#awards" data-i="6"><title>Awards</title>
- <path class="edge" d="M248 40 368 202M248 79 368 202M248 118 368 202M248 157 368 202M248 196 368 202"/>
- <circle class="node" cx="368" cy="202" r="4.6"/>
- <rect class="hit" x="357" y="191" width="239" height="22"/>
- <text class="lab" x="386" y="206">Awards</text>
- </a>
- <g class="node n-in" aria-hidden="true"><circle cx="16" cy="78" r="4"/><circle cx="16" cy="118" r="4"/><circle cx="16" cy="158" r="4"/></g>
- <g class="node n-hid" aria-hidden="true"><circle cx="128" cy="40" r="4"/><circle cx="128" cy="79" r="4"/><circle cx="128" cy="118" r="4"/><circle cx="128" cy="157" r="4"/><circle cx="128" cy="196" r="4"/><circle cx="248" cy="40" r="4"/><circle cx="248" cy="79" r="4"/><circle cx="248" cy="118" r="4"/><circle cx="248" cy="157" r="4"/><circle cx="248" cy="196" r="4"/></g>
- <path class="fwd" d="M16 158 L128 79 L248 157 L368 34" aria-hidden="true"/>
- <g class="fdot" aria-hidden="true"><circle cx="16" cy="158" r="4"/><circle cx="128" cy="79" r="4"/><circle cx="248" cy="157" r="4"/></g>
+ {%- endfor %}
  </svg>
- <p class="mlpcap">A 3&#8211;5&#8211;5&#8211;7 network: vision, language and speech in; the sections of this page out. One output unit fires at a time &#8212; the section you are reading &#8212; and the path that feeds it is drawn back through the hidden layers. Follow an output unit and the page goes there.</p>
+ <p class="mlpcap">{{ t.mlp_cap }}</p>
 </nav>

@@ -1,6 +1,8 @@
 ---
 title: "RNA-Seq Pan-Cancer Clustering for Tumor Identification"
+title_fr: "Partitionnement pan-cancer de données RNA-Seq pour l'identification de tumeurs"
 excerpt: "Unsupervised clustering of gene expression data using K-Means and DBSCAN for automatic tumor type identification from TCGA dataset.<br/><br/>**Technologies:** Python, Scikit-learn, PCA, t-SNE"
+excerpt_fr: "Partitionnement non supervisé de données d'expression génique par K-Means et DBSCAN, pour identifier automatiquement le type de tumeur à partir du jeu de données TCGA.<br/><br/>**Technologies :** Python, Scikit-learn, ACP, t-SNE"
 collection: portfolio
 date: 2025-05-25
 image: "portfolio/robotic_dna.jpg"

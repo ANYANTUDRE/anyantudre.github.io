@@ -1,5 +1,6 @@
 ---
 title: "Head of State's Award of Excellence"
+title_fr: "Prix d'Excellence du Chef de l'État"
 collection: awards
 date: 2021-08-01
 award_type: "National Recognition"
@@ -8,6 +9,7 @@ issuer: "Presidency of Burkina Faso"
 image: "awards/excellence-faso.jpeg"
 link: "https://www.presidencedufaso.bf/journee-de-lexcellence-scolaire-99-laureats-recoivent-les-felicitations-du-president-du-faso/"
 excerpt: "Ranked 4th nationwide out of 154,775 candidates in the Baccalaureate."
+excerpt_fr: "4e au niveau national sur 154 775 candidats au baccalauréat."
 featured: true
 ---
 

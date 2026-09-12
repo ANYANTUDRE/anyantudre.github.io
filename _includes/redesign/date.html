@@ -1,0 +1,38 @@
+{%- comment -%}
+  A DATE, IN THE PAGE'S OWN LANGUAGE.  ROUND 6, § 1.
+
+  Jekyll's `date:` filter cannot localise: `%B` is January on a French page as
+  surely as on an English one. So the month is looked up by index in
+  _data/t.yml and the rest is assembled here, once, instead of being spelled
+  out at every call site.
+
+      {% include redesign/date.html d=item.date %}            6 June 2025 / 6 juin 2025
+      {% include redesign/date.html d=item.date f='dmy_abbr' %}  6 Jun 2025 / 6 juin 2025
+      {% include redesign/date.html d=item.date f='my' %}        June 2025 / juin 2025
+      {% include redesign/date.html d=item.date f='my_abbr' %}   Jun 2025 / juin 2025
+      {% include redesign/date.html d=item.date f='month' %}     June / juin
+
+  `lang=` overrides the page's language for the rare row that has to state a
+  date in the other one. The first of the month is "1er" in French and "1" in
+  English, which is the only day that inflects.
+
+  It emits the string and nothing else — no <time> — so the caller keeps the
+  machine-readable datetime attribute it already had.
+{%- endcomment -%}
+{%- assign d_lang = include.lang | default: page.lang | default: 'en' -%}
+{%- assign d_t = site.data.t[d_lang] -%}
+{%- assign d_mi = include.d | date: '%-m' | minus: 1 -%}
+{%- assign d_day = include.d | date: '%-d' -%}
+{%- assign d_year = include.d | date: '%Y' -%}
+{%- assign d_month = d_t.months[d_mi] -%}
+{%- assign d_month_a = d_t.months_abbr[d_mi] -%}
+{%- if d_lang == 'fr' and d_day == '1' -%}{%- assign d_day = '1er' -%}{%- endif -%}
+{%- case include.f -%}
+{%- when 'my' -%}{{ d_month }} {{ d_year }}
+{%- when 'my_abbr' -%}{{ d_month_a }} {{ d_year }}
+{%- when 'month' -%}{{ d_month }}
+{%- when 'month_abbr' -%}{{ d_month_a }}
+{%- when 'y' -%}{{ d_year }}
+{%- when 'dmy_abbr' -%}{{ d_day }} {{ d_month_a }} {{ d_year }}
+{%- else -%}{{ d_day }} {{ d_month }} {{ d_year }}
+{%- endcase -%}

@@ -74,32 +74,55 @@
 .pc .gl{font-family:var(--math);font-size:15px;fill:var(--text)}
 .pc .plate{fill:var(--bg);stroke:none}
 
-// === 14. MLP NAV — a 3–5–5–8 network; every output unit is a real anchor ===
+// === 14. MLP NAV — a 3–5–5–7 network; every output unit is a real anchor ===
+//
+// ROUND 6 § 5 — THE CONTRIBUTION FIELD, not a wire. The design lit a single
+// polyline from the input layer to one output, which reads as a cable and says
+// nothing about how a network computes. Every edge and every node now carries
+// its OWN weight `--w` in [0,1] for the active output, written by
+// assets/js/redesign.js, and weight is rendered as ACCENT STRENGTH:
+//
+//     edge   opacity      --e-lo  ..  --e-hi
+//     node   fill-opacity   .03   ..  1        (over an opaque .plate)
+//
+// so the strongest contributors sit at full oxblood and the weakest stay pale
+// but present. NOTHING IS EVER FULLY HIDDEN: the ramp bottoms out at --e-lo,
+// never at zero, which is the whole point — almost every unit contributes
+// something, a few contribute a lot.
+//
+// The two ends of the ramp are the EXISTING themed edge tokens, so the dark
+// palette lifts the whole field exactly as it lifted the old flat edges, and
+// no new token enters _tokens.scss.
+//
+// Interpolated with #{""} for the same reason the heatmap tint is: Ruby Sass
+// 3.7 parses inside calc() and would try to fold `var(--e-hi) - var(--e-lo)`.
 .mlpwrap{margin:var(--s6) 0 0}
-.mlp{display:block;width:100%;max-width:34rem;height:auto;color:var(--text);overflow:visible}
-.mlp .edge{fill:none;stroke:currentColor;stroke-width:1;opacity:var(--edge-o);transition:stroke 160ms ease,opacity 160ms ease}
-// the signal gains weight layer by layer: .15 → .26 → .40 into the outputs
-.mlp .e2{opacity:var(--edge-o2)}
-// every out-edge rests low; only the ACTIVE unit's fan lifts, and the one
-// forward path through the hidden layers carries full accent weight
-.mlp .out .edge{opacity:var(--edge-o);stroke:var(--accent);pointer-events:none}
-.mlp .out.on .edge{opacity:var(--edge-o3)}
-.mlp .node{fill:var(--bg);stroke:currentColor;stroke-width:1;transition:fill 160ms ease,stroke 160ms ease}
-.mlp .n-in{opacity:.55} .mlp .n-hid{opacity:.7}
-// ONE output unit is filled — the section in view. The rest are OUTLINED.
-.mlp .out .node{fill:var(--bg);stroke:var(--accent);stroke-width:1.4}
-.mlp .out.on .node{fill:var(--accent);stroke:var(--accent)}
-.mlp .out.on .lab{fill:var(--accent)}
-// the forward path: deterministic per output index, so a section always
-// lights the same chain. Colour and opacity only — nothing moves.
-.mlp .fwd{fill:none;stroke:var(--accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-.mlp .fdot{fill:var(--accent);stroke:none;pointer-events:none}
+.mlp{display:block;width:100%;max-width:34rem;height:auto;color:var(--text);overflow:visible;
+  --e-lo:var(--edge-o);--e-hi:var(--edge-on)}
+// the --w fallbacks are what a browser that somehow drops the inline style
+// still draws: a flat, quiet, legible field rather than a blank box
+.mlp .edge{fill:none;stroke:var(--accent);stroke-width:1;pointer-events:none;
+  opacity:#{"calc(var(--e-lo) + (var(--e-hi) - var(--e-lo)) * var(--w, .3))"};
+  transition:opacity 180ms ease}
+// the opaque disc under every node, so the field cannot show through it and
+// the fans are closed off cleanly where they land
+.mlp .plate{fill:var(--bg);stroke:none;pointer-events:none}
+.mlp .node{fill:var(--accent);stroke:var(--accent);stroke-width:1.1;pointer-events:none;
+  fill-opacity:#{"calc(.03 + .97 * var(--w, .3))"};
+  stroke-opacity:#{"calc(.32 + .68 * var(--w, .3))"};
+  transition:fill-opacity 180ms ease,stroke-opacity 180ms ease}
+// The output discs read a shade heavier — they are the layer being explained,
+// and all seven stay clearly OUTLINED whatever the field says, because they
+// are also the seven section markers of a table of contents. Only the fill
+// answers "which one is active"; the ring answers "there are seven".
+.mlp .node--out{stroke-width:1.4;stroke-opacity:#{"calc(.58 + .42 * var(--w, .3))"}}
 .mlp .lab{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;fill:var(--muted);stroke:none;transition:fill 160ms ease}
+.mlp .out.on .lab{fill:var(--accent)}
 .mlp .inlab{font-family:var(--sans);font-size:12px;letter-spacing:.03em;fill:var(--muted);stroke:none}
+// the transparent rect covers the disc AND its name, so the whole row is the
+// hover, focus and click target; the click still scrolls to the section.
 .mlp .hit{fill:transparent;stroke:none}
 .mlp .out{cursor:pointer;outline:none;text-decoration:none}
-.mlp .out:hover .edge,.mlp .out:focus-visible .edge{opacity:var(--edge-on);stroke-width:1.3}
-.mlp .out:hover .node,.mlp .out:focus-visible .node{stroke:var(--accent);stroke-width:2.2}
 .mlp .out:hover .lab,.mlp .out:focus-visible .lab{fill:var(--accent)}
 .mlp .out:focus-visible .hit{stroke:var(--accent);stroke-width:1.5}
 .mlpcap{font-family:var(--sans);font-size:var(--t-label);letter-spacing:.02em;color:var(--muted);margin:var(--s2) 0 0}

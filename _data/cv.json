@@ -4,7 +4,7 @@
     "email": "nyantudrealban@gmail.com",
     "phone": "",
     "website": "https://anyantudre.github.io",
-    "summary": "Machine Learning Engineer. Diplôme d'Ingénieur d'État in Computer Science and Artificial Intelligence from ENSA Safi, July 2026. Deep learning for vision, language and speech, with speech and language technologies for low-resource African languages as the through-line. Looking for a PhD in deep learning, with an interest in multimodal learning.",
+    "summary": "Machine Learning Engineer. Diplôme d'Ingénieur d'État in Computer Science and Artificial Intelligence from the École Nationale des Sciences Appliquées (ENSA), Safi, July 2026. Deep learning for vision, language and speech, with speech and language technologies for low-resource African languages as the through-line. Looking for a PhD in deep learning, with an interest in multimodal learning.",
     "location": {
       "address": "",
       "postalCode": "",
@@ -70,7 +70,7 @@
   ],
   "education": [
     {
-      "institution": "ENSA Safi - Cadi Ayyad University",
+      "institution": "École Nationale des Sciences Appliquées (ENSA) Safi - Cadi Ayyad University",
       "area": "Diplôme d'Ingénieur d'État (BAC+5) - Computer Science and Artificial Intelligence",
       "studyType": "Diplôme d'Ingénieur d'État (BAC+5)",
       "startDate": "2023-10",
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "institution": "ENSA Fez - Sidi Mohammed Ben Abdellah University",
+      "institution": "École Nationale des Sciences Appliquées (ENSA) Fez - Sidi Mohammed Ben Abdellah University",
       "area": "Preparatory Class - Mathematics, Physics, and Computer Science",
       "studyType": "",
       "startDate": "2021-10",
@@ -168,7 +168,7 @@
       "institution": "GO AI Corporation",
       "date": "2024",
       "role": "Instructor",
-      "description": "Three-week intensive bootcamp for 120+ learners, one of the Data Science and AI bootcamps that have reached 200+ students."
+      "description": "Three-week intensive bootcamp at GO AI Corporation, one of the Data Science/AI bootcamps that have reached 200+ students."
     }
   ],
   "portfolio": []
