@@ -32,4 +32,4 @@ This toolkit helps the research community address data scarcity challenges for l
 ## Links
 
 - [GitHub Repository](https://github.com/ANYANTUDRE/Moore-Speech-Corpora-Toolkit)
-- [Blog Post: Collecting Mooré Data from the Bible](/blog/posts/moorespeechcorpora-toolkit-collecting-moore-data-from-the-bible/)
+- [Blog Post: Collecting Mooré Data from the Bible](/blog/posts/moore-speech-corpora/)

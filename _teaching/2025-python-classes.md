@@ -3,7 +3,7 @@ title: "Python Programming Classes"
 title_fr: "Cours de programmation Python"
 collection: teaching
 type: "Community Course"
-permalink: /teaching/2025-python-classes
+permalink: /teaching/2025-python-classes/
 venue: "Community Initiative"
 date: 2025-03-01
 location: "Remote"

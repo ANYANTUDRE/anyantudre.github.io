@@ -1,9 +1,47 @@
+# `docker compose up` then open http://localhost:4000
+#
+# Why this file looks the way it does — three separate things used to break it:
+#
+# 1. GEMS. The image is built from the Gemfile alone, so it does not contain the
+#    exact versions Gemfile.lock pins, and Bundler refuses to run without them:
+#    "Could not find addressable-2.8.8, csv-3.3.5, ... (Bundler::GemNotFound)".
+#    The jekyll-bundle volume plus BUNDLE_PATH gives them somewhere to live, kept
+#    between runs. It is declared external so it is shared with any `docker run`
+#    that mounts the same name, rather than compose making a second, empty copy.
+#    If it does not exist yet, create it once:
+#        docker volume create jekyll-bundle
+#    and the first `bundle install` will populate it (that one needs network).
+#
+# 2. PERMISSIONS. The Dockerfile ends with USER vscode (uid 1000), which cannot
+#    write to that volume. `user: "0:0"` is what makes the install possible.
+#
+# 3. THE COMMAND. It has to stay on ONE line. A YAML folded block (`>`) turns the
+#    newlines into spaces and the `sh -c` quoting comes apart, which fails with
+#    the memorable "sh: 3: --config: not found".
+#
+# `bundle check` short-circuits the install when the volume is already populated,
+# so start-up needs no network once the gems are there.
+#
+# JEKYLL_ENV must be anything other than "development": in development
+# `jekyll serve` overwrites a blank `url` with its own bind address, so every
+# asset link comes out as http://0.0.0.0:4000/... and the site renders with no
+# CSS at all. See the comment in _config_docker.yml.
+
 services:
   jekyll-site:
     image: jekyll-site
     build: .
-    volumes: [ .:/usr/src/app ]
-    ports: [ 4000:4000 ]
-    user: 1000:1000
-    environment: [ JEKYLL_ENV=docker ]
-    command: jekyll serve -H 0.0.0.0 -w --config _config.yml,_config_docker.yml
+    user: "0:0"
+    volumes:
+      - .:/usr/src/app
+      - jekyll-bundle:/bundle
+    ports:
+      - "4000:4000"
+    environment:
+      JEKYLL_ENV: docker
+      BUNDLE_PATH: /bundle
+    command: sh -c "bundle check >/dev/null 2>&1 || bundle install --quiet; bundle exec jekyll serve -H 0.0.0.0 -w --config _config.yml,_config_docker.yml"
+
+volumes:
+  jekyll-bundle:
+    external: true

@@ -3,7 +3,7 @@ title: "Data Science & AI Summer Bootcamp"
 title_fr: "Bootcamp d'été data science & IA"
 collection: teaching
 type: "Intensive Bootcamp"
-permalink: /teaching/2024-ds-bootcamp
+permalink: /teaching/2024-ds-bootcamp/
 venue: "GO AI Corporation"
 date: 2024-07-01
 location: "Burkina Faso / Remote"
