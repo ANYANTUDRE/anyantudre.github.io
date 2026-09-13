@@ -1,21 +1,26 @@
-The MIT License (MIT)
+Copyright (c) 2026 Wendyellé Abubakrh Alban NYANTUDRE. All rights reserved.
 
-Copyright (c) 2016 Michael Rose
+Unless a file or folder says otherwise, all original work in this repository
+is protected by copyright. This covers the site's text, blog posts, project
+write-ups, CV, images, and its design: the layouts, styles, scripts and
+figures written for this site.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+No part of this work may be copied, reproduced, modified, distributed or
+used, in whole or in part, for personal or commercial purposes, without prior
+written permission from the author.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+To ask for permission, write to nyantudrealban@gmail.com or contact me on
+LinkedIn: https://www.linkedin.com/in/anyantudre/
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Unauthorized use and/or duplication of this material without express and
+written permission from the author is strictly prohibited.
+
+
+THIRD-PARTY CODE
+
+This site is built on Academic Pages
+(https://github.com/academicpages/academicpages.github.io), which is based on
+Minimal Mistakes by Michael Rose. The code that comes from those projects
+remains under the MIT License; its copyright and permission notice is kept in
+LICENSE-MIT. Other third-party libraries included in this repository keep
+their own licenses.

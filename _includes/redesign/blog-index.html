@@ -1,0 +1,169 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- if lang == 'fr' -%}
+{%- assign home_url = '/fr/' -%}{%- else -%}{%- assign home_url = '/' -%}
+{%- endif -%}
+{%- assign in_lang = site.posts | where_exp: "p", "p.lang == lang" -%}
+{%- assign groups = in_lang | group_by_exp: "p", "p.categories[0]" | sort: "name" -%}
+
+<article class="col">
+
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">{{ t.both_languages }}</span>Chaque article existe en fran&ccedil;ais et en anglais. Le titre m&egrave;ne &agrave; la version fran&ccedil;aise, <span class="mn-em">[ EN ]</span> &agrave; l&rsquo;anglaise.</span>
+
+ <h1>{{ t.blog_title }}</h1>
+ <p class="lede">Revues d&rsquo;articles et tutoriels, {{ in_lang | size }} &agrave; ce jour. Les revues expliquent le probl&egrave;me qu&rsquo;un article voulait r&eacute;soudre, son id&eacute;e centrale et la construction du r&eacute;seau&#8239;; les tutoriels avancent pas &agrave; pas, avec tout le code, de l&rsquo;installation jusqu&rsquo;au r&eacute;sultat final.</p>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">{{ t.both_languages }}</span>Every post exists in English and French. The title goes to the English one, <span class="mn-em">[ FR ]</span> to the French.</span>
+
+ <h1>{{ t.blog_title }}</h1>
+ <p class="lede">Paper reviews and tutorials, {{ in_lang | size }} so far. The reviews explain the problem a paper set out to solve, its core idea and how the network is built; the tutorials go step by step, with all the code, from setup to the final result.</p>
+{%- endif %}
+
+{% include redesign/attention.html %}
+
+{%- for group in groups -%}
+{%- assign g_label = t.cat[group.name] | default: group.name | replace: '_', ' ' | replace: '-', ' ' | capitalize -%}
+{%- case group.name -%}
+{%- when 'paper_review' -%}
+{%- assign g_id = 'w-reviews' -%}
+{%- when 'tutorial' -%}
+{%- assign g_id = 'w-tutorials' -%}
+{%- else -%}
+{%- assign g_id = group.name | slugify | prepend: 'w-' -%}
+{%- endcase -%}
+{%- assign turn = forloop.index0 | modulo: 3 -%}
+{%- if turn == 0 -%}
+{%- assign sg_a = 'sg5' -%}
+{%- assign sg_b = 'sg3' -%}
+{%- elsif turn == 1 -%}
+{%- assign sg_a = 'sg3' -%}
+{%- assign sg_b = 'sg1' -%}
+{%- else -%}
+{%- assign sg_a = 'sg6' -%}
+{%- assign sg_b = 'sg4' -%}
+{%- endif -%}
+
+ <h2 id="{{ g_id }}">{{ g_label }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#{{ sg_a }}"/></svg><svg><use href="#{{ sg_b }}"/></svg></div>
+
+{%- assign in_group = group.items | sort: "date" -%}
+{%- for post in in_group -%}
+{%- assign words = post.content | strip_html | number_of_words -%}
+{%- assign mins = words | divided_by: site.words_per_minute -%}
+{%- if mins < 1 %}{% assign mins = 1 %}{% endif -%}
+{%- if lang == 'fr' -%}
+  {%- assign fr_href = post.url -%}
+  {%- assign en_href = post.translation_en -%}
+{%- else -%}
+  {%- assign en_href = post.url -%}
+  {%- assign fr_href = post.translation_fr -%}
+{%- endif %}
+
+ <div class="wrow" data-spy>
+  <span class="marginnote">{% if post.image.path %}<img class="mn-thumb" src="{{ post.image.path | relative_url }}" alt="{{ post.image.alt | default: post.title | escape }}" loading="lazy">{% endif %}{% if post.tags.size > 0 %}<span class="mn-label">{{ t.tags }}</span>{% for tag in post.tags %}{{ tag | replace: '_', ' ' | replace: '-', ' ' }}{% unless forloop.last %} &middot; {% endunless %}{% endfor %}{% endif %}</span>
+  <span class="meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=post.date %}</time></span>
+  <h3 class="wtitle"><a class="tl" href="{{ post.url | relative_url }}" hreflang="{{ lang }}">{{ post.title }}</a></h3>
+  <span class="res">{% if en_href %}<span class="gs"><a href="{{ en_href | relative_url }}" hreflang="en" lang="en">EN</a></span>{% else %}<span class="gs">EN</span>{% endif %} {% if fr_href %}<span class="gs"><a href="{{ fr_href | relative_url }}" hreflang="fr" lang="fr">FR</a></span>{% else %}<span class="gs">FR</span>{% endif %} <span class="dot">&middot; {{ mins }} {{ t.min_read }}</span></span>
+ </div>
+{% endfor -%}
+{%- endfor %}
+
+</article>
+
+<article class="col">
+ <h2 id="colophon">{{ t.colophon }}</h2>
+ <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg2"/></svg><svg><use href="#sg5"/></svg></div>
+ <div class="sb">{%- assign resnet_en = '/blog/posts/resnet-review/' -%}
+{%- assign resnet_fr = '/blog/posts/resnet-review-fr/' -%}
+{%- if lang == 'fr' -%}
+{%- assign resnet_url = resnet_fr -%}{%- else -%}{%- assign resnet_url = resnet_en -%}
+{%- endif -%}
+
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">Pourquoi ces huit</span>Quelques formules fondatrices qui font tourner l&rsquo;apprentissage profond moderne, et que je trouve sinc&egrave;rement belles.</span>
+ <p>Huit &eacute;quations, du neurone seul aux mod&egrave;les g&eacute;n&eacute;ratifs.</p>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">Why these eight</span>A few foundational formulas that power modern deep learning, and that I genuinely find beautiful.</span>
+ <p>Eight equations, from a single neuron to generative models.</p>
+{%- endif %}
+
+ <div class="colo wide">
+  <div class="colo-i">
+  <p class="colo-m"><i>y</i> = <i>&#966;</i>(&#8721;<sub><i>i</i></sub> <i>w</i><sub><i>i</i></sub><i>x</i><sub><i>i</i></sub> + <i>b</i>)</p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">Le neurone seul &middot; Rosenblatt, 1958 &middot; <a href="{{ '/fr/projects/#perceptron' | relative_url }}">dessin&eacute; sur la page Travaux</a></p>
+{%- else %}
+  <p class="colo-a">The single unit &middot; Rosenblatt, 1958 &middot; <a href="{{ '/projects/#perceptron' | relative_url }}">drawn on the work page</a></p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m"><i>f</i>(<i>x</i>) = <i>f</i><sup>(3)</sup>(<i>f</i><sup>(2)</sup>(<i>f</i><sup>(1)</sup>(<i>x</i>)))</p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">R&eacute;seaux profonds &agrave; propagation avant &middot; Goodfellow <i>et al.</i>, 2016 &middot; <a href="{{ home_url | relative_url }}">dessin&eacute; sur la page d&rsquo;accueil</a></p>
+{%- else %}
+  <p class="colo-a">Deep feedforward networks &middot; Goodfellow et al., 2016 &middot; <a href="{{ home_url | relative_url }}">drawn on the home page</a></p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m"><i>&#952;</i><sup>*</sup> = <span class="op">arg&#8201;max</span><sub><i>&#952;</i></sub> &#8721;<sub><i>i</i></sub> <span class="op">log</span> <i>p</i><sub><i>&#952;</i></sub>(<i>x</i><sub><i>i</i></sub>)</p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">Maximum de vraisemblance &middot; d&rsquo;apr&egrave;s Fisher, 1922</p>
+{%- else %}
+  <p class="colo-a">Maximum likelihood &middot; after Fisher, 1922</p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m">&#8466; = &#8722; &#8721;<sub><i>i</i></sub> <i>y</i><sub><i>i</i></sub> <span class="op">log</span> <i>&#375;</i><sub><i>i</i></sub></p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">Entropie crois&eacute;e &middot; d&rsquo;apr&egrave;s Shannon, 1948 &middot; <a href="{{ '/portfolio/radio-signals-classification/' | relative_url }}" hreflang="en">Classification de signaux radio</a></p>
+{%- else %}
+  <p class="colo-a">Cross-entropy loss &middot; after Shannon, 1948 &middot; <a href="{{ '/portfolio/radio-signals-classification/' | relative_url }}">Radio-signal classification</a></p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m"><i>&#952;</i> &#8592; <i>&#952;</i> &#8722; <i>&#951;</i> &#8711;<sub><i>&#952;</i></sub>&#8466;(<i>&#952;</i>)</p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">Descente de gradient &middot; Cauchy, 1847</p>
+{%- else %}
+  <p class="colo-a">Gradient descent &middot; Cauchy, 1847</p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m"><i>y</i> = &#8497;(<i>x</i>, {<i>W</i><sub><i>i</i></sub>}) + <i>x</i></p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">Bloc r&eacute;siduel &middot; He <i>et al.</i>, 2015 &middot; <a href="{{ resnet_url | relative_url }}">ResNet, la revue</a></p>
+{%- else %}
+  <p class="colo-a">Residual block &middot; He et al., 2015 &middot; <a href="{{ resnet_url | relative_url }}">ResNet, reviewed</a></p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m"><span class="op">Attention</span>(<i>Q</i>, <i>K</i>, <i>V</i>) = <span class="op">softmax</span>(<i>QK</i><sup>&#8868;</sup> / &#8730;<i>d</i><sub><i>k</i></sub>) <i>V</i></p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">Attention par produit scalaire normalis&eacute; &middot; Vaswani <i>et al.</i>, 2017 &middot; <a href="{{ '/portfolio/florence-2-vlm/' | relative_url }}" hreflang="en">Florence-2 et les VLM</a></p>
+{%- else %}
+  <p class="colo-a">Scaled dot-product attention &middot; Vaswani et al., 2017 &middot; <a href="{{ '/portfolio/florence-2-vlm/' | relative_url }}">Florence-2 and the VLMs</a></p>
+{%- endif %}
+  </div>
+
+  <div class="colo-i">
+  <p class="colo-m"><span class="op">min</span><sub><i>&#952;</i></sub> <span class="op">max</span><sub><i>&#966;</i></sub> &#120124;<sub><i>x</i>&#8764;<i>p</i><sub>data</sub></sub>[<span class="op">log</span> <i>D</i><sub><i>&#966;</i></sub>(<i>x</i>)] +<br><span class="colo-cont">&#120124;<sub><i>z</i>&#8764;<i>p</i><sub><i>z</i></sub></sub>[<span class="op">log</span>(1 &#8722; <i>D</i><sub><i>&#966;</i></sub>(<i>G</i><sub><i>&#952;</i></sub>(<i>z</i>)))]</span></p>
+{%- if lang == 'fr' %}
+  <p class="colo-a">R&eacute;seaux antagonistes g&eacute;n&eacute;ratifs &middot; Goodfellow <i>et al.</i>, 2014 &middot; <a href="{{ '/portfolio/gan-mnist/' | relative_url }}" hreflang="en">DCGAN sur MNIST</a></p>
+{%- else %}
+  <p class="colo-a">Generative adversarial networks &middot; Goodfellow et al., 2014 &middot; <a href="{{ '/portfolio/gan-mnist/' | relative_url }}">DCGAN on MNIST</a></p>
+{%- endif %}
+  </div>
+
+ </div>
+
+ <p class="tail"><a href="{{ home_url | relative_url }}">{{ t.back_home }}</a></p>
+ </div>
+
+</article>

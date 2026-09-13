@@ -1,0 +1,52 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign kt = 'title_' | append: lang -%}
+{%- assign kx = 'excerpt_' | append: lang -%}
+{%- if lang == 'fr' -%}
+{%- assign cv_url = '/fr/cv/' -%}{%- else -%}{%- assign cv_url = '/cv/' -%}
+{%- endif -%}
+
+<article class="col">
+
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">{{ t.about_this_list }}</span>Mes projets les plus importants et que je peux mettre en lien, du plus r&eacute;cent au plus ancien. &laquo;&#8239;{{ t.writeup }}&#8239;&raquo; ouvre le r&eacute;cit complet d&rsquo;un projet et &laquo;&#8239;{{ t.code }}&#8239;&raquo; son d&eacute;p&ocirc;t&#8239;; les mots-cl&eacute;s indiquent le domaine et les principaux outils. Les exp&eacute;riences plus modestes sont sur <a href="https://github.com/{{ site.author.github }}">GitHub</a>.</span>
+
+ <h1>{{ t.work_title }}</h1>
+ <p class="lede">Tout ce que j&rsquo;ai construit et que je peux montrer, du plus r&eacute;cent au plus ancien. La plupart sont ouverts sur GitHub&nbsp;; les autres sont des syst&egrave;mes clients que je peux d&eacute;crire mais pas mettre en lien.</p>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">{{ t.about_this_list }}</span>My most significant and linkable projects, newest first. &ldquo;{{ t.writeup }}&rdquo; opens the full account of a project and &ldquo;{{ t.code }}&rdquo; its repository; the tags name its field and main tools. Smaller experiments are on <a href="https://github.com/{{ site.author.github }}">GitHub</a>.</span>
+
+ <h1>{{ t.work_title }}</h1>
+ <p class="lede">Everything I have built and can show, newest first. Most are open on GitHub; the rest are client systems I can describe but not link.</p>
+{%- endif %}
+
+{% include redesign/perceptron.html %}{% assign projects = site.portfolio | sort: 'date' | reverse %}
+{% assign rules = "sg3|sg5,sg6|sg1,sg2|sg4,sg4|sg6" | split: "," %}
+{% assign shown_year = "" %}
+{% assign year_index = 0 %}
+{% for item in projects %}
+  {%- assign year = item.date | date: "%Y" -%}
+  {%- if year != shown_year -%}
+    {%- assign shown_year = year -%}
+    {%- assign slot = year_index | modulo: 4 -%}
+    {%- assign pair = rules[slot] | split: "|" -%}
+    {%- assign year_index = year_index | plus: 1 %}
+
+ <h2 class="yr" id="year-{{ year }}">{{ year }}</h2>
+ <div class="rule rule--2" aria-hidden="true"><svg><use href="#{{ pair[0] }}"/></svg><svg><use href="#{{ pair[1] }}"/></svg></div>
+  {%- endif -%}
+
+  {%- assign blurb = item[kx] | default: item.excerpt | split: '<br' | first | markdownify | strip_html | strip_newlines | strip %}
+ <div class="entry" data-spy>
+  {%- if item.tags and item.tags.size > 0 %}
+  <span class="marginnote"><span class="mn-label">{{ t.tags }}</span>{{ item.tags | join: " · " }}</span>
+  {%- endif %}
+  <h3><a class="tl" href="{{ item.url | relative_url }}" hreflang="en">{{ item[kt] | default: item.title }}</a></h3>
+  <p>{{ blurb }}</p>
+  <p class="res">{% if item.github_url %}<span class="g"><a href="{{ item.github_url }}">{{ t.code }}</a></span> {% endif %}<span class="g"><a href="{{ item.url | relative_url }}" hreflang="en">{{ t.writeup }}</a></span>{% if item.github_stars %}<span class="stars">&#9733; {{ item.github_stars }} {% if item.github_stars == 1 %}{{ t.stars_one }}{% else %}{{ t.stars_many }}{% endif %}</span>{% endif %}</p>
+ </div>
+{% endfor %}
+
+ <p class="tail"><a href="{{ cv_url | relative_url }}">{{ t.full_cv }}</a></p>
+
+</article>

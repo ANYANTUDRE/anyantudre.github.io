@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you refer to this work, please cite it as below. All rights reserved; see LICENSE."
+type: software
+title: "anyantudre.github.io: personal website"
+authors:
+  - family-names: "NYANTUDRE"
+    given-names: "Wendyellé Abubakrh Alban"
+    email: "nyantudrealban@gmail.com"
+url: "https://anyantudre.github.io"
+repository-code: "https://github.com/anyantudre/anyantudre.github.io"
+keywords:
+  - personal website
+  - portfolio
+  - deep learning

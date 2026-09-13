@@ -1,6 +1,8 @@
 ---
 title: "Florence-2 Vision Language Model Toolkit"
+title_fr: "Boîte à outils pour le modèle vision-langage Florence-2"
 excerpt: "Comprehensive collection of notebooks for Microsoft's Florence-2 VLM: inference, data auto-labeling, and fine-tuning for various computer vision tasks.<br/><br/>**Technologies:** PyTorch, Hugging Face Transformers, Computer Vision"
+excerpt_fr: "Ensemble de notebooks pour le VLM Florence-2 de Microsoft : inférence, auto-étiquetage des données et affinage pour diverses tâches de vision par ordinateur.<br/><br/>**Technologies :** PyTorch, Hugging Face Transformers, vision par ordinateur"
 collection: portfolio
 date: 2024-07-01
 image: "portfolio/florence2.png"

@@ -1,0 +1,37 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign kt = 'title_' | append: lang -%}
+{%- assign news_items = site.news | sort: 'date' | reverse -%}
+{%- assign news_total = news_items | size -%}
+{%- assign news_per = 3 -%}
+{%- assign news_pages = news_total | plus: news_per | minus: 1 | divided_by: news_per -%}
+
+{%- if news_total > 0 -%}
+<div class="news">
+{%- for p in (1..news_pages) %}
+ <input class="np-in" type="radio" name="news-page" id="news-p{{ p }}"{% if p == 1 %} checked{% endif %}>
+{%- endfor %}
+
+ <div class="np-track">
+{%- for p in (1..news_pages) %}
+ {%- assign news_start = p | minus: 1 | times: news_per %}
+  <div class="np-page">
+  {%- for item in news_items offset: news_start limit: news_per %}
+  <a class="nrow" href="{{ item.url | relative_url }}">
+   <span class="nwhen"><time datetime="{{ item.date | date: '%Y-%m' }}">{% include redesign/date.html d=item.date f='my_abbr' %}</time>{% if item.organisation %}<span class="nwho">{{ t.orgs[item.organisation] | default: item.organisation }}</span>{% endif %}</span>
+   <span class="nwhat tl">{{ item[kt] | default: item.title }}</span>
+  </a>
+  {%- endfor %}
+  </div>
+{%- endfor %}
+ </div>
+
+{%- if news_pages > 1 %}
+ <div class="np-dots">
+{%- for p in (1..news_pages) %}
+  <label class="np-dot" for="news-p{{ p }}"><span class="vh">{{ t.news_page | replace: '%1', p | replace: '%2', news_pages }}</span></label>
+{%- endfor %}
+ </div>
+{%- endif %}
+</div>
+{%- endif -%}

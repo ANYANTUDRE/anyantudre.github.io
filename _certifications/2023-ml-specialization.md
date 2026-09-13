@@ -5,6 +5,7 @@ type: "Professional Certification"
 issuer: "Stanford University & DeepLearning.AI"
 date: 2023-06-01
 image: "certifications/ml-coursera.png"
+link: "https://www.coursera.org/account/accomplishments/specialization/certificate/292BW56B7FML"
 excerpt: "Core ML concepts: supervised, unsupervised, neural networks and best practices taught by Andrew Ng."
 ---
 

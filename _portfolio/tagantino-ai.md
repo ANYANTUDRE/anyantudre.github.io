@@ -1,6 +1,8 @@
 ---
 title: "Tagantino AI - Smart Agriculture with Satellite Data"
+title_fr: "Tagantino AI - agriculture intelligente par données satellitaires"
 excerpt: "ETL pipelines and Deep Learning models to forecast droughts from satellite data, helping Moroccan farmers optimize water resources.<br/><br/>**Technologies:** PyTorch, AWS Glue, Airflow, LangChain, RAG"
+excerpt_fr: "Pipelines ETL et modèles d'apprentissage profond pour prévoir les sécheresses à partir de données satellitaires, et aider les agriculteurs marocains à optimiser la ressource en eau.<br/><br/>**Technologies :** PyTorch, AWS Glue, Airflow, LangChain, RAG"
 collection: portfolio
 date: 2025-06-01
 image: "portfolio/tagantino.jpg"
@@ -9,7 +11,7 @@ tags: [Deep Learning, Data Engineering, AWS, LLM, RAG]
 
 ## Overview
 
-Tagantino AI is a smart agriculture platform that helps Moroccan farmers better manage water resources by forecasting droughts using satellite data and providing real-time decision support through an LLM assistant.
+Tagantino AI is a smart agriculture platform that helps Moroccan farmers better manage water resources by forecasting droughts using satellite data and providing real-time decision support through an LLM assistant. Built between **January and June 2025**.
 
 ## Key Components
 

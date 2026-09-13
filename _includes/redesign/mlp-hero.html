@@ -1,0 +1,79 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign in_y   = '78,118,158' | split: ',' -%}
+{%- assign h1_y   = '40,79,118,157,196' | split: ',' -%}
+{%- assign h2_y   = '40,79,118,157,196' | split: ',' -%}
+{%- assign out_y  = '34,62,90,118,146,174,202' | split: ',' -%}
+{%- assign hit_y  = '23,51,79,107,135,163,191' | split: ',' -%}
+{%- assign lab_y  = '38,66,94,122,150,178,206' | split: ',' -%}
+{%- include redesign/sections.html -%}
+{%- assign wtab = '0.62,0.21,0.88,0.34,0.71,0.15,0.95,0.44,0.28,0.79,0.52,0.18,0.66,0.37,0.83,0.24,0.57,0.91,0.31,0.48,0.74,0.20,0.60' | split: ',' -%}
+
+<nav class="mlpwrap" aria-label="{{ t.mlp_nav }}">
+ <svg class="mlp" viewBox="-140 0 668 236">
+ <title>{{ t.mlp_title }}</title>
+ <g aria-hidden="true">
+ <text class="inlab" x="-8" y="82" text-anchor="end">{{ t.in_curiosity }}</text>
+ <text class="inlab" x="-8" y="122" text-anchor="end">{{ t.in_deep_work }}</text>
+ <text class="inlab" x="-8" y="162" text-anchor="end">{{ t.in_critical }}</text>
+ </g><g class="edges" aria-hidden="true">
+ {%- for a in (0..2) -%}
+ {%- for b in (0..4) -%}
+ {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 2 | modulo: 23 -%}
+ <path class="edge" data-l="0" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ wtab[wi] }}" d="M16 {{ in_y[a] }} 128 {{ h1_y[b] }}"/>
+ {%- endfor -%}
+ {%- endfor -%}
+ {%- for a in (0..4) -%}
+ {%- for b in (0..4) -%}
+ {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 11 | modulo: 23 -%}
+ <path class="edge" data-l="1" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ wtab[wi] }}" d="M128 {{ h1_y[a] }} 248 {{ h2_y[b] }}"/>
+ {%- endfor -%}
+ {%- endfor -%}
+ {%- for a in (0..4) -%}
+ {%- for b in (0..6) -%}
+ {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 19 | modulo: 23 -%}
+ {%- if b == 0 -%}
+ {%- assign w = wtab[wi] -%}{%- else -%}{%- assign w = wtab[wi] | times: 0.06 | round: 3 -%}
+ {%- endif -%}
+ <path class="edge" data-l="2" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ w }}" d="M248 {{ h2_y[a] }} 368 {{ out_y[b] }}"/>
+ {%- endfor -%}
+ {%- endfor -%}
+ </g><g class="nodes" aria-hidden="true">
+ {%- for a in (0..2) -%}
+ {%- assign wi = a | times: 7 | times: 3 | plus: 5 | modulo: 23 -%}
+ <circle class="plate" cx="16" cy="{{ in_y[a] }}" r="4"/><circle class="node" data-n="0" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="16" cy="{{ in_y[a] }}" r="4"/>
+ {%- endfor -%}
+ {%- for a in (0..4) -%}
+ {%- assign wi = a | times: 7 | times: 3 | plus: 13 | modulo: 23 -%}
+ <circle class="plate" cx="128" cy="{{ h1_y[a] }}" r="4"/><circle class="node" data-n="1" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="128" cy="{{ h1_y[a] }}" r="4"/>
+ {%- endfor -%}
+ {%- for a in (0..4) -%}
+ {%- assign wi = a | times: 7 | times: 3 | plus: 17 | modulo: 23 -%}
+ <circle class="plate" cx="248" cy="{{ h2_y[a] }}" r="4"/><circle class="node" data-n="2" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="248" cy="{{ h2_y[a] }}" r="4"/>
+ {%- endfor -%}
+ {%- for b in (0..6) -%}
+ {%- if b == 0 -%}
+ {%- assign w = '1' -%}
+ {%- else -%}
+ {%- assign w = '0.12' -%}
+ {%- endif -%}
+ <circle class="plate" cx="368" cy="{{ out_y[b] }}" r="4.6"/><circle class="node node--out" data-n="3" data-k="{{ b }}" style="--w:{{ w }}" cx="368" cy="{{ out_y[b] }}" r="4.6"/>
+ {%- endfor -%}
+ </g>{%- for b in (0..6) -%}
+ <a class="out{% if b == 0 %} on{% endif %}" href="#{{ sect_id[b] }}" data-i="{{ b }}"><title>{{ sect_lab[b] }}</title>
+ <rect class="hit" x="357" y="{{ hit_y[b] }}" width="171" height="22"/>
+ <text class="lab" x="386" y="{{ lab_y[b] }}">{{ sect_lab[b] }}</text>
+ </a>
+ {%- endfor %}
+ </svg>
+ <p class="eqn mlpeq" role="math" aria-label="{{ t.mlp_eq_alt }}"><i>f</i>(<i>x</i>) = <i>f</i><sup>(3)</sup>(<i>f</i><sup>(2)</sup>(<i>f</i><sup>(1)</sup>(<i>x</i>)))</p>
+ <p class="attrib">{{ t.mlp_attrib }}</p>
+ <p class="mlpcap">{{ t.mlp_cap }}
+  <span class="mlpcap-wide ulab">{{ t.mlp_cap_follow }}</span>
+  <span class="mlpcap-narrow ulab">{{ t.mlp_cap_list }}</span>
+ </p><ul class="mlplist">
+ {%- for b in (0..6) -%}
+ <li><a href="#{{ sect_id[b] }}">{{ sect_lab[b] }}</a></li>
+ {%- endfor -%}
+ </ul>
+</nav>

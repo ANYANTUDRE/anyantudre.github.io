@@ -1,0 +1,68 @@
+---
+layout: redesign-default
+---
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign lead = page.excerpt | markdownify | strip_html | strip_newlines | strip -%}
+{%- assign siblings = site.news | sort: 'date' | reverse -%}
+
+<header class="posthead band">
+ <p class="rubric">{{ t.rubric_news }}</p>
+ <h1>{{ page.title }}</h1>
+ {%- if lead and lead != "" %}
+ <p class="dek">{{ lead }}</p>
+ {%- endif %}
+ <p class="byline">{% if page.date %}<time datetime="{{ page.date | date_to_xmlschema }}">{% include redesign/date.html d=page.date f='my' %}</time>{% endif %}{% if page.organisation %} <span class="sep">&middot;</span> {{ page.organisation }}{% endif %}</p>
+ <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
+</header>
+
+<article class="col flow" data-prose>
+
+ <span class="marginnote">
+  <span class="mn-label">{{ t.this_milestone }}</span>
+  {%- if page.date %}<span class="mn-em">{% include redesign/date.html d=page.date f='my' %}</span>{% endif -%}
+  {%- if page.organisation %}<br>{{ page.organisation }}{% endif -%}
+ </span>
+
+ <span class="marginnote">
+  <span class="mn-label">{{ t.links }}</span>
+  {%- if page.onward %}<span class="g"><a href="{{ page.onward | relative_url }}">{{ page.onward_label | default: t.more }}</a></span> {% endif -%}
+  <span class="g"><a href="{{ '/#news' | relative_url }}">{{ t.all_news_short }}</a></span>
+ </span>{%- if page.image %}
+ <figure class="leadfig">
+  <img src="{{ page.image | prepend: '/images/' | relative_url }}" alt="{{ page.image_alt | default: page.title | escape }}" loading="lazy">
+  {%- if page.image_caption %}
+  <figcaption>{{ page.image_caption }}</figcaption>
+  {%- endif %}
+ </figure>
+ {%- endif %}
+
+ {{ content }}
+
+ <p class="tail">{% if page.onward %}<a href="{{ page.onward | relative_url }}">{{ page.onward_label | default: t.more }} &rarr;</a> <span class="sep">&middot;</span> {% endif %}<a href="{{ '/#news' | relative_url }}">{{ t.all_news_arrow }}</a></p>
+
+</article>{%- assign others = 0 -%}
+{%- for item in siblings -%}
+{%- if item.url != page.url -%}{%- assign others = others | plus: 1 -%}
+{%- endif -%}
+{%- endfor -%}
+{%- if others > 0 %}{%- assign kt = 'title_' | append: lang -%}
+<section class="col" aria-labelledby="more-news">
+ <h2 id="more-news">{{ t.more_news }}</h2>
+ <div class="rule rule--sb" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg6"/></svg></div>
+ <div class="sb">
+ <div class="news">
+{%- assign shown = 0 -%}
+{%- for item in siblings -%}
+{%- if shown < 3 and item.url != page.url -%}
+{%- assign shown = shown | plus: 1 %}
+  <a class="nrow" href="{{ item.url | relative_url }}">
+   <span class="nwhen"><time datetime="{{ item.date | date: '%Y-%m' }}">{% include redesign/date.html d=item.date f='my_abbr' %}</time>{% if item.organisation %}<span class="nwho">{{ t.orgs[item.organisation] | default: item.organisation }}</span>{% endif %}</span>
+   <span class="nwhat tl">{{ item[kt] | default: item.title }}</span>
+  </a>
+{%- endif -%}
+{%- endfor %}
+ </div>
+ </div>
+</section>
+{%- endif %}

@@ -6,6 +6,7 @@ issuer: "Microsoft"
 date: 2024-12-01
 credential_id: "DCF05E6EB8559E7E"
 image: "certifications/azure.png"
+link: "https://learn.microsoft.com/api/credentials/share/en-us/waanyantudre/DCF05E6EB8559E7E?sharingId=7E1C109BC04611C7"
 excerpt: "Certified expertise in building, deploying, and monitoring ML models on Azure using Python and MLflow."
 ---
 

@@ -1,6 +1,8 @@
 ---
 title: "Spotify Batch Data Processing"
+title_fr: "Traitement par lots des données Spotify"
 excerpt: "Python project for extracting and processing data from Spotify Web API with OAuth 2.0 authentication and pagination strategies.<br/><br/>**Technologies:** Python, Spotify API, OAuth 2.0, REST APIs"
+excerpt_fr: "Projet Python d'extraction et de traitement des données de l'API Web de Spotify, avec authentification OAuth 2.0 et stratégies de pagination.<br/><br/>**Technologies :** Python, API Spotify, OAuth 2.0, API REST"
 collection: portfolio
 date: 2025-09-04
 image: "portfolio/spotify.png"

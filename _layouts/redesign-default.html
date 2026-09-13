@@ -1,0 +1,54 @@
+{% include base_path %}<!doctype html>{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+<html lang="{{ lang }}" class="no-js" data-view="{{ page.view }}"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
+  <head><script>
+      (function () {
+        try {
+          var s = localStorage.getItem("theme");
+          var dark = s === "dark" ||
+            (s !== "light" && window.matchMedia &&
+             window.matchMedia("(prefers-color-scheme: dark)").matches);
+          if (dark) document.documentElement.setAttribute("data-theme", "dark");
+          else document.documentElement.removeAttribute("data-theme");
+        } catch (e) {}
+      })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    {% include head.html %}
+    {% include head/custom.html %}
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Karla:wght@400;600&display=swap">
+  </head>
+
+  <body>
+
+    {% include browser-upgrade.html %}
+
+    <a class="skip" href="#main">{{ t.skip }}</a>
+
+    {% include redesign/sprite.html %}
+
+    <div class="sheet">
+
+      {% include redesign/masthead.html %}
+
+      <main id="main" tabindex="-1">
+        {{ content }}
+      </main>
+
+      {% include redesign/footer.html %}
+
+    </div>
+
+    {% include footer/mathjax.html %}{%- if content contains 'language-plotly' %}
+    <script src="{{ base_path }}/assets/js/lib/plotly.min.js"></script>
+    {%- endif %}
+    {% include scripts.html %}
+    <script type="application/json" id="ui-strings">{{ t.js | jsonify }}</script>
+    <script src="{{ base_path }}/assets/js/redesign.js"></script>
+
+  </body>
+</html>

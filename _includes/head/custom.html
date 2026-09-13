@@ -1,15 +1,29 @@
 {% include base_path %}
 
-<!-- start custom head snippets -->
+<!-- start custom head snippets --><link rel="icon" href="{{ base_path }}/images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="{{ base_path }}/images/favicon.ico" sizes="any">
+<link rel="icon" href="{{ base_path }}/images/favicon-32x32.png" type="image/png" sizes="32x32">
+<link rel="icon" href="{{ base_path }}/images/favicon-192x192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/apple-touch-icon-180x180.png"><meta name="theme-color" content="#FFFFF8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151515" media="(prefers-color-scheme: dark)">{%- assign share_desc = page.description | default: page.excerpt | default: site.description | markdownify | strip_html | normalize_whitespace | strip | truncate: 200 -%}
+{%- unless page.header.image or page.header.overlay_image %}
+<meta property="og:image" content="{{ '/images/profile.jpg' | absolute_url }}">
+{%- endunless %}
+<meta property="og:image:alt" content="{{ site.author.name | escape_once }}">
+{%- unless page.excerpt or site.og_description %}
+<meta property="og:description" content="{{ share_desc | escape_once }}">
+{%- endunless %}
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ page.title | default: site.title | markdownify | strip_html | strip_newlines | escape_once }}">
+<meta name="twitter:description" content="{{ share_desc | escape_once }}">
+<meta name="twitter:image" content="{{ '/images/profile.jpg' | absolute_url }}">
 
-<!-- Support for Academicons -->
-<link rel="stylesheet" href="{{ base_path }}/assets/css/academicons.css"/>
-
-<!-- Favicon: profile photo -->
-<link rel="apple-touch-icon" sizes="180x180" href="{{ base_path }}/images/profile.jpg"/>
-<link rel="icon" type="image/png" href="{{ base_path }}/images/profile.jpg" sizes="32x32"/>
-<link rel="icon" type="image/png" href="{{ base_path }}/images/profile.jpg" sizes="192x192"/>
-<link rel="icon" href="{{ base_path }}/images/profile.jpg"/>
-<meta name="theme-color" content="#1a1a2e"/>
+{%- assign pg_lang = page.lang | default: 'en' -%}
+{%- include redesign/lang-pair.html -%}
+{%- if lp_exact %}
+<link rel="alternate" hreflang="{{ pg_lang }}" href="{{ page.url | absolute_url }}">
+<link rel="alternate" hreflang="{{ lp_other }}" href="{{ lp_other_url | absolute_url }}">
+<link rel="alternate" hreflang="x-default" href="{% if pg_lang == 'en' %}{{ page.url | absolute_url }}{% else %}{{ lp_other_url | absolute_url }}{% endif %}">
+{%- endif %}
 
 <!-- end custom head snippets -->

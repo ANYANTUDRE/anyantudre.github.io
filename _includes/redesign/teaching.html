@@ -1,0 +1,59 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- assign kt = 'title_' | append: lang -%}
+{%- assign kx = 'excerpt_' | append: lang -%}
+{%- if lang == 'fr' -%}
+{%- assign cv_url = '/fr/cv/' -%}{%- else -%}{%- assign cv_url = '/cv/' -%}
+{%- endif -%}
+{%- assign teaching_items = site.teaching | sort: 'date' | reverse -%}
+{%- assign talk_items = site.talks | sort: 'date' | reverse -%}
+{%- capture nl %}
+{% endcapture -%}
+
+<article class="col">
+{%- if lang == 'fr' %}
+ <span class="marginnote"><span class="mn-label">Surtout en fran&ccedil;ais</span>La plupart de ces interventions ont &eacute;t&eacute; donn&eacute;es en fran&ccedil;ais, devant des publics du Burkina Faso et du Maroc. Les titres sont laiss&eacute;s dans la langue de l&rsquo;intervention.</span>
+ <h1>{{ t.talks_title }}</h1>
+ <p class="lede">Des salles de classe, des salles de conf&eacute;rence et beaucoup d&rsquo;appels vid&eacute;o. Le propos est presque toujours celui que j&rsquo;aurais voulu entendre &agrave; dix-neuf ans&nbsp;: ce qu&rsquo;est ce domaine, et comment on y entre quand on est &agrave; Ouagadougou.</p>
+{%- else %}
+ <span class="marginnote"><span class="mn-label">Mostly in French</span>Most of these were given in French, to audiences in Burkina Faso and Morocco. Titles are left in the language they were delivered in.</span>
+ <h1>{{ t.talks_title }}</h1>
+ <p class="lede">Classrooms, conference rooms and a great many video calls. The brief is usually the one I would have wanted at nineteen: what this field is, and how somebody in Ouagadougou gets into it.</p>
+{%- endif %}
+</article>
+
+<article class="col">
+
+ <h2 id="t-teaching">{{ t.h_teaching }}</h2>
+ <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg3"/></svg><svg><use href="#sg6"/></svg></div>
+ <div class="sb">
+ {%- if teaching_items.size > 0 %}
+ <ul class="list list--d">
+ {%- for item in teaching_items %}
+  {%- assign one_line = item[kx] | default: item.excerpt | strip_html | strip | split: nl | first | strip -%}
+  <li data-spy><span class="marginnote"><span class="mn-label">{{ t.places[item.venue] | default: item.venue | escape_once }}</span><span class="mn-em"><time datetime="{{ item.date | date: '%Y-%m' }}">{% include redesign/date.html d=item.date f='my_abbr' %}</time></span>{% if item.location %}<br>{{ t.places[item.location] | default: item.location | escape_once }}{% endif %}</span><span class="t"><a class="tl" href="{{ item.url | relative_url }}" hreflang="en">{{ item[kt] | default: item.title | escape_once }}</a></span><span class="d">{{ one_line | escape_once }}</span><span class="meta">{{ t.instructor }}{% if item.type %} <span class="sep">&middot;</span> {{ t.kinds[item.type] | default: item.type | escape_once }}{% endif %}</span></li>
+ {%- endfor %}
+ </ul>
+ {%- else %}
+ <p class="meta">{{ t.nothing_yet }}</p>
+ {%- endif %}
+ </div>
+
+ <h2 id="t-talks">{{ t.h_talks }}</h2>
+ <div class="rule rule--sb rule--2" aria-hidden="true"><svg><use href="#sg0"/></svg><svg><use href="#sg6"/></svg><svg><use href="#sg2"/></svg></div>
+ <div class="sb">
+ {%- if talk_items.size > 0 %}
+ <ul class="list list--d">
+ {%- for item in talk_items %}
+  {%- assign one_line = item[kx] | default: item.excerpt | strip_html | strip | split: nl | first | strip -%}
+  <li data-spy><span class="marginnote"><span class="mn-label">{{ t.places[item.venue] | default: item.venue | escape_once }}</span><span class="mn-em"><time datetime="{{ item.date | date: '%Y-%m-%d' }}">{% include redesign/date.html d=item.date f='dmy_abbr' %}</time></span>{% if item.location %}<br>{{ t.places[item.location] | default: item.location | escape_once }}{% endif %}</span><span class="t"><a class="tl" href="{{ item.url | relative_url }}"{% if item.lang %} lang="{{ item.lang }}"{% endif %}>{{ item[kt] | default: item.title | escape_once }}</a></span><span class="d">{{ one_line | escape_once }}</span><span class="meta">{{ t.kinds[item.talk_type] | default: item.talk_type | default: t.talk | escape_once }}{% if item.pdf %} <span class="sep">&middot;</span> <a href="{{ item.pdf | relative_url }}">{{ t.slides }}</a>{% endif %}</span></li>
+ {%- endfor %}
+ </ul>
+ {%- else %}
+ <p class="meta">{{ t.nothing_yet }}</p>
+ {%- endif %}
+
+ <p class="tail"><a href="{{ cv_url | relative_url }}">{{ t.full_cv }}</a></p>
+ </div>
+
+</article>

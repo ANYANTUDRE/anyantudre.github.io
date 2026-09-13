@@ -1,0 +1,46 @@
+{%- assign lp_lang = page.lang | default: 'en' -%}
+{%- case page.view -%}
+  {%- when 'work' -%}
+  {%- assign lp_home = '/fr/projects/' -%}
+  {%- when 'blog' -%}
+  {%- assign lp_home = '/fr/blog/' -%}
+  {%- when 'post' -%}
+  {%- assign lp_home = '/fr/blog/' -%}
+  {%- when 'talks' -%}
+  {%- assign lp_home = '/fr/teaching-talks/' -%}
+  {%- when 'cv' -%}
+  {%- assign lp_home = '/fr/cv/' -%}
+  {%- else -%}
+  {%- assign lp_home = '/fr/' -%}
+{%- endcase -%}
+{%- assign lp_exact = true -%}
+{%- if lp_lang == 'fr' -%}
+  {%- assign lp_other = 'en' -%}
+  {%- assign lp_other_url = page.translation_en -%}
+  {%- unless lp_other_url -%}
+    {%- assign lp_mirror = page.url | remove_first: '/fr' -%}
+    {%- if lp_mirror == '' -%}
+    {%- assign lp_mirror = '/' -%}
+    {%- endif -%}
+    {%- assign lp_mirror_page = site.pages | where: 'url', lp_mirror | first -%}
+    {%- if lp_mirror_page -%}
+      {%- assign lp_other_url = lp_mirror -%}
+    {%- else -%}
+      {%- assign lp_other_url = '/' -%}
+      {%- assign lp_exact = false -%}
+    {%- endif -%}
+  {%- endunless -%}
+{%- else -%}
+  {%- assign lp_other = 'fr' -%}
+  {%- assign lp_other_url = page.translation_fr -%}
+  {%- unless lp_other_url -%}
+    {%- assign lp_mirror = page.url | prepend: '/fr' | replace: '//', '/' -%}
+    {%- assign lp_mirror_page = site.pages | where: 'url', lp_mirror | first -%}
+    {%- if lp_mirror_page -%}
+      {%- assign lp_other_url = lp_mirror -%}
+    {%- else -%}
+      {%- assign lp_other_url = lp_home -%}
+      {%- assign lp_exact = false -%}
+    {%- endif -%}
+  {%- endunless -%}
+{%- endif -%}

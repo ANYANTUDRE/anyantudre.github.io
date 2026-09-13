@@ -1,18 +1,10 @@
 ---
-layout: archive
-title: "Projects"
+layout: redesign-default
+view: work
+lang: en
+title: "Work"
 permalink: /projects/
 redirect_from:
   - /portfolio/
-author_profile: true
 ---
-
-{% include base_path %}
-
-<div class="portfolio-grid">
-{% assign sorted_projects = site.portfolio | sort: 'date' | reverse %}
-{% for post in sorted_projects %}
-  {% include archive-single-portfolio.html %}
-{% endfor %}
-</div>
-
+{% include redesign/work.html %}

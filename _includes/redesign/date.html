@@ -1,0 +1,26 @@
+{%- assign d_lang = include.lang | default: page.lang | default: 'en' -%}
+{%- assign d_t = site.data.t[d_lang] -%}
+{%- assign d_mi = include.d | date: '%-m' | minus: 1 -%}
+{%- assign d_day = include.d | date: '%-d' -%}
+{%- assign d_year = include.d | date: '%Y' -%}
+{%- assign d_month = d_t.months[d_mi] -%}
+{%- assign d_month_a = d_t.months_abbr[d_mi] -%}
+{%- if d_lang == 'fr' and d_day == '1' -%}
+{%- assign d_day = '1er' -%}
+{%- endif -%}
+{%- case include.f -%}
+{%- when 'my' -%}
+{{ d_month }} {{ d_year }}
+{%- when 'my_abbr' -%}
+{{ d_month_a }} {{ d_year }}
+{%- when 'month' -%}
+{{ d_month }}
+{%- when 'month_abbr' -%}
+{{ d_month_a }}
+{%- when 'y' -%}
+{{ d_year }}
+{%- when 'dmy_abbr' -%}
+{{ d_day }} {{ d_month_a }} {{ d_year }}
+{%- else -%}
+{{ d_day }} {{ d_month }} {{ d_year }}
+{%- endcase -%}

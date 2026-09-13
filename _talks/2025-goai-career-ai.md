@@ -6,6 +6,7 @@ venue: "GO AI Academy"
 date: 2025-07-31
 location: "Online"
 excerpt: "Comprehensive webinar on AI opportunities, threats, and how to build a resilient career in the AI era."
+excerpt_fr: "Webinaire complet sur les opportunités ouvertes par l'IA, les menaces qu'elle fait peser, et comment bâtir une carrière qui y résiste."
 image: "talks/goai-career.jpg"
 pdf: "/files/talks/webinaire-preparer-carriere-ia.pdf"
 ---

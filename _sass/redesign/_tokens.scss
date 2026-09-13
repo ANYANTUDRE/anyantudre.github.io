@@ -1,0 +1,33 @@
+:root{
+  --bg:#FFFFF8; --surface:#FFFFFF;--text:#111111;
+  --muted:#5C5C57;
+  --faint:#A8A89E;
+  --border:#DCDCD4;
+  --accent:#A02020; --accent-soft:#EFE1DF;--acc-rgb:160,32,32;
+  --serif:"EB Garamond",Garamond,"Palatino Linotype",Palatino,Georgia,serif;--math:"EB Garamond",Garamond,"Cambria Math",Palatino,Georgia,serif;--sans:"Karla","Helvetica Neue",Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+
+  --t-dsp:clamp(2.1rem,1.6rem + 2.2vw,3.05rem);--t-h1:clamp(1.75rem,1.4rem + 1.5vw,2.35rem);
+  --t-h2:clamp(1.44rem,1.2rem + .8vw,1.8rem);--t-h3:clamp(1.2rem,1.11rem + .38vw,1.38rem);--t-body:1.111rem;--t-note:.875rem;--t-label:.72rem;
+
+  --u:.5rem;--s1:var(--u); --s2:calc(2*var(--u)); --s3:calc(3*var(--u)); --s4:calc(4*var(--u));
+  --s6:calc(6*var(--u)); --s8:calc(8*var(--u)); --s12:calc(12*var(--u));
+
+  --shell:63rem; --pad-left:4rem;--prose:36rem; --rail:18rem; --gap:3.5rem;--noteoff:calc(var(--rail) + var(--gap));--wide:calc(var(--prose) + var(--noteoff));
+
+  --setback:1.75rem;
+
+  --navh:6.6rem; --navw:30rem;
+
+  --pr:3.5rem; --side:10rem; --sidegap:2.5rem; --shell-post:72.5rem;
+  --portrait:284px;
+  --cell:1.5rem;
+  --field-h:12.5rem;
+  --rule-h:.9rem;
+  --rule-ink:.34;
+  --edge-o:.15; --edge-on:.7;
+  --ring-o:.85; --trail-o:.55;
+}
+
+:root[data-theme="dark"]{
+  --bg:#151515; --surface:#1D1D1B;--text:#DDDDD6; --muted:#9C9C94; --faint:#66665F; --border:#2A2A27;--accent:#E07B72; --accent-soft:#3A2523;--acc-rgb:224,123,114;--rule-ink:.46; --edge-o:.2; --edge-on:.8; --ring-o:.9; --trail-o:.68
+}

@@ -1,0 +1,77 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+{%- if lang == 'fr' -%}
+  {%- assign home_path = '/fr/' -%}
+{%- else -%}
+  {%- assign home_path = '/' -%}
+{%- endif -%}
+{%- if page.view == 'home' -%}
+  {%- assign home_anchor = '' -%}
+{%- else -%}
+  {%- assign home_anchor = home_path | relative_url -%}
+{%- endif -%}
+{%- if site.atom_feed.path -%}
+  {%- assign feed_url = site.atom_feed.path -%}
+{%- else -%}
+  {%- assign feed_url = '/feed.xml' | relative_url -%}
+{%- endif -%}
+
+<footer class="foot">
+ <div class="band">
+  <p class="rubric">{{ t.back_up }}</p>
+  <div class="rule rule--foot rule--acc" aria-hidden="true"><svg><use href="#sg5"/></svg></div>
+
+  <div class="field">
+  <svg class="contours" viewBox="0 0 1000 300" preserveAspectRatio="none" role="img" aria-label="{{ t.descent_alt }}">
+  <g class="rings">
+  <ellipse cx="250" cy="214" rx="86" ry="26" transform="rotate(-18 250 214)" opacity=".11"/>
+  <ellipse cx="250" cy="214" rx="155" ry="47" transform="rotate(-18 250 214)" opacity=".10"/>
+  <ellipse cx="250" cy="214" rx="238" ry="72" transform="rotate(-18 250 214)" opacity=".09"/>
+  <ellipse cx="250" cy="214" rx="332" ry="100" transform="rotate(-18 250 214)" opacity=".08"/>
+  <ellipse cx="250" cy="214" rx="440" ry="132" transform="rotate(-18 250 214)" opacity=".07"/>
+  <ellipse cx="250" cy="214" rx="560" ry="168" transform="rotate(-18 250 214)" opacity=".06"/>
+  <ellipse cx="250" cy="214" rx="690" ry="206" transform="rotate(-18 250 214)" opacity=".05"/>
+  </g>
+  <polyline class="trail-l" points="920,46 846,96 752,64 656,120 560,88 462,150 368,118 300,176 250,214"/>
+  </svg>
+
+  <span class="fmin"><a href="{{ home_anchor }}#main">{{ site.author.name | default: site.title }}</a><span>{{ t.the_minimum }}</span></span>
+  <a class="fv fv--up" style="left:36.8%;top:39.33%" href="{{ home_anchor }}#news"><span class="d"></span><span class="l">{{ t.h_news }}</span></a>
+  <a class="fv fv--dn" style="left:46.2%;top:50%" href="{{ home_anchor }}#about"><span class="d"></span><span class="l">{{ t.h_about }}</span></a>
+  <a class="fv fv--up" style="left:56%;top:29.33%" href="{{ home_anchor }}#education"><span class="d"></span><span class="l">{{ t.h_education }}</span></a>
+  <a class="fv fv--dn" style="left:65.6%;top:40%" href="{{ home_anchor }}#experience"><span class="d"></span><span class="l">{{ t.h_experience }}</span></a>
+  <a class="fv fv--up" style="left:75.2%;top:21.33%" href="{{ home_anchor }}#work"><span class="d"></span><span class="l">{{ t.h_work }}</span></a>
+  <a class="fv fv--dn" style="left:84.6%;top:32%" href="{{ home_anchor }}#awards"><span class="d"></span><span class="l">{{ t.h_awards }}</span></a>
+  <a class="fv fv--up" style="left:92%;top:15.33%" href="{{ home_anchor }}#posts"><span class="d"></span><span class="l">{{ t.h_posts }}</span></a>
+  </div>
+
+  <div class="flegend">
+  <p class="eq" role="math" aria-label="{{ t.descent_eq_alt }}"><i>&#952;</i> &#8592; <i>&#952;</i> &#8722; <i>&#951;</i> &#8711;<sub><i>&#952;</i></sub> &#8466;(<i>&#952;</i>)</p>
+  <p class="attrib">{{ t.descent_attrib }}</p>
+  </div>
+
+  <div class="foot-band">
+  <div class="foot-id">
+  <p>&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ t.rights }}</p>
+  <p>{{ t.places[site.author.location] | default: site.author.location }} &middot; {{ t.set_in }} &middot; {{ t.last_updated }} {{ site.time | date: '%Y-%m-%d' }}</p>
+  </div>
+  <div class="foot-links">
+  <ul class="socials socials--foot">
+  {%- if site.author.email %}
+  <li><a href="mailto:{{ site.author.email }}" aria-label="{{ t.aria_email | replace: '%s', site.author.name }}"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-mail"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.github %}
+  <li><a href="https://github.com/{{ site.author.github }}" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-gh"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.linkedin %}
+  <li><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-li"/></svg></a></li>
+  {%- endif %}
+  {%- if site.author.twitter %}
+  <li><a href="https://x.com/{{ site.author.twitter }}" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-x"/></svg></a></li>
+  {%- endif %}
+  </ul>
+  <p>{% if site.atom_feed.hide != true %}<a href="{{ feed_url }}">{{ t.rss }}</a> <span class="sep">&middot;</span> {% endif %}<a href="{{ '/sitemap/' | relative_url }}">{{ t.sitemap }}</a></p>
+  </div>
+  </div>
+ </div>
+</footer>

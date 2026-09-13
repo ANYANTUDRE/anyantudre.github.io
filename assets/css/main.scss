@@ -37,12 +37,23 @@
     "layout/sidebar",
     "layout/json_cv",
 
-    "vendor/font-awesome/fontawesome",
-    "vendor/font-awesome/solid",
-    "vendor/font-awesome/brands",
+    "vendor/font-awesome/fontawesome-subset",
 
     "layout/syntax-dark",
     "layout/blog",
     "layout/home",
     "layout/sections"
+;
+
+@import
+    "redesign/tokens",
+    "redesign/base",
+    "redesign/devices",
+    "redesign/chrome",
+    "redesign/sections",
+    "redesign/post"
+;
+
+@import
+    "redesign/legacy"
 ;

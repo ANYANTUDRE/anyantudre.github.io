@@ -1,0 +1,81 @@
+.mast{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--border);padding-top:var(--s3);padding-bottom:var(--s1);margin-bottom:var(--s8)}
+.mast .top{display:grid;grid-template-columns:minmax(0,1fr) var(--navw);column-gap:var(--s4);align-items:center;margin-bottom:var(--s2)}
+.brand{display:flex;align-items:center;gap:var(--s2);min-width:0}
+.wordmark{font-family:var(--serif);font-size:1.05rem;font-style:italic;text-decoration:none}
+.wordmark:hover{color:var(--accent)}
+.minimlp{display:block;height:2.4rem;width:auto;aspect-ratio:56 / 40;flex:0 0 auto;color:var(--text);overflow:visible;
+  --e-lo:.08;--e-hi:.85}
+.minimlp .mm-e{fill:none;stroke:var(--accent);pointer-events:none;
+  stroke-width:#{"calc(.28 + .72 * var(--w, .3))"};
+  opacity:#{"calc(var(--e-lo) + (var(--e-hi) - var(--e-lo)) * var(--w, .3))"};
+  transition:opacity 180ms ease}
+.minimlp .mm-pl{fill:var(--bg);stroke:none;pointer-events:none}
+.minimlp .mm-n{fill:var(--accent);stroke:var(--accent);stroke-width:.5;pointer-events:none;
+  fill-opacity:#{"calc(.05 + .95 * var(--w, .35))"};
+  stroke-opacity:#{"calc(.35 + .65 * var(--w, .35))"};
+  transition:fill-opacity 180ms ease,stroke-opacity 180ms ease}
+.minimlp .mm-n--out{stroke-width:.7;stroke-opacity:#{"calc(.58 + .42 * var(--w, .35))"}}
+
+.minimlp .out{visibility:hidden}
+.minimlp .mm-hit{fill:transparent;stroke:none}
+@media (min-width:960px) and (any-pointer:fine){
+  .minimlp .out{visibility:visible;cursor:pointer;outline:none;text-decoration:none}
+  .minimlp .out:focus-visible .mm-hit{stroke:var(--accent);stroke-width:1.5}
+}
+.nav{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:var(--s1) var(--s3)}
+.nav a{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);text-decoration:none;padding-bottom:3px;border-bottom:2px solid transparent}
+.nav a:hover{color:var(--text)}
+html[data-view="home"]  .nav-home,
+html[data-view="work"]  .nav-work,
+html[data-view="blog"]  .nav-blog,
+html[data-view="post"]  .nav-blog,
+html[data-view="cv"]    .nav-cv,
+html[data-view="talks"] .nav-talks{color:var(--text);border-bottom-color:var(--accent)}
+.lang{font-family:var(--sans);font-size:var(--t-label);font-weight:600;letter-spacing:.1em;color:var(--muted);white-space:nowrap}
+.lang .cur{color:var(--text)}
+.lang .br,.lang .sl{color:var(--muted)}
+.lang .sl{padding:0 .1em}
+.lang a{color:var(--accent);text-decoration-color:var(--accent);text-decoration-thickness:.07em;text-underline-offset:.2em}
+.lang a:hover{color:var(--text);text-decoration-color:var(--text)}
+
+.navtail{display:flex;align-items:baseline;gap:var(--s2);white-space:nowrap}
+.tgl{appearance:none;-webkit-appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;font-size:var(--t-label);line-height:1;color:var(--muted);cursor:pointer;transition:color 150ms ease;display:inline-flex;align-items:center;align-self:center}
+.tgl svg{width:15px;height:15px;display:block;color:inherit;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tgl-moon{display:none}
+:root[data-theme="dark"] .tgl-sun{display:none}
+:root[data-theme="dark"] .tgl-moon{display:block}
+.tgl:hover{color:var(--accent)}
+.tgl:focus-visible{color:var(--accent);outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+.foot{margin-top:var(--s12)}
+.foot .rubric{margin-bottom:var(--s1)}
+.rubric{font-family:var(--sans);font-size:var(--t-label);font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin:0 0 var(--s3)}
+.field{position:relative;height:var(--field-h);margin-bottom:var(--s3)}
+.contours{position:absolute;inset:0;width:100%;height:100%;color:var(--text);pointer-events:none}
+.contours .rings{fill:none;stroke:currentColor;stroke-width:1;opacity:var(--ring-o)}
+.contours .trail-l{fill:none;stroke:var(--accent);stroke-width:1.1;opacity:var(--trail-o);stroke-linejoin:round;stroke-linecap:round}
+.fmin{position:absolute;left:25%;top:71.33%;transform:translate(-100%,-50%);padding-right:1rem;max-width:16rem;text-align:right}
+.fmin::before{content:"";position:absolute;right:0;top:50%;transform:translate(50%,-50%);width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.fmin a{font-family:var(--serif);font-size:1.16rem;font-style:italic;text-decoration:none;display:block;line-height:1.2}
+.fmin a:hover{color:var(--accent)}
+.fmin span{font-family:var(--sans);font-size:var(--t-label);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-top:2px}
+.fv{position:absolute;width:0;height:0;transform:translate(-50%,-50%);text-decoration:none}
+.fv .d{position:absolute;left:-4px;top:-4px;width:8px;height:8px;border-radius:50%;border:1px solid var(--muted);background:var(--bg);transition:background-color 150ms ease,border-color 150ms ease}
+.fv .l{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--sans);font-size:var(--t-label);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:3px 4px}
+.fv--up .l{bottom:10px}
+.fv--dn .l{top:10px}
+.fv:hover .l,.fv:focus-visible .l{color:var(--accent)}
+.fv:hover .d,.fv:focus-visible .d{background:var(--accent);border-color:var(--accent)}
+.fv:focus-visible{outline:none}
+.fv:focus-visible .l{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+.flegend{margin:0 0 var(--s4)}
+.flegend .eq{display:block;text-align:right;font-family:var(--math);font-size:1.08rem;line-height:1.4;color:var(--text);margin:0}
+.flegend .attrib{text-align:right;margin:.15rem 0 0}
+.foot-band{padding-top:var(--s2);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--s2) var(--s4)}
+.foot-band p{margin:0;font-family:var(--sans);font-size:var(--t-label);letter-spacing:.03em;color:var(--muted);line-height:1.7}
+.foot-id{min-width:0}
+
+.foot-links{display:flex;flex-direction:column;align-items:flex-end;gap:var(--s1);min-width:0}
+.foot-links p{text-align:right}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:var(--accent)}

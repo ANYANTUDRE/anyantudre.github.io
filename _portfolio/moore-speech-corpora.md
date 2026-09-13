@@ -1,6 +1,8 @@
 ---
 title: "Moore Speech Corpora Toolkit"
+title_fr: "MooreSpeechCorpora, boîte à outils pour la parole en mooré"
 excerpt: "Open-source toolkit to collect, preprocess, align, and normalize Mooré language speech/text data for low-resource NLP applications.<br/><br/>**Technologies:** Python, Speech Processing, TTS, ASR"
+excerpt_fr: "Boîte à outils libre pour collecter, prétraiter, aligner et normaliser des données audio et texte en mooré, au service du TAL en langues peu dotées.<br/><br/>**Technologies :** Python, traitement de la parole, synthèse vocale, reconnaissance de la parole"
 collection: portfolio
 date: 2025-06-07
 image: "portfolio/Moore_Language.png"
@@ -30,4 +32,4 @@ This toolkit helps the research community address data scarcity challenges for l
 ## Links
 
 - [GitHub Repository](https://github.com/ANYANTUDRE/Moore-Speech-Corpora-Toolkit)
-- [Blog Post: Collecting Mooré Data from the Bible](/blog/posts/moorespeechcorpora-toolkit-collecting-moore-data-from-the-bible/)
+- [Blog Post: Collecting Mooré Data from the Bible](/blog/posts/moore-speech-corpora/)

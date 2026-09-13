@@ -1,37 +1,39 @@
 ---
-layout: archive
+layout: redesign-legacy
 title: "Sitemap"
 permalink: /sitemap/
-author_profile: true
 ---
 
-{% include base_path %}
+<p class="lede">Every page and post this site builds. For the robots there is an <a href="{{ '/sitemap.xml' | relative_url }}">XML version</a> as well.</p>
 
-A list of all the posts and pages found on the site. For you robots out there, there is an [XML version]({{ base_path }}/sitemap.xml) available for digesting as well.
+<h2 id="sm-pages">Pages</h2>
+<div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg2"/></svg></div>
+<ul class="index">
+{%- for p in site.pages %}
+{%- if p.title and p.sitemap != false %}
+ <li><span class="t"><a class="tl" href="{{ p.url | relative_url }}">{{ p.title }}</a></span></li>
+{%- endif %}
+{%- endfor %}
+</ul>
 
-<h2>Pages</h2>
-{% for post in site.pages %}
-  {% include archive-single.html %}
-{% endfor %}
+<h2 id="sm-posts">Posts</h2>
+<div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg4"/></svg></div>
+<ul class="index">
+{%- for post in site.posts %}
+ <li><span class="t"><a class="tl" href="{{ post.url | relative_url }}">{{ post.title }}</a></span><span class="dt"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%-d %b %Y" }}</time></span></li>
+{%- endfor %}
+</ul>
 
-<h2>Posts</h2>
-{% for post in site.posts %}
-  {% include archive-single.html %}
-{% endfor %}
-
-{% capture written_label %}'None'{% endcapture %}
-
-{% for collection in site.collections %}
-{% unless collection.output == false or collection.label == "posts" %}
-  {% capture label %}{{ collection.label }}{% endcapture %}
-  {% if label != written_label %}
-  <h2>{{ label }}</h2>
-  {% capture written_label %}{{ label }}{% endcapture %}
-  {% endif %}
-{% endunless %}
-{% for post in collection.docs %}
-  {% unless collection.output == false or collection.label == "posts" %}
-  {% include archive-single.html %}
-  {% endunless %}
-{% endfor %}
-{% endfor %}
+{%- for collection in site.collections %}
+{%- unless collection.output == false or collection.label == "posts" %}
+{%- if collection.docs.size > 0 %}
+<h2 id="sm-{{ collection.label | slugify }}">{{ collection.label | capitalize }}</h2>
+<div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg{{ forloop.index0 | modulo: 6 | plus: 1 }}"/></svg></div>
+<ul class="index">
+{%- for doc in collection.docs %}
+ <li><span class="t"><a class="tl" href="{{ doc.url | relative_url }}">{{ doc.title }}</a></span><span class="dt">{% if doc.date %}<time datetime="{{ doc.date | date_to_xmlschema }}">{{ doc.date | date: "%-d %b %Y" }}</time>{% endif %}</span></li>
+{%- endfor %}
+</ul>
+{%- endif %}
+{%- endunless %}
+{%- endfor %}

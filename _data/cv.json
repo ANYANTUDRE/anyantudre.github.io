@@ -4,7 +4,7 @@
     "email": "nyantudrealban@gmail.com",
     "phone": "",
     "website": "https://anyantudre.github.io",
-    "summary": "Machine Learning Engineer at GO AI Corporation. Final-year MEng student in Data Engineering and AI with expertise in deep learning, computer vision, NLP, and speech technologies for low-resource languages.",
+    "summary": "Machine Learning Engineer. Diplôme d'Ingénieur d'État in Computer Science and Artificial Intelligence from the École Nationale des Sciences Appliquées (ENSA), Safi, July 2026. Deep learning for vision, language and speech, with speech and language technologies for low-resource African languages as the through-line. Looking for a PhD in deep learning, with an interest in multimodal learning.",
     "location": {
       "address": "",
       "postalCode": "",
@@ -32,60 +32,83 @@
   },
   "work": [
     {
-      "company": "GO AI Corporation",
-      "position": "Chief Technology Officer",
-      "website": "https://goaicorporation.org/",
-      "startDate": "2024-10",
-      "endDate": "",
-      "summary": "Lead the team responsible for design, development, and deployment of AI solutions. Supervise interns and trained 120+ people in Data Science through bootcamps.",
-      "highlights": []
+      "company": "Université de Moncton",
+      "position": "AI Research Assistant",
+      "website": "https://www.umoncton.ca/",
+      "startDate": "2026-03",
+      "endDate": "2026-08",
+      "summary": "Quantum machine learning for drug discovery, in Moncton, Canada.",
+      "highlights": [
+        "Literature review on quantum machine learning for drug discovery, covering molecular generative models and variational quantum circuits.",
+        "Collected and curated a dataset of 5-lipoxygenase (5-LOX) inhibitors from chemical databases including ChEMBL, PubChem and BindingDB.",
+        "Implemented and evaluated hybrid quantum-classical generative architectures (QGAN, QVAE) and Transformers for the de novo generation of 5-LOX inhibitors."
+      ]
     },
     {
       "company": "GO AI Corporation",
-      "position": "Machine Learning Engineer",
+      "position": "Machine Learning Engineer (part-time)",
       "website": "https://goaicorporation.org/",
       "startDate": "2024-03",
-      "endDate": "",
-      "summary": "Working on AI-for-social-good projects focused on local languages, education, and access to information. Led the design and training of translation and speech models for Mooré language, adopted by UNICEF, Tanager NGO, and Orange Burkina.",
-      "highlights": []
-    },
-    {
-      "company": "Université de Moncton",
-      "position": "Machine Learning Research Intern",
-      "website": "https://www.umoncton.ca/",
-      "startDate": "2025-02",
-      "endDate": "2025-05",
-      "summary": "Contributed to research on 'Securing AI Models Against Extraction & Poisoning Attacks'. Conducted literature review on model stealing and data poisoning attacks on CNN and Transformer architectures.",
-      "highlights": []
+      "endDate": "2025-08",
+      "summary": "Remote.",
+      "highlights": [
+        "Designed, trained and deployed translation, speech synthesis and speech recognition models (MT, ASR and TTS) for Mooré, a low-resource language with 7M+ speakers across 5+ West African countries.",
+        "Contributed to building one of the largest Mooré-language corpora to date, supporting low-resource NLP applications."
+      ]
     },
     {
       "company": "Technocolabs Softwares Inc.",
-      "position": "Machine Learning Engineer Intern",
+      "position": "Machine Learning Engineering Intern",
       "website": "https://www.technocolabs.com/",
       "startDate": "2023-08",
       "endDate": "2023-10",
-      "summary": "Developed and deployed ML models to predict prepayment risk of mortgage-backed securities, supporting better risk assessment for financial institutions.",
-      "highlights": []
+      "summary": "Remote.",
+      "highlights": [
+        "Developed and deployed ML models to predict prepayment risk on mortgage-backed securities, improving risk assessment for financial institutions."
+      ]
     }
   ],
   "education": [
     {
-      "institution": "ENSA Safi - Cadi Ayyad University",
-      "area": "Computer Science - Data Engineering and AI",
-      "studyType": "MEng",
-      "startDate": "2023",
-      "endDate": "Present",
-      "gpa": "17.2/20 (Rank: 1st/19)",
-      "courses": []
+      "institution": "École Nationale des Sciences Appliquées (ENSA) Safi - Cadi Ayyad University",
+      "area": "Diplôme d'Ingénieur d'État (BAC+5) - Computer Science and Artificial Intelligence",
+      "studyType": "Diplôme d'Ingénieur d'État (BAC+5)",
+      "startDate": "2023-10",
+      "endDate": "2026-07",
+      "gpa": "17.25/20, Highest Honours (Rank: 1st/19)",
+      "courses": [
+        "Applied Mathematics",
+        "Data Structures & Algorithms",
+        "Stochastic Modeling",
+        "Optimization",
+        "NLP",
+        "Heuristics",
+        "Deep Learning",
+        "Data Mining",
+        "Big Data",
+        "Computer Vision",
+        "Game Theory",
+        "Cloud Computing",
+        "Fuzzy Systems"
+      ]
     },
     {
-      "institution": "ENSA Fez - Sidi Med Ben Abdellah University",
-      "area": "Preparatory Cycle - Mathematics, Physics, and Computer Science",
+      "institution": "École Nationale des Sciences Appliquées (ENSA) Fez - Sidi Mohammed Ben Abdellah University",
+      "area": "Preparatory Class - Mathematics, Physics, and Computer Science",
       "studyType": "",
-      "startDate": "2021",
-      "endDate": "2023",
-      "gpa": "16.25/20 (Rank: 3rd/262)",
-      "courses": []
+      "startDate": "2021-10",
+      "endDate": "2023-07",
+      "gpa": "16.25/20, Highest Honours (Rank: 3rd/262)",
+      "courses": [
+        "Calculus",
+        "Probability & Statistics",
+        "Linear Algebra",
+        "Algorithms",
+        "Data Structures",
+        "C Programming",
+        "Electronics & Computer Architecture",
+        "Physics"
+      ]
     }
   ],
   "skills": [
@@ -94,30 +117,38 @@
       "keywords": ["Python", "R", "SQL", "Java", "C/C++"]
     },
     {
-      "name": "AI/ML",
-      "keywords": ["PyTorch", "TensorFlow", "Transformers", "Hugging Face", "LangChain", "OpenCV"]
-    },
-    {
-      "name": "Databases & Big Data",
-      "keywords": ["MongoDB", "Redis", "Spark", "Kafka", "Airflow", "Neo4j"]
+      "name": "AI & Data",
+      "keywords": ["PyTorch", "TensorFlow", "Hugging Face", "SQL/PostgreSQL", "MongoDB", "Redis", "Spark", "Airflow"]
     },
     {
       "name": "Cloud & MLOps",
       "keywords": ["AWS", "Azure", "Docker", "Git", "MLflow", "FastAPI", "Django"]
+    },
+    {
+      "name": "Deep Learning",
+      "keywords": ["Language modelling (RNN, Transformers/LLM, supervised fine-tuning, quantisation, LoRA)", "Computer vision (CNNs, VAE, ViT, VLM)", "RL & alignment (DPO, PPO, GRPO)"]
+    },
+    {
+      "name": "Speech Processing",
+      "keywords": ["Text-to-speech (mel-spectrograms, vocoders, G2P)", "Automatic speech recognition (CTC, Seq2Seq/Whisper, self-supervised encoders wav2vec2/XLS-R)", "Pseudo-labelling & distillation", "Audio tooling (librosa, torchaudio, soundfile, ffmpeg)"]
     }
   ],
   "languages": [
     {
       "language": "French",
-      "fluency": "Native"
+      "fluency": "C2"
     },
     {
       "language": "English",
-      "fluency": "Advanced (C1)"
+      "fluency": "C1"
     },
     {
       "language": "Spanish",
-      "fluency": "Beginner (A1)"
+      "fluency": "A1"
+    },
+    {
+      "language": "Mooré",
+      "fluency": "Native"
     }
   ],
   "interests": [],
@@ -130,14 +161,14 @@
       "institution": "Community Initiative",
       "date": "2025-03",
       "role": "Instructor",
-      "description": "Delivered weekly Python classes to 60+ students"
+      "description": "Weekly Python programming classes for 60+ students."
     },
     {
       "course": "Data Science & AI Summer Bootcamp",
       "institution": "GO AI Corporation",
       "date": "2024",
-      "role": "Lead Instructor",
-      "description": "Instructed a 3-week bootcamp for 120+ learners"
+      "role": "Instructor",
+      "description": "Three-week intensive bootcamp at GO AI Corporation, one of the Data Science/AI bootcamps that have reached 200+ students."
     }
   ],
   "portfolio": []

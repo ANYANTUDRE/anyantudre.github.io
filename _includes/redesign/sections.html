@@ -1,0 +1,7 @@
+{%- assign sect_id = 'news,about,education,experience,work,awards,posts' | split: ',' -%}
+{%- capture sect_lab -%}
+{{ t.h_news }}|{{ t.h_about }}|{{ t.h_education }}|{{ t.h_experience }}|{{ t.h_work }}|{{ t.h_awards }}|{{ t.h_posts }}{%- endcapture -%}
+{%- assign sect_lab = sect_lab | split: '|' -%}
+{%- if lang == 'fr' -%}
+{%- assign sect_home = '/fr/' -%}{%- else -%}{%- assign sect_home = '/' -%}
+{%- endif -%}

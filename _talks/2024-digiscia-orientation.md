@@ -6,6 +6,7 @@ venue: "DigiScia"
 date: 2024-08-18
 location: "Online"
 excerpt: "Panel discussion guiding future African talents towards careers in Data Science and AI."
+excerpt_fr: "Table ronde pour orienter les futurs talents africains vers les métiers de la data science et de l'IA."
 image: "talks/digiscia-talk.gif"
 pdf: "/files/talks/digiscia-talk.pdf"
 ---

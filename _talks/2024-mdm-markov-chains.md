@@ -1,11 +1,13 @@
 ---
 title: "Markov Chains and AI Applications"
+title_fr: "Chaînes de Markov et applications en IA"
 collection: talks
 talk_type: "Conference Stand"
 venue: "Journée Marocaine des Mathématiques (MDM)"
 date: 2024-04-20
 location: "UM6P, Morocco"
 excerpt: "Presented Markov Chains and their applications in AI: weather forecasting, text and image generation."
+excerpt_fr: "Présentation des chaînes de Markov et de leurs applications en IA : prévision météorologique, génération de texte et d'images."
 image: "talks/markov.jpg"
 pdf: "/files/talks/mdm-presentation-markov-chains.pdf"
 ---

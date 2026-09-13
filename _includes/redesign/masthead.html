@@ -1,0 +1,78 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+
+<header class="mast">
+ <div class="band">
+  <div class="top">
+  <div class="brand">{%- include redesign/sections.html -%}
+  {%- assign mm_in = '13,20,27' | split: ',' -%}
+  {%- assign mm_h = '6,13,20,27,34' | split: ',' -%}
+  {%- assign mm_out = '4,9.3,14.7,20,25.3,30.7,36' | split: ',' -%}
+  {%- assign mm_hit = '1.35,6.65,12.05,17.35,22.65,28.05,33.35' | split: ',' -%}
+  {%- assign wtab = '0.62,0.21,0.88,0.34,0.71,0.15,0.95,0.44,0.28,0.79,0.52,0.18,0.66,0.37,0.83,0.24,0.57,0.91,0.31,0.48,0.74,0.20,0.60' | split: ',' -%}
+  <svg class="minimlp" viewBox="0 0 56 40"><title>{{ t.mlp_mark }}</title>
+  <g class="mm-edges">
+  {%- for a in (0..2) -%}
+  {%- for b in (0..4) -%}
+  {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 11 | modulo: 23 -%}
+  <path class="mm-e" data-l="0" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ wtab[wi] }}" d="M5 {{ mm_in[a] }} 26 {{ mm_h[b] }}"/>
+  {%- endfor -%}
+  {%- endfor -%}
+  {%- for a in (0..4) -%}
+  {%- for b in (0..6) -%}
+  {%- assign wi = a | times: 7 | plus: b | times: 3 | plus: 19 | modulo: 23 -%}
+  {%- if b == 0 -%}
+  {%- assign w = wtab[wi] -%}{%- else -%}{%- assign w = wtab[wi] | times: 0.06 | round: 3 -%}
+  {%- endif -%}
+  <path class="mm-e" data-l="1" data-a="{{ a }}" data-b="{{ b }}" style="--w:{{ w }}" d="M26 {{ mm_h[a] }} 50 {{ mm_out[b] }}"/>
+  {%- endfor -%}
+  {%- endfor -%}
+  </g>
+  <g class="mm-nodes">
+  {%- for a in (0..2) -%}
+  {%- assign wi = a | times: 7 | times: 3 | plus: 5 | modulo: 23 -%}
+  <circle class="mm-pl" cx="5" cy="{{ mm_in[a] }}" r="1.3"/><circle class="mm-n" data-n="0" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="5" cy="{{ mm_in[a] }}" r="1.3"/>
+  {%- endfor -%}
+  {%- for a in (0..4) -%}
+  {%- assign wi = a | times: 7 | times: 3 | plus: 17 | modulo: 23 -%}
+  <circle class="mm-pl" cx="26" cy="{{ mm_h[a] }}" r="1.3"/><circle class="mm-n" data-n="1" data-k="{{ a }}" style="--w:{{ wtab[wi] }}" cx="26" cy="{{ mm_h[a] }}" r="1.3"/>
+  {%- endfor -%}
+  {%- for b in (0..6) -%}
+  {%- if b == 0 -%}
+  {%- assign w = '1' -%}
+  {%- else -%}
+  {%- assign w = '0.12' -%}
+  {%- endif -%}
+  <circle class="mm-pl" cx="50" cy="{{ mm_out[b] }}" r="1.7"/><circle class="mm-n mm-n--out" data-n="2" data-k="{{ b }}" style="--w:{{ w }}" cx="50" cy="{{ mm_out[b] }}" r="1.7"/>
+  {%- endfor -%}
+  </g>{%- for b in (0..6) -%}
+  <a class="out" href="{{ sect_home | relative_url }}#{{ sect_id[b] }}" data-i="{{ b }}"><title>{{ sect_lab[b] }}</title><rect class="mm-hit" x="41" y="{{ mm_hit[b] }}" width="15" height="5.3"/></a>
+  {%- endfor %}
+  </svg>
+  <a class="wordmark" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+  </div><nav class="nav" aria-label="{{ t.primary_nav }}">
+  {%- for link in site.data.navigation.main %}
+  {%- assign nav_label = site.data.t.en.nav[link.key] | default: link.title -%}
+  {%- if lang == 'fr' -%}
+    {%- assign nav_url = link.url | prepend: '/fr' | replace: '//', '/' -%}
+    {%- assign nav_page = site.pages | where: 'url', nav_url | first -%}
+    {%- unless nav_page %}{% assign nav_url = link.url %}{% endunless -%}
+  {%- else -%}
+    {%- assign nav_url = link.url -%}
+  {%- endif %}
+  <a class="nav-{{ link.key }}" href="{{ nav_url | relative_url }}"{% unless lang == 'en' %} lang="en"{% endunless %}>{{ nav_label }}</a>
+  {%- endfor %}
+  <span class="navtail">{%- include redesign/lang-pair.html -%}
+  {%- assign other_url = lp_other_url -%}
+  {%- if lang == 'fr' %}
+  <span class="lang"><span class="gs"><a href="{{ other_url | relative_url }}" hreflang="en" lang="en">EN</a></span> <span class="sl">/</span> <span class="gs"><span class="cur" aria-current="true">FR</span></span></span>
+  {%- else %}
+  <span class="lang"><span class="gs"><span class="cur" aria-current="true">EN</span></span> <span class="sl">/</span> <span class="gs"><a href="{{ other_url | relative_url }}" hreflang="fr" lang="fr">FR</a></span></span>
+  {%- endif %}
+  <button id="theme-toggle" type="button" class="tgl" aria-label="{{ t.toggle_theme }}" title="{{ t.toggle_theme }}"><svg class="tgl-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-sun"/></svg><svg class="tgl-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#ic-moon"/></svg></button>
+  </span>
+  </nav>
+  </div>
+  <div class="rule rule--mast rule--2 rule--acc" aria-hidden="true"><svg><use href="#sg1"/></svg><svg><use href="#sg2"/></svg></div>
+ </div>
+</header>

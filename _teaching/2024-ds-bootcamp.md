@@ -1,14 +1,17 @@
 ---
 title: "Data Science & AI Summer Bootcamp"
+title_fr: "Bootcamp d'été data science & IA"
 collection: teaching
 type: "Intensive Bootcamp"
-permalink: /teaching/2024-ds-bootcamp
+permalink: /teaching/2024-ds-bootcamp/
 venue: "GO AI Corporation"
 date: 2024-07-01
 location: "Burkina Faso / Remote"
+excerpt: "Three-week intensive bootcamp at GO AI Corporation, one of the Data Science/AI bootcamps that have reached 200+ students."
+excerpt_fr: "Bootcamp intensif de trois semaines à GO AI Corporation, l'un des bootcamps data science/IA qui ont touché plus de 200 étudiants."
 ---
 
-Led a **3-week intensive Data Science & AI bootcamp** for **120+ learners** at GO AI Corporation.
+Led a **3-week intensive Data Science & AI bootcamp** at GO AI Corporation. It is one of the Data Science/AI bootcamps I have taught, which together have reached **200+ students**.
 
 ## Bootcamp Curriculum
 

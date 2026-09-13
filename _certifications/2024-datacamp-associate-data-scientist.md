@@ -5,6 +5,7 @@ type: "Professional Certification"
 issuer: "DataCamp"
 date: 2024-11-01
 image: "certifications/datacamp-associate-data-scientist.png"
+link: "https://www.datacamp.com/completed/statement-of-accomplishment/track/a63516e3344d6f4fdee72dca092672763295f043"
 excerpt: "Track covering Python, SQL, statistics, probability, data manipulation & visualization and predictive modeling."
 ---
 

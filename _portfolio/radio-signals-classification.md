@@ -1,6 +1,8 @@
 ---
 title: "Radio Signals Classification"
+title_fr: "Classification de signaux radio"
 excerpt: "Deep learning model for classifying radio signals using spectrogram images with PyTorch and transfer learning.<br/><br/>**Technologies:** PyTorch, timm, Audio Processing, Transfer Learning"
+excerpt_fr: "Modèle d'apprentissage profond classant des signaux radio à partir de leurs spectrogrammes, en PyTorch et par apprentissage par transfert.<br/><br/>**Technologies :** PyTorch, timm, traitement audio, apprentissage par transfert"
 collection: portfolio
 date: 2024-03-01
 image: "portfolio/radio-signals.png"

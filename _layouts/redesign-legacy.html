@@ -1,0 +1,20 @@
+---
+layout: redesign-default
+---
+{%- assign sg_pick = page.url | append: page.title | size | modulo: 6 | plus: 1 -%}
+{%- if page.legacy_wide -%}
+{%- assign legacy_w = 'wide' -%}{%- else -%}{%- assign legacy_w = 'band' -%}
+{%- endif -%}
+
+<article class="{{ legacy_w }} flow legacy">
+
+ {%- if page.title %}
+ <header class="legacyhead">
+  <h1>{{ page.title }}</h1>
+  <div class="rule rule--flat" aria-hidden="true"><svg><use href="#sg{{ sg_pick }}"/></svg></div>
+ </header>
+ {%- endif %}
+
+ {{ content }}
+
+</article>

@@ -12,7 +12,7 @@ site_theme               : "air" # The available themes options are "default", "
 title                    : "Wendyellé A. Alban NYANTUDRE"
 title_separator          : "-"
 name                     : &name "Wendyellé A. Alban NYANTUDRE"
-description              : &description "Machine Learning Engineer | Deep Learning (Vision, Language & Speech)"
+description              : &description "Machine Learning Engineer | Deep learning for vision, language and speech, with a focus on low-resource African languages"
 url                      : https://anyantudre.github.io
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "anyantudre/anyantudre.github.io"
@@ -39,9 +39,9 @@ author:
   avatar           : "profile.jpg"
   name             : "Wendyellé A. Alban NYANTUDRE"
   pronouns         : "he/him"
-  bio              : "ML Engineer @GO AI Corp | Deep Learning (Vision, Language & Speech)"
+  bio              : "Machine Learning Engineer | Deep learning for vision, language and speech | Looking for a PhD"
   location         : "Safi, Morocco"
-  employer         : "GO AI Corporation"
+  employer         :
   uri              : # URL
   email            : "nyantudrealban@gmail.com" 
 
@@ -140,13 +140,11 @@ atom_feed:
   hide                   : false     # change to true to hide the RSS feed in the footer
   path                   : # blank (default) uses feed.xml
 
-
 # SEO Related
 google_site_verification :
 bing_site_verification   :
 alexa_site_verification  :
 yandex_site_verification :
-
 
 # Social Sharing
 twitter:
@@ -164,13 +162,11 @@ social:
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
 
-
 # Analytics
 analytics:
   provider               :  "false" # false (default), "google", "google-universal", "google-analytics-4", "custom"
   google:
     tracking_id          :
-
 
 # Reading Files
 include:
@@ -196,6 +192,11 @@ exclude:
   - Gruntfile.js
   - gulpfile.js
   - LICENSE
+  - LICENSE-MIT
+  - README.md
+  - TUTORIAL.md
+  - CITATION.cff
+  - docker-compose.yaml
   - local
   - log
   - node_modules
@@ -210,14 +211,12 @@ keep_files:
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
-
 # Conversion
 markdown: kramdown
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
-
 
 # Markdown Processing
 kramdown:
@@ -235,7 +234,6 @@ kramdown:
     block:
       line_numbers: true
       start_line: 1
-
 
 # These settings control the types of collections used by the template
 collections:
@@ -257,10 +255,12 @@ collections:
   awards:
     output: true
     permalink: /:collection/:path/
+  news:
+    output: true
+    permalink: /news/:path/
   extra:
     output: true
     permalink: /:collection/:path/
-
 
 # These settings control how pages and collections are included in the site
 defaults:
@@ -270,6 +270,7 @@ defaults:
       type: posts
     values:
       layout: blog_post
+      view: post
       author_profile: true
       read_time: true
       comments: true
@@ -284,30 +285,29 @@ defaults:
     values:
       layout: single
       author_profile: true
-  # _teaching
   - scope:
       path: ""
       type: teaching
     values:
-      layout: single
+      layout: talk
+      view: talks
       author_profile: true
       share: true
       comments: true
-  # _publications
   - scope:
       path: ""
       type: publications
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
       comments: true
-  # _portfolio
   - scope:
       path: ""
       type: portfolio
     values:
-      layout: single
+      layout: redesign-project
+      view: work
       author_profile: true
       share: true
       comment: true
@@ -319,37 +319,41 @@ defaults:
       layout: talk
       author_profile: true
       share: true
-  # _certifications
+      view: talks
   - scope:
       path: ""
       type: certifications
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
-  # _awards
   - scope:
       path: ""
       type: awards
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
+  - scope:
+      path: ""
+      type: news
+    values:
+      layout: redesign-news
+      view: home
+      author_profile: true
   # _extra
   - scope:
       path: ""
       type: extra
     values:
-      layout: single
+      layout: redesign-legacy
       author_profile: true
       share: true
-
 
 # Sass/SCSS
 sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
-
 
 # Outputting
 permalink: /:categories/:title/
@@ -359,7 +363,6 @@ timezone: Etc/UTC # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 # To enable pagination later, consider using jekyll-paginate-v2
 # paginate: 10
 # paginate_path: "/blog/page:num/"
-
 
 # Plugins
 plugins:
@@ -378,7 +381,6 @@ whitelist:
   - jekyll-sitemap
   - jekyll-redirect-from
   - jemoji
-
 
 # Archives
 #  Type
@@ -407,7 +409,6 @@ tag_archive:
 #   permalinks:
 #     category: /categories/:name/
 #     tag: /tags/:name/
-
 
 # HTML Compression
 # - https://jch.penibelst.de/

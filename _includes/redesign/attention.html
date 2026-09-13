@@ -1,0 +1,33 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+ <div class="rule" aria-hidden="true"><svg><use href="#sg2"/></svg></div>
+
+ <div class="wide duo duo--hm" id="attention">
+  <div>
+  <div class="hm">
+  <span class="hm-corner"></span>
+  <div class="hmcols" aria-hidden="true">
+  {% for term in t.at_terms %}<span>{{ term }}</span>{% endfor %}
+  </div>
+  <div class="hmrows" aria-hidden="true">
+  {% for term in t.at_terms %}<span>{{ term }}</span>{% endfor %}
+  </div>
+  <div class="mx" role="img" aria-label="{{ t.at_alt }}">
+  <span class="a8"></span><span class="a7"></span><span class="a5"></span><span class="a5"></span><span class="a5"></span><span class="a7"></span><span class="a3"></span><span class="a5"></span>
+  <span class="a7"></span><span class="a8"></span><span class="a7"></span><span class="a7"></span><span class="a7"></span><span class="a3"></span><span class="a2"></span><span class="a4"></span>
+  <span class="a5"></span><span class="a7"></span><span class="a8"></span><span class="a4"></span><span class="a1"></span><span class="a2"></span><span class="a1"></span><span class="a3"></span>
+  <span class="a5"></span><span class="a7"></span><span class="a4"></span><span class="a8"></span><span class="a7"></span><span class="a2"></span><span class="a2"></span><span class="a3"></span>
+  <span class="a5"></span><span class="a7"></span><span class="a1"></span><span class="a7"></span><span class="a8"></span><span class="a1"></span><span class="a3"></span><span class="a4"></span>
+  <span class="a7"></span><span class="a3"></span><span class="a2"></span><span class="a2"></span><span class="a1"></span><span class="a8"></span><span class="a6"></span><span class="a3"></span>
+  <span class="a3"></span><span class="a2"></span><span class="a1"></span><span class="a2"></span><span class="a3"></span><span class="a6"></span><span class="a8"></span><span class="a6"></span>
+  <span class="a5"></span><span class="a4"></span><span class="a3"></span><span class="a3"></span><span class="a4"></span><span class="a3"></span><span class="a6"></span><span class="a8"></span>
+  </div>
+  </div>
+  <p class="hmkey"><span>{{ t.at_weak }}</span><span class="ramp" aria-hidden="true"><span class="sw a1"></span><span class="sw a2"></span><span class="sw a3"></span><span class="sw a4"></span><span class="sw a5"></span><span class="sw a6"></span><span class="sw a7"></span><span class="sw a8"></span></span><span>{{ t.at_strong }}</span></p>
+  </div>
+  <div>
+  <p class="eqn" role="math" aria-label="{{ t.at_eqn_alt }}"><span class="op">Attention</span>(<i>Q</i>, <i>K</i>, <i>V</i>) = <span class="op">softmax</span><span class="pn">(</span><span class="frac"><span class="num"><i>Q</i><i>K</i><sup class="op">T</sup></span><span class="den"><span class="rad">&#8730;</span><span class="rand"><i>d</i><sub><i>k</i></sub></span></span></span><span class="pn">)</span> <i>V</i></p>
+  <p class="attrib">{{ t.at_attrib }}</p>
+  <p class="gloss">{{ t.at_gloss }}</p>
+  </div>
+ </div>

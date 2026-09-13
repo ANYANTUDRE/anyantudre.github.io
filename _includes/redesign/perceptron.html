@@ -1,0 +1,47 @@
+{%- assign lang = page.lang | default: 'en' -%}
+{%- assign t = site.data.t[lang] -%}
+ <div class="rule" aria-hidden="true"><svg><use href="#sg6"/></svg></div>
+
+ <div class="wide duo duo--pc" id="perceptron">
+  <div>
+  <svg class="pc" viewBox="0 0 360 200" role="img" aria-label="{{ t.pc_alt }}">
+  <g class="wire">
+  <path d="M74 44 176 100"/>
+  <path d="M74 100 176 100"/>
+  <path d="M74 156 176 100"/>
+  <path d="M190 176 190 116"/>
+  <path d="M206 100 236 100"/>
+  <path d="M266 100 312 100"/>
+  </g>
+  <circle class="nd" cx="70" cy="44" r="4"/>
+  <circle class="nd" cx="70" cy="100" r="4"/>
+  <circle class="nd" cx="70" cy="156" r="4"/>
+  <text class="vr" x="58" y="41" text-anchor="end">x<tspan dy="3" font-size="9">1</tspan></text>
+  <text class="lb" x="58" y="56" text-anchor="end">{{ t.in_vision }}</text>
+  <text class="vr" x="58" y="97" text-anchor="end">x<tspan dy="3" font-size="9">2</tspan></text>
+  <text class="lb" x="58" y="112" text-anchor="end">{{ t.in_language }}</text>
+  <text class="vr" x="58" y="153" text-anchor="end">x<tspan dy="3" font-size="9">3</tspan></text>
+  <text class="lb" x="58" y="168" text-anchor="end">{{ t.in_speech }}</text>
+  <rect class="plate" x="112" y="64" width="24" height="15"/>
+  <rect class="plate" x="112" y="93" width="24" height="14"/>
+  <rect class="plate" x="112" y="121" width="24" height="15"/>
+  <text class="wt" x="124" y="75" text-anchor="middle">w<tspan dy="2.5" font-size="8.5">1</tspan></text>
+  <text class="wt" x="124" y="104" text-anchor="middle">w<tspan dy="2.5" font-size="8.5">2</tspan></text>
+  <text class="wt" x="124" y="132" text-anchor="middle">w<tspan dy="2.5" font-size="8.5">3</tspan></text>
+  <circle class="nd" cx="190" cy="100" r="15"/>
+  <text class="gl" x="190" y="106" text-anchor="middle">∑</text>
+  <circle class="nd hd" cx="251" cy="100" r="15"/>
+  <text class="gl" x="251" y="106" text-anchor="middle">φ</text>
+  <circle class="nd-b" cx="190" cy="180" r="4"/>
+  <text class="vr" x="178" y="184" text-anchor="end">b</text>
+  <path class="wire" d="M306 95 316 100 306 105"/>
+  <text class="vr" x="322" y="97">y</text>
+  <text class="lb" x="322" y="112">{{ t.pc_output }}</text>
+  </svg>
+  </div>
+  <div>
+  <p class="eqn" role="math" aria-label="{{ t.pc_eqn_alt }}"><i>y</i> = <span class="op">φ</span><span class="pn">(</span> <span class="op">∑</span><sub><i>i</i></sub> <i>w</i><sub><i>i</i></sub><i>x</i><sub><i>i</i></sub> + <i>b</i> <span class="pn">)</span></p>
+  <p class="attrib">{{ t.pc_attrib }}</p>
+  <p class="gloss">{{ t.pc_gloss }}</p>
+  </div>
+ </div>

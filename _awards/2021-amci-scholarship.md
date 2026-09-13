@@ -1,5 +1,6 @@
 ---
 title: "Kingdom of Morocco Cooperation Scholarship"
+title_fr: "Bourse de coopération du Royaume du Maroc"
 collection: awards
 date: 2021-09-01
 award_type: "Scholarship"
@@ -7,10 +8,11 @@ category: "scholarship"
 issuer: "AMCI - Agence Marocaine de Coopération Internationale"
 image: "awards/amci-logo.png"
 link: "https://www.amci.ma"
-excerpt: "Merit-based scholarship covering 5 years of engineering studies."
+excerpt: "Merit-based 4,000 EUR award covering tuition and living expenses for 5 years of engineering studies."
+excerpt_fr: "Bourse au mérite de 4 000 EUR couvrant les frais de scolarité et de séjour pendant cinq ans d'études d'ingénieur."
 ---
 
-Awarded the **AMCI Scholarship**, a merit-based grant of approximately $4,500 USD covering tuition and living expenses for 5 years of engineering studies in Morocco.
+Awarded the **AMCI Scholarship**, a merit-based **4,000 EUR** award covering tuition and living expenses for 5 years of engineering studies in Morocco.
 
 ## About AMCI
 

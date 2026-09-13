@@ -1,6 +1,8 @@
 ---
 title: "Fine-Tuning MMS Adapter Models for Low-Resource ASR"
+title_fr: "Affinage des modèles à adaptateurs MMS pour la reconnaissance de la parole en langues peu dotées"
 excerpt: "Scripts and utilities for fine-tuning Meta's Massive Multilingual Speech (MMS) adapter models for ASR on low-resource languages like Mooré.<br/><br/>**Technologies:** PyTorch, Hugging Face Transformers, Speech Processing"
+excerpt_fr: "Scripts et utilitaires pour affiner les modèles à adaptateurs MMS (Massive Multilingual Speech) de Meta sur des langues peu dotées comme le mooré.<br/><br/>**Technologies :** PyTorch, Hugging Face Transformers, traitement de la parole"
 collection: portfolio
 date: 2024-10-21
 image: "portfolio/mms_map.png"
